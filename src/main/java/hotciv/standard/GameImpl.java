@@ -63,10 +63,12 @@ public class GameImpl implements Game {
     //Initialize the units map
     units = new HashMap<>();
     units.put(new Position(2,0), new UnitImpl(GameConstants.ARCHER, Player.RED));
+    units.put(new Position(3,2), new UnitImpl(GameConstants.LEGION, Player.BLUE));
+    units.put(new Position(4,3), new UnitImpl(GameConstants.SETTLER, Player.RED));
   }
 
   public Tile getTileAt( Position p ) { return map.get(p);}
-  public Unit getUnitAt( Position p ) { return units.get(p); }//Not implemented
+  public Unit getUnitAt( Position p ) { return units.get(p); }
   public City getCityAt( Position p ) { return cities.get(p); }
   public Player getPlayerInTurn() { return p;}
   public Player getWinner() {

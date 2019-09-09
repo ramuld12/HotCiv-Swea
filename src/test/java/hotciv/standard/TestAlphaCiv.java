@@ -151,9 +151,23 @@ public class TestAlphaCiv {
    * Tests for the Unit Class
    */
   @Test
-  public void redShouldHaveArcherAtTile2_0() {
+  public void redShouldHaveAnArcherAtTile2_0() {
     Position p = new Position(2,0);
     assertThat(game.getUnitAt(p).getTypeString(), is(GameConstants.ARCHER));
+    assertThat(game.getUnitAt(p).getOwner(), is(Player.RED));
+  }
+
+  @Test
+  public void redShouldHaveALegionAtTile3_2() {
+    Position p = new Position(3,2);
+    assertThat(game.getUnitAt(p).getTypeString(), is(GameConstants.LEGION));
+    assertThat(game.getUnitAt(p).getOwner(), is(Player.BLUE));
+  }
+
+  @Test
+  public void redShouldHaveASettlerAtTile4_3() {
+    Position p = new Position(4,3);
+    assertThat(game.getUnitAt(p).getTypeString(), is(GameConstants.SETTLER));
     assertThat(game.getUnitAt(p).getOwner(), is(Player.RED));
   }
 
