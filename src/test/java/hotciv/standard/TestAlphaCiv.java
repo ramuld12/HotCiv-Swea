@@ -88,20 +88,28 @@ public class TestAlphaCiv {
 
   @Test
   public void gameShouldBeginInYear4000BC() {
-    assertThat(game.getAge(), is(4000));
+    assertThat(game.getAge(), is(-4000));
   }
 
   @Test
   public void gameShouldAdvances100YearsPrRound() {
     endOfRound();
     endOfRound();
-    assertThat(game.getAge(), is(3800));
+    assertThat(game.getAge(), is(-3800));
   }
 
   @Test
-  public void redShouldWinInYear3000() {
+  public void redShouldWinInYear3000BC() {
     for (int i = 0; i<10; i++) { endOfRound(); }
     assertThat(game.getWinner(), is(Player.RED));
+  }
+
+  @Test
+  public void winnerShouldBeNullBetween4000BCAnd3100BC() {
+    for (int i = 0; i<9; i++) {
+      endOfRound();
+      assertNull(game.getWinner());
+    }
   }
 
   @Test

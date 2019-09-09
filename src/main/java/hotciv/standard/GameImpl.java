@@ -35,11 +35,13 @@ import java.util.HashMap;
 
 public class GameImpl implements Game {
   private Player p = Player.RED; //The current player in turn, initially set to red
-  private int gameAge = 4000; //The current age of the game, initially set to 4000
-  private HashMap<Position, Tile> map; //HashMap for representing tiletypes
-  private HashMap<Position, City> cities;
+  private int gameAge = -4000; //The current age of the game, initially set to -4000
+  private HashMap<Position, Tile> map; //HashMap for representing the different tiletypes
+  private HashMap<Position, City> cities; //HashMap representing the cities
 
-
+  /**Constructor method for gameImp
+   * Initializes the private variables with tiletypes and city initial positions for the cities.
+   */
   public GameImpl() {
     map = new HashMap<>();
     for (int i = 0; i < GameConstants.WORLDSIZE; i++){
@@ -54,7 +56,6 @@ public class GameImpl implements Game {
     cities = new HashMap<>();
     cities.put(new Position(1,1), new CityImpl(Player.RED));
     cities.put(new Position(4,1),new CityImpl(Player.BLUE));
-
   }
 
   public Tile getTileAt( Position p ) { return map.get(p);}
@@ -62,8 +63,9 @@ public class GameImpl implements Game {
   public City getCityAt( Position p ) { return cities.get(p); }
   public Player getPlayerInTurn() { return p;}
   public Player getWinner() {
-    return Player.RED;
-  }//(fake it)
+    if (this.gameAge >= -3000) {return Player.RED;}
+    else return null;
+  }
   public int getAge() { return gameAge; }
   public boolean moveUnit( Position from, Position to ) {
     return false;
@@ -73,7 +75,7 @@ public class GameImpl implements Game {
       p = Player.BLUE;
     } else {
       p = Player.RED;
-      gameAge -= 100;
+      gameAge += 100;
       ((CityImpl)cities.get(new Position(1,1))).incrementTreas();
     }
   }
