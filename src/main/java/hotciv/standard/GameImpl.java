@@ -38,11 +38,13 @@ public class GameImpl implements Game {
   private int gameAge = -4000; //The current age of the game, initially set to -4000
   private HashMap<Position, Tile> map; //HashMap for representing the different tiletypes
   private HashMap<Position, City> cities; //HashMap representing the cities
+  private HashMap<Position, Unit> units; //HashMap representing the units
 
   /**Constructor method for gameImp
    * Initializes the private variables with tiletypes and city initial positions for the cities.
    */
   public GameImpl() {
+    //Initialize the gameboard
     map = new HashMap<>();
     for (int i = 0; i < GameConstants.WORLDSIZE; i++){
       for (int j = 0; j < GameConstants.WORLDSIZE; j++){
@@ -53,13 +55,18 @@ public class GameImpl implements Game {
     map.put(new Position(0,1), new TileImpl(GameConstants.HILLS));
     map.put(new Position(2,2), new TileImpl(GameConstants.MOUNTAINS));
 
+    //Initialize the citites map
     cities = new HashMap<>();
     cities.put(new Position(1,1), new CityImpl(Player.RED));
     cities.put(new Position(4,1),new CityImpl(Player.BLUE));
+
+    //Initialize the units map
+    units = new HashMap<>();
+    units.put(new Position(2,0), new UnitImpl(GameConstants.ARCHER, Player.RED));
   }
 
   public Tile getTileAt( Position p ) { return map.get(p);}
-  public Unit getUnitAt( Position p ) { return null; }//Not implemented
+  public Unit getUnitAt( Position p ) { return units.get(p); }//Not implemented
   public City getCityAt( Position p ) { return cities.get(p); }
   public Player getPlayerInTurn() { return p;}
   public Player getWinner() {

@@ -147,6 +147,16 @@ public class TestAlphaCiv {
     assertThat(game.getCityAt(new Position(1,1)).getTreasury(), is(12));
   }
 
+  /**
+   * Tests for the Unit Class
+   */
+  @Test
+  public void redShouldHaveArcherAtTile2_0() {
+    Position p = new Position(2,0);
+    assertThat(game.getUnitAt(p).getTypeString(), is(GameConstants.ARCHER));
+    assertThat(game.getUnitAt(p).getOwner(), is(Player.RED));
+  }
+
 }
 
 
