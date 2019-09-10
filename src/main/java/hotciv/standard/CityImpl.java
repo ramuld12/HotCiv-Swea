@@ -1,15 +1,18 @@
 package hotciv.standard;
 
 import hotciv.framework.City;
+import hotciv.framework.GameConstants;
 import hotciv.framework.Player;
 
 public class CityImpl implements City {
 
   private Player p;
   private int treas;
+  private String prod;
 
   public CityImpl(Player p) {
     this.p = p;
+    prod = GameConstants.ARCHER;
   }
 
   @Override
@@ -29,7 +32,7 @@ public class CityImpl implements City {
 
   @Override
   public String getProduction() {
-    return null;
+    return prod;
   }//Not done
 
   @Override
@@ -41,4 +44,20 @@ public class CityImpl implements City {
     this.treas += 6;
   }
 
+  public void changeProduction(String unitType){
+    prod = unitType;
+  }
+
+  public boolean hasEnoughProduction() {
+    if ((prod.equals(GameConstants.ARCHER) && treas >= 10) ||
+            (prod.equals(GameConstants.LEGION) && treas >= 15) ||
+            (prod.equals(GameConstants.SETTLER) && treas >= 30)) {
+      return true;
+    }
+    return false;
+  }
+
+  public void reduceTreasury(int i) {
+    treas -= i;
+  }
 }

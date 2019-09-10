@@ -38,7 +38,7 @@ public class GameImpl implements Game {
   private Player p = Player.RED; //The current player in turn, initially set to red
   private int gameAge = -4000; //The current age of the game, initially set to -4000
   private HashMap<Position, Tile> map; //HashMap for representing the different tiletypes
-  private HashMap<Position, City> cities; //HashMap representing the cities
+  private HashMap<Position, CityImpl> cities; //HashMap representing the cities
   private HashMap<Position, UnitImpl> units; //HashMap representing the units
 
   /**Constructor method for gameImp
@@ -59,7 +59,7 @@ public class GameImpl implements Game {
     //Initialize the citites map
     cities = new HashMap<>();
     cities.put(new Position(1,1), new CityImpl(Player.RED));
-    cities.put(new Position(4,1),new CityImpl(Player.BLUE));
+    cities.put(new Position(4,1), new CityImpl(Player.BLUE));
 
     //Initialize the units map
     units = new HashMap<>();
@@ -101,11 +101,21 @@ public class GameImpl implements Game {
     } else {
       p = Player.RED;
       gameAge += 100;
-      ((CityImpl)cities.get(new Position(1,1))).incrementTreas();
+      cities.get(new Position(1,1)).incrementTreas();
       units.values().forEach(UnitImpl::resetMoveCounter);
+      cities.keySet().forEach(po -> produceUnit(po, cities.get(po)));
     }
   }
+
   public void changeWorkForceFocusInCityAt( Position p, String balance ) {}//Not implemented stadig ikke
-  public void changeProductionInCityAt( Position p, String unitType ) {}//Not implemented
-  public void performUnitActionAt( Position p ) {}//Not implemented stadig ikke
+  public void changeProductionInCityAt( Position p, String unitType ) {
+    cities.get(p).changeProduction(unitType);
+  }//Not implemented
+  public void performUnitActionAt( Position p ) {}//Not implemented
+
+  public void produceUnit(Position po, CityImpl c) {
+    if (c.hasEnoughProduction()) {
+      units.put(po, new UnitImpl(c.getProduction(), c.getOwner()));
+    }
+  }
 }

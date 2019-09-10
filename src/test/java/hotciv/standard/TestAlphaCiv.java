@@ -261,6 +261,30 @@ public class TestAlphaCiv {
     assertThat(game.getUnitAt(p4).getMoveCount(), is(1));
     assertThat(game.getUnitAt(p6).getMoveCount(), is(1));
   }
+
+  @Test
+  public void shouldChangeProductionUnit(){
+    Position p = new Position(1,1);
+    game.changeProductionInCityAt(p,GameConstants.ARCHER);
+    assertThat(game.getCityAt(p).getProduction(), is(GameConstants.ARCHER));
+
+    Position m = new Position(4,1);
+    game.changeProductionInCityAt(m,GameConstants.SETTLER);
+    assertThat(game.getCityAt(m).getProduction(), is(GameConstants.SETTLER));
+
+  }
+
+  @Test
+  public void shouldProduceUnitAtRedCityIfVacant(){
+    Position p = new Position(1,1);
+    game.changeProductionInCityAt(p,GameConstants.ARCHER);
+    assertNull(game.getUnitAt(p));
+    endOfRound();
+    endOfRound();
+    assertThat(game.getUnitAt(p).getTypeString(), is(GameConstants.ARCHER));
+  }
+
 }
+
 
 
