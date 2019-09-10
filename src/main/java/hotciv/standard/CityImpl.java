@@ -51,8 +51,16 @@ public class CityImpl implements City {
   public void reduceTreasury(int i) {
     treas -= i;
   }
+
+  public int getProdCost() {
+    if (prod.equals(GameConstants.ARCHER)) {return 10;}
+    else if (prod.equals(GameConstants.LEGION)) {return 15;}
+    else if (prod.equals(GameConstants.SETTLER)) {return 30;}
+    return 0;
+  }
+
   public boolean hasEnoughProduction() {
-    if (prod.equals(GameConstants.ARCHER) && treas >= 10) {
+    if (treas >= getProdCost()){
       return true;
     }
     return false;

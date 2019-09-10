@@ -143,8 +143,6 @@ public class TestAlphaCiv {
   public void shouldAdd6ProductionEachRound() {
     endOfRound();
     assertThat(game.getCityAt(new Position(1,1)).getTreasury(), is(6));
-    endOfRound();
-    assertThat(game.getCityAt(new Position(1,1)).getTreasury(), is(12));
   }
 
   /**
@@ -273,13 +271,32 @@ public class TestAlphaCiv {
     assertThat(game.getCityAt(m).getProduction(), is(GameConstants.SETTLER));
   }
 
-  @Test
-  public void shouldCreateUnitInVacantRedCity() {
+  /*@Test
+  //public void shouldCreateUnitInVacantRedCity() {
     Position p = new Position(1,1);
     assertNull(game.getUnitAt(p));
     endOfRound();
     endOfRound();
     assertThat(game.getUnitAt(p).getTypeString(), is(GameConstants.ARCHER));
+  }*/
+
+  @Test
+  public void shouldReduceTreasuryWhenProducingUnit() {
+    Position p = new Position(1,1);
+    endOfRound();
+    endOfRound();
+    assertThat(game.getCityAt(p).getTreasury(), is(2));
+  }
+
+  @Test
+  public void shouldCreateUnitInVacantBlueCity() {
+    Position p = new Position(4,1);
+    game.changeProductionInCityAt(p,GameConstants.LEGION);
+    assertNull(game.getUnitAt(p));
+    endOfRound();
+    endOfRound();
+    endOfRound();
+    assertThat(game.getUnitAt(p).getTypeString(), is(GameConstants.LEGION));
   }
 
 }
