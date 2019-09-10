@@ -271,14 +271,14 @@ public class TestAlphaCiv {
     assertThat(game.getCityAt(m).getProduction(), is(GameConstants.SETTLER));
   }
 
-  /*@Test
-  //public void shouldCreateUnitInVacantRedCity() {
+  @Test
+  public void shouldCreateUnitInVacantRedCity() {
     Position p = new Position(1,1);
     assertNull(game.getUnitAt(p));
     endOfRound();
     endOfRound();
     assertThat(game.getUnitAt(p).getTypeString(), is(GameConstants.ARCHER));
-  }*/
+  }
 
   @Test
   public void shouldReduceTreasuryWhenProducingUnit() {
