@@ -41,7 +41,7 @@ public class CityImpl implements City {
   }//Not done
 
   public void incrementTreas() {
-    this.treas += 6;
+    treas += 6;
   }
 
   public void changeProduction(String unitType){

@@ -102,6 +102,7 @@ public class GameImpl implements Game {
       p = Player.RED;
       gameAge += 100;
       cities.get(new Position(1,1)).incrementTreas();
+      cities.get(new Position(4,1)).incrementTreas();
       units.values().forEach(UnitImpl::resetMoveCounter);
       cities.keySet().forEach(p -> produceUnitInCityAt(p, cities.get(p)));
     }
