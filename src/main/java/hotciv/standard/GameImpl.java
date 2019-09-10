@@ -81,6 +81,7 @@ public class GameImpl implements Game {
     if (toType.equals(GameConstants.OCEANS) || toType.equals(GameConstants.MOUNTAINS)){
       return false;
     }
+    if (units.get(from) == null) {return false;}
     String unitType = units.get(from).getTypeString();
     units.put(to, new UnitImpl(unitType, p));
     return true;

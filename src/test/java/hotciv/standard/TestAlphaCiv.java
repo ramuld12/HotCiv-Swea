@@ -184,6 +184,15 @@ public class TestAlphaCiv {
     assertThat(game.getUnitAt(p2).getTypeString(), is(GameConstants.ARCHER));
   }
 
+  @Test
+  public void movingAUnitShouldHaveAUnitAtTheFromPosition() {
+    Position p1 = new Position(2,0); Position p2 = new Position(2,1);
+    assertThat(game.moveUnit(p2,p1), is(false));
+    assertThat(game.moveUnit(p1, p2), is(true));
+  }
+
+  
+
 }
 
 
