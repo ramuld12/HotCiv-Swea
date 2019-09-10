@@ -103,19 +103,20 @@ public class GameImpl implements Game {
       gameAge += 100;
       cities.get(new Position(1,1)).incrementTreas();
       units.values().forEach(UnitImpl::resetMoveCounter);
-      cities.keySet().forEach(po -> produceUnit(po, cities.get(po)));
+      cities.keySet().forEach(p -> produceUnitInCityAt(p, cities.get(p)));
     }
   }
 
-  public void changeWorkForceFocusInCityAt( Position p, String balance ) {}//Not implemented stadig ikke
+  private void produceUnitInCityAt(Position p, CityImpl c) {
+    if (c.hasEnoughProduction()) {
+      units.put(p, new UnitImpl(c.getProduction(), c.getOwner()));
+    }
+  }
+
+  public void changeWorkForceFocusInCityAt( Position p, String balance ) {}//Not implemented
   public void changeProductionInCityAt( Position p, String unitType ) {
     cities.get(p).changeProduction(unitType);
-  }//Not implemented
+  }
   public void performUnitActionAt( Position p ) {}//Not implemented
 
-  public void produceUnit(Position po, CityImpl c) {
-    if (c.hasEnoughProduction()) {
-      units.put(po, new UnitImpl(c.getProduction(), c.getOwner()));
-    }
-  }
 }

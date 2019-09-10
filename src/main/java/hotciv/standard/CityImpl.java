@@ -33,7 +33,7 @@ public class CityImpl implements City {
   @Override
   public String getProduction() {
     return prod;
-  }//Not done
+  }
 
   @Override
   public String getWorkforceFocus() {
@@ -48,16 +48,14 @@ public class CityImpl implements City {
     prod = unitType;
   }
 
+  public void reduceTreasury(int i) {
+    treas -= i;
+  }
   public boolean hasEnoughProduction() {
-    if ((prod.equals(GameConstants.ARCHER) && treas >= 10) ||
-            (prod.equals(GameConstants.LEGION) && treas >= 15) ||
-            (prod.equals(GameConstants.SETTLER) && treas >= 30)) {
+    if (prod.equals(GameConstants.ARCHER) && treas >= 10) {
       return true;
     }
     return false;
   }
 
-  public void reduceTreasury(int i) {
-    treas -= i;
-  }
 }

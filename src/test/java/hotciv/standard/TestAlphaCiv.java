@@ -271,13 +271,11 @@ public class TestAlphaCiv {
     Position m = new Position(4,1);
     game.changeProductionInCityAt(m,GameConstants.SETTLER);
     assertThat(game.getCityAt(m).getProduction(), is(GameConstants.SETTLER));
-
   }
 
   @Test
-  public void shouldProduceUnitAtRedCityIfVacant(){
+  public void shouldCreateUnitInVacantRedCity() {
     Position p = new Position(1,1);
-    game.changeProductionInCityAt(p,GameConstants.ARCHER);
     assertNull(game.getUnitAt(p));
     endOfRound();
     endOfRound();
