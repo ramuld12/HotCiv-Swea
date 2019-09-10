@@ -220,6 +220,20 @@ public class TestAlphaCiv {
     assertThat(game.moveUnit(p1,p2), is(false));
   }
 
+  @Test
+  public void attackingUnitShouldAlwaysWinTest1() {
+    Position p1 = new Position(3,2); Position p2 = new Position(4,3);
+    game.moveUnit(p2,p1);
+    assertThat(game.getUnitAt(p1).getTypeString(), is(GameConstants.SETTLER));
+  }
+
+  @Test
+  public void attackingUnitShouldAlwaysWinTest2() {
+    Position p1 = new Position(3,2); Position p2 = new Position(4,3);
+    game.endOfTurn();
+    game.moveUnit(p1,p2);
+    assertThat(game.getUnitAt(p2).getTypeString(), is(GameConstants.LEGION));
+  }
 }
 
 
