@@ -199,6 +199,20 @@ public class TestAlphaCiv {
     assertThat(game.getUnitAt(p2).getTypeString(), is(GameConstants.ARCHER));
   }
 
+  @Test
+  public void aMovedUnitShouldHaveTheSameOwner() {
+    Position p1 = new Position(3,2); Position p2 = new Position(2,1);
+    game.endOfTurn();
+    game.moveUnit(p1,p2);
+    assertThat(game.getUnitAt(p2).getOwner(), is(Player.BLUE));
+  }
+
+  @Test
+  public void redShouldNotBeAbleToMoveBlueUnits() {
+    Position p1 = new Position(3,2); Position p2 = new Position(2,1);
+    assertThat(game.moveUnit(p1,p2), is(false));
+  }
+
 }
 
 

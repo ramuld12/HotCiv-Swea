@@ -81,7 +81,8 @@ public class GameImpl implements Game {
     if (toType.equals(GameConstants.OCEANS) || toType.equals(GameConstants.MOUNTAINS)){
       return false;
     }
-    if (units.get(from) == null) {return false;}
+    if (units.get(from) == null) {return false;} //Making sure there is a unit at from position
+    if(units.get(from).getOwner() != p) {return false;} //Making sure the player in turn can only move his/her own units
     String unitType = units.get(from).getTypeString();
     units.put(to, new UnitImpl(unitType, p));
     units.remove(from);
