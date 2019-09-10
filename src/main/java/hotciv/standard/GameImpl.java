@@ -73,11 +73,17 @@ public class GameImpl implements Game {
   public Player getPlayerInTurn() { return p;}
   public Player getWinner() {
     if (this.gameAge >= -3000) {return Player.RED;}
-    else return null;
+    return null;
   }
   public int getAge() { return gameAge; }
   public boolean moveUnit( Position from, Position to ) {
-    return false;
+    String toType = map.get(to).getTypeString();
+    if (toType.equals(GameConstants.OCEANS) || toType.equals(GameConstants.MOUNTAINS)){
+      return false;
+    }
+    String unitType = units.get(from).getTypeString();
+    units.put(to, new UnitImpl(unitType, p));
+    return true;
   }//Not implemented
   public void endOfTurn() {//Not fully implemented
     if (p.equals(Player.RED)) {
@@ -88,7 +94,7 @@ public class GameImpl implements Game {
       ((CityImpl)cities.get(new Position(1,1))).incrementTreas();
     }
   }
-  public void changeWorkForceFocusInCityAt( Position p, String balance ) {}//Not implemented
+  public void changeWorkForceFocusInCityAt( Position p, String balance ) {}//Not implemented stadig ikke
   public void changeProductionInCityAt( Position p, String unitType ) {}//Not implemented
-  public void performUnitActionAt( Position p ) {}//Not implemented
+  public void performUnitActionAt( Position p ) {}//Not implemented stadig ikke
 }

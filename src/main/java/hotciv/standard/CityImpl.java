@@ -19,8 +19,8 @@ public class CityImpl implements City {
 
   @Override
   public int getSize() {
-    return 0;
-  }//Not done
+    return 1;
+  }
 
   @Override
   public int getTreasury() {

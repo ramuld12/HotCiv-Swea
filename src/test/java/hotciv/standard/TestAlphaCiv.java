@@ -140,7 +140,7 @@ public class TestAlphaCiv {
   }
 
   @Test
-  public void shouldAdd6ProductionprRound() {
+  public void shouldAdd6ProductionEachRound() {
     endOfRound();
     assertThat(game.getCityAt(new Position(1,1)).getTreasury(), is(6));
     endOfRound();
@@ -169,6 +169,19 @@ public class TestAlphaCiv {
     Position p = new Position(4,3);
     assertThat(game.getUnitAt(p).getTypeString(), is(GameConstants.SETTLER));
     assertThat(game.getUnitAt(p).getOwner(), is(Player.RED));
+  }
+
+  @Test
+  public void itShouldNotBeAllowedToMoveToMountainsOrOcean() {
+    Position p1 = new Position(2,0); Position p2 = new Position(1,0);
+    assertThat(game.moveUnit(p1, p2), is(false));
+  }
+
+  @Test
+  public void archersShouldOnlyMove1Tile() {
+    Position p1 = new Position(2,0); Position p2 = new Position(3,0);
+    game.moveUnit(p1, p2);
+    assertThat(game.getUnitAt(p2).getTypeString(), is(GameConstants.ARCHER));
   }
 
 }
