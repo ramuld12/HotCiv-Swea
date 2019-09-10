@@ -39,4 +39,12 @@ public class UnitImpl implements Unit {
   public int getAttackingStrength() {
     return 0;
   }
+
+  public void decreaseMoveCount() {
+    move --;
+  }
+
+  public void resetMoveCounter() {
+    move = 1;
+  }
 }

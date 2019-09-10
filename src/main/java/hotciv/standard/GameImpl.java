@@ -39,7 +39,7 @@ public class GameImpl implements Game {
   private int gameAge = -4000; //The current age of the game, initially set to -4000
   private HashMap<Position, Tile> map; //HashMap for representing the different tiletypes
   private HashMap<Position, City> cities; //HashMap representing the cities
-  private HashMap<Position, Unit> units; //HashMap representing the units
+  private HashMap<Position, UnitImpl> units; //HashMap representing the units
 
   /**Constructor method for gameImp
    * Initializes the private variables with tiletypes and city initial positions for the cities.
@@ -83,17 +83,18 @@ public class GameImpl implements Game {
     if (units.get(from) == null) {return false;} //Making sure there is a unit at from position
     if (units.get(from).getOwner() != p) {return false;} //Making sure the player in turn can only move his/her own units
     if (units.get(to) != null) {units.remove(to);} //Attacking unit should always win
+    if (units.get(from).getMoveCount() < 1) {return false;}
     for (Position po : Utility.get8neighborhoodOf(from)) {
       if (po.equals(to)) {
         String unitType = units.get(from).getTypeString();
         units.put(to, new UnitImpl(unitType, p));
         units.remove(from);
+        ((UnitImpl)units.get(to)).decreaseMoveCount();
         return true;
       }
     }
     return false;
-
-  }//Not implemented
+  }
   public void endOfTurn() {//Not fully implemented
     if (p.equals(Player.RED)) {
       p = Player.BLUE;
@@ -101,6 +102,7 @@ public class GameImpl implements Game {
       p = Player.RED;
       gameAge += 100;
       ((CityImpl)cities.get(new Position(1,1))).incrementTreas();
+      units.values().forEach(UnitImpl::resetMoveCounter);
     }
   }
   public void changeWorkForceFocusInCityAt( Position p, String balance ) {}//Not implemented stadig ikke

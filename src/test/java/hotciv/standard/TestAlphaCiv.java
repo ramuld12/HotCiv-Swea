@@ -234,6 +234,33 @@ public class TestAlphaCiv {
     game.moveUnit(p1,p2);
     assertThat(game.getUnitAt(p2).getTypeString(), is(GameConstants.LEGION));
   }
+
+  @Test
+  public void aUnitShouldHave0MoveCounterAfterMoving() {
+    Position p2 = new Position(4,3); Position p1 = new Position(3,2);
+    game.moveUnit(p2, p1);
+    assertThat(game.getUnitAt(p1).getMoveCount(), is(0));
+  }
+
+  @Test
+  public void theMoveCounterOfUnitsShouldBeRestoredAfterEndOfRound() {
+    //Move red's units
+    Position p1 = new Position(2,0); Position p2 = new Position(3,0);
+    game.moveUnit(p1, p2);
+    Position p3 = new Position(4,3); Position p4 = new Position(4,4);
+    game.moveUnit(p3, p4);
+    game.endOfTurn();
+
+    //Move blue's unit
+    Position p5 = new Position(3,2); Position p6 = new Position(3,3);
+    game.moveUnit(p5,p6);
+    game.endOfTurn();
+
+    //Make sure they have 1 movecounter after finished round
+    assertThat(game.getUnitAt(p2).getMoveCount(), is(1));
+    assertThat(game.getUnitAt(p4).getMoveCount(), is(1));
+    assertThat(game.getUnitAt(p6).getMoveCount(), is(1));
+  }
 }
 
 
