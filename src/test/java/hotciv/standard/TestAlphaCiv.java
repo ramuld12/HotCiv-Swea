@@ -191,7 +191,13 @@ public class TestAlphaCiv {
     assertThat(game.moveUnit(p1, p2), is(true));
   }
 
-  
+  @Test
+  public void movingAUnitShouldRemoveTheUnitAndCreateANew() {
+    Position p1 = new Position(2,0); Position p2 = new Position(2,1);
+    game.moveUnit(p1,p2);
+    assertNull(game.getUnitAt(p1));
+    assertThat(game.getUnitAt(p2).getTypeString(), is(GameConstants.ARCHER));
+  }
 
 }
 

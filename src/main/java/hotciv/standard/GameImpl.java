@@ -84,6 +84,7 @@ public class GameImpl implements Game {
     if (units.get(from) == null) {return false;}
     String unitType = units.get(from).getTypeString();
     units.put(to, new UnitImpl(unitType, p));
+    units.remove(from);
     return true;
   }//Not implemented
   public void endOfTurn() {//Not fully implemented
