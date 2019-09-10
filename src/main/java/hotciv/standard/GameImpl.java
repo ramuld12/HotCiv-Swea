@@ -3,6 +3,7 @@ package hotciv.standard;
 import hotciv.standard.CityImpl;
 
 import hotciv.framework.*;
+import hotciv.utility.Utility;
 
 import java.util.HashMap;
 
@@ -78,15 +79,19 @@ public class GameImpl implements Game {
   public int getAge() { return gameAge; }
   public boolean moveUnit( Position from, Position to ) {
     String toType = map.get(to).getTypeString();
-    if (toType.equals(GameConstants.OCEANS) || toType.equals(GameConstants.MOUNTAINS)){
-      return false;
-    }
+    if (toType.equals(GameConstants.OCEANS) || toType.equals(GameConstants.MOUNTAINS)) {return false;}
     if (units.get(from) == null) {return false;} //Making sure there is a unit at from position
-    if(units.get(from).getOwner() != p) {return false;} //Making sure the player in turn can only move his/her own units
-    String unitType = units.get(from).getTypeString();
-    units.put(to, new UnitImpl(unitType, p));
-    units.remove(from);
-    return true;
+    if (units.get(from).getOwner() != p) {return false;} //Making sure the player in turn can only move his/her own units
+    for (Position po : Utility.get8neighborhoodOf(from)) {
+      if (po.equals(to)) {
+        String unitType = units.get(from).getTypeString();
+        units.put(to, new UnitImpl(unitType, p));
+        units.remove(from);
+        return true;
+      }
+    }
+    return false;
+
   }//Not implemented
   public void endOfTurn() {//Not fully implemented
     if (p.equals(Player.RED)) {

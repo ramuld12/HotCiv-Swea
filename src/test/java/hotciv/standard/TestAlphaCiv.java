@@ -213,6 +213,13 @@ public class TestAlphaCiv {
     assertThat(game.moveUnit(p1,p2), is(false));
   }
 
+  @Test
+  public void aUnitShouldNotBeAbleToMoveMoreThanItsMoveCounter() {
+    Position p1 = new Position(3,2); Position p2 = new Position(5,2);
+    game.endOfTurn();//Blue should be in turn in this test
+    assertThat(game.moveUnit(p1,p2), is(false));
+  }
+
 }
 
 
