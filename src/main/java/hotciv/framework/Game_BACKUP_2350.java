@@ -136,7 +136,9 @@ public interface Game {
    * Nothing happens in case the unit has no associated action.
    */
   public void performUnitActionAt( Position p );
+<<<<<<< HEAD
+=======
 
   //“This is the hotfix for release 2.1”
-
+>>>>>>> release
 }
