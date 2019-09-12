@@ -107,7 +107,6 @@ public class GameImpl implements Game {
   }
 
   private void produceUnitInCityAt(Position p, CityImpl c) {
-    System.out.println("hej" + p + c.getOwner());
     if (c.hasEnoughProduction()) {
       c.reduceTreasury(c.getProdCost());
       units.put(p, new UnitImpl(c.getProduction(), c.getOwner()));
