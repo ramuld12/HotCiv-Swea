@@ -59,7 +59,7 @@ public class CityImpl implements City {
     return 0;
   }
 
-  public boolean hasEnoughProduction() {
+  public boolean hasEnoughTreasure() {
     if (treas >= getProdCost()){
       return true;
     }

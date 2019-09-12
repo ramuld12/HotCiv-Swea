@@ -1,38 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="hotciv.standard.TestAlphaCiv" tests="32" skipped="0" failures="0" errors="0" timestamp="2019-09-12T10:43:21" hostname="m51" time="0.646">
+<testsuite name="hotciv.standard.TestAlphaCiv" tests="32" skipped="0" failures="0" errors="0" timestamp="2019-09-12T13:08:58" hostname="m51" time="0.361">
   <properties/>
-  <testcase name="archersShouldOnlyMove1Tile" classname="hotciv.standard.TestAlphaCiv" time="0.179"/>
+  <testcase name="archersShouldOnlyMove1Tile" classname="hotciv.standard.TestAlphaCiv" time="0.076"/>
   <testcase name="aUnitShouldHave0MoveCounterAfterMoving" classname="hotciv.standard.TestAlphaCiv" time="0.007"/>
-  <testcase name="shouldBeRedAsStartingPlayer" classname="hotciv.standard.TestAlphaCiv" time="0.001"/>
-  <testcase name="movingAUnitShouldHaveAUnitAtTheFromPosition" classname="hotciv.standard.TestAlphaCiv" time="0.003"/>
-  <testcase name="movingAUnitShouldRemoveTheUnitAndCreateANew" classname="hotciv.standard.TestAlphaCiv" time="0.009"/>
-  <testcase name="shouldReduceTreasuryWhenProducingUnit" classname="hotciv.standard.TestAlphaCiv" time="0.042"/>
-  <testcase name="shouldChangeProductionUnit" classname="hotciv.standard.TestAlphaCiv" time="0.012"/>
+  <testcase name="shouldBeRedAsStartingPlayer" classname="hotciv.standard.TestAlphaCiv" time="0.002"/>
+  <testcase name="movingAUnitShouldHaveAUnitAtTheFromPosition" classname="hotciv.standard.TestAlphaCiv" time="0.001"/>
+  <testcase name="movingAUnitShouldRemoveTheUnitAndCreateANew" classname="hotciv.standard.TestAlphaCiv" time="0.0"/>
+  <testcase name="shouldReduceTreasuryWhenProducingUnit" classname="hotciv.standard.TestAlphaCiv" time="0.071"/>
+  <testcase name="shouldChangeProductionUnit" classname="hotciv.standard.TestAlphaCiv" time="0.002"/>
   <testcase name="shouldCreateUnitInVacantBlueCity" classname="hotciv.standard.TestAlphaCiv" time="0.002"/>
-  <testcase name="blueShouldBeAfterRed" classname="hotciv.standard.TestAlphaCiv" time="0.006"/>
+  <testcase name="blueShouldBeAfterRed" classname="hotciv.standard.TestAlphaCiv" time="0.017"/>
   <testcase name="redShouldWinInYear3000BC" classname="hotciv.standard.TestAlphaCiv" time="0.008"/>
-  <testcase name="redShouldHaveALegionAtTile3_2" classname="hotciv.standard.TestAlphaCiv" time="0.001"/>
+  <testcase name="redShouldHaveALegionAtTile3_2" classname="hotciv.standard.TestAlphaCiv" time="0.01"/>
   <testcase name="shouldBeHillsAtTile0_1" classname="hotciv.standard.TestAlphaCiv" time="0.001"/>
-  <testcase name="gameShouldBeginInYear4000BC" classname="hotciv.standard.TestAlphaCiv" time="0.013"/>
-  <testcase name="redShouldBeginEachRound" classname="hotciv.standard.TestAlphaCiv" time="0.004"/>
+  <testcase name="gameShouldBeginInYear4000BC" classname="hotciv.standard.TestAlphaCiv" time="0.008"/>
+  <testcase name="redShouldBeginEachRound" classname="hotciv.standard.TestAlphaCiv" time="0.001"/>
   <testcase name="shouldAdd6ProductionEachRound" classname="hotciv.standard.TestAlphaCiv" time="0.005"/>
-  <testcase name="shouldCreateUnitInVacantRedCity" classname="hotciv.standard.TestAlphaCiv" time="0.021"/>
-  <testcase name="winnerShouldBeNullBetween4000BCAnd3100BC" classname="hotciv.standard.TestAlphaCiv" time="0.002"/>
+  <testcase name="shouldCreateUnitInVacantRedCity" classname="hotciv.standard.TestAlphaCiv" time="0.013"/>
+  <testcase name="winnerShouldBeNullBetween4000BCAnd3100BC" classname="hotciv.standard.TestAlphaCiv" time="0.007"/>
   <testcase name="redShouldHaveASettlerAtTile4_3" classname="hotciv.standard.TestAlphaCiv" time="0.001"/>
-  <testcase name="aUnitShouldNotBeAbleToMoveMoreThanItsMoveCounter" classname="hotciv.standard.TestAlphaCiv" time="0.006"/>
-  <testcase name="shouldBeOceanAtTile1_0" classname="hotciv.standard.TestAlphaCiv" time="0.001"/>
-  <testcase name="theMoveCounterOfUnitsShouldBeRestoredAfterEndOfRound" classname="hotciv.standard.TestAlphaCiv" time="0.009"/>
-  <testcase name="gameShouldAdvances100YearsPrRound" classname="hotciv.standard.TestAlphaCiv" time="0.006"/>
-  <testcase name="redCityShouldBeAt1_1" classname="hotciv.standard.TestAlphaCiv" time="0.014"/>
-  <testcase name="blueCityShouldBeAt4_1" classname="hotciv.standard.TestAlphaCiv" time="0.002"/>
-  <testcase name="itShouldNotBeAllowedToMoveToMountainsOrOcean" classname="hotciv.standard.TestAlphaCiv" time="0.005"/>
-  <testcase name="shouldBePlainsByDefault" classname="hotciv.standard.TestAlphaCiv" time="0.011"/>
-  <testcase name="aMovedUnitShouldHaveTheSameOwner" classname="hotciv.standard.TestAlphaCiv" time="0.007"/>
-  <testcase name="redShouldNotBeAbleToMoveBlueUnits" classname="hotciv.standard.TestAlphaCiv" time="0.016"/>
-  <testcase name="shouldBeMountainsAtTile2_2" classname="hotciv.standard.TestAlphaCiv" time="0.002"/>
-  <testcase name="attackingUnitShouldAlwaysWinTest1" classname="hotciv.standard.TestAlphaCiv" time="0.001"/>
-  <testcase name="attackingUnitShouldAlwaysWinTest2" classname="hotciv.standard.TestAlphaCiv" time="0.005"/>
-  <testcase name="redShouldHaveAnArcherAtTile2_0" classname="hotciv.standard.TestAlphaCiv" time="0.005"/>
+  <testcase name="aUnitShouldNotBeAbleToMoveMoreThanItsMoveCounter" classname="hotciv.standard.TestAlphaCiv" time="0.0"/>
+  <testcase name="shouldBeOceanAtTile1_0" classname="hotciv.standard.TestAlphaCiv" time="0.0"/>
+  <testcase name="theMoveCounterOfUnitsShouldBeRestoredAfterEndOfRound" classname="hotciv.standard.TestAlphaCiv" time="0.007"/>
+  <testcase name="gameShouldAdvances100YearsPrRound" classname="hotciv.standard.TestAlphaCiv" time="0.002"/>
+  <testcase name="redCityShouldBeAt1_1" classname="hotciv.standard.TestAlphaCiv" time="0.0"/>
+  <testcase name="blueCityShouldBeAt4_1" classname="hotciv.standard.TestAlphaCiv" time="0.0"/>
+  <testcase name="itShouldNotBeAllowedToMoveToMountainsOrOcean" classname="hotciv.standard.TestAlphaCiv" time="0.0"/>
+  <testcase name="shouldBePlainsByDefault" classname="hotciv.standard.TestAlphaCiv" time="0.0"/>
+  <testcase name="aMovedUnitShouldHaveTheSameOwner" classname="hotciv.standard.TestAlphaCiv" time="0.0"/>
+  <testcase name="redShouldNotBeAbleToMoveBlueUnits" classname="hotciv.standard.TestAlphaCiv" time="0.001"/>
+  <testcase name="shouldBeMountainsAtTile2_2" classname="hotciv.standard.TestAlphaCiv" time="0.0"/>
+  <testcase name="attackingUnitShouldAlwaysWinTest1" classname="hotciv.standard.TestAlphaCiv" time="0.0"/>
+  <testcase name="attackingUnitShouldAlwaysWinTest2" classname="hotciv.standard.TestAlphaCiv" time="0.0"/>
+  <testcase name="redShouldHaveAnArcherAtTile2_0" classname="hotciv.standard.TestAlphaCiv" time="0.0"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
