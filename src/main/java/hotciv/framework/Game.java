@@ -135,5 +135,7 @@ public interface Game {
    * @param p the position of a unit that must perform its action.
    * Nothing happens in case the unit has no associated action.
    */
-  public void performUnitActionAt( Position p );  
+  public void performUnitActionAt( Position p );
+
+  //“This is the hotfix for release 2.1”
 }
