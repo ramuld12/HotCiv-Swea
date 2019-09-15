@@ -76,7 +76,8 @@ public class GameImpl implements Game {
   }
   public int getAge() { return gameAge; }
   public boolean moveUnit( Position from, Position to ) {
-    if (map.get(to).isNotValidMovementTile()) {return false;}
+    if (!map.containsKey(from) || !map.containsKey(to)) {return false;}
+    if (!map.get(to).isValidMovementTileType()) {return false;}
     if (units.get(from) == null) {return false;} //Making sure there is a unit at from position
     if (units.get(from).getOwner() != p) {return false;} //Making sure the player in turn can only move his/her own units
     if (units.get(to) != null) {units.remove(to);} //Attacking unit should always win
@@ -115,7 +116,7 @@ public class GameImpl implements Game {
       else {
         for (Position po : Utility.get8neighborhoodOf(p)) {
           //find the next vacant spot around the city
-          if (units.get(po) == null && !map.get(po).isNotValidMovementTile()) {
+          if (units.get(po) == null && map.get(po).isValidMovementTileType()) {
             units.put(po, new UnitImpl(c.getProduction(), c.getOwner()));
             break;
           }

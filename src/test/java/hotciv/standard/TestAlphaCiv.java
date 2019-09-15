@@ -310,6 +310,20 @@ public class TestAlphaCiv {
     assertThat(game.getUnitAt(p).getTypeString(), is(GameConstants.ARCHER));
   }
 
+  @Test
+  public void shouldNotAllowMovingFromMinus1_Minus0 () {
+    Position p1 = new Position (0,1);
+    Position p2 = new Position (-1,0);
+    assertFalse(game.moveUnit(p1, p2));
+  }
+
+  @Test
+  public void shouldNotAllowMovingToMinus1_Minus0 () {
+    Position p1 = new Position (0,1);
+    Position p2 = new Position (-1,0);
+    assertFalse(game.moveUnit(p2, p1));
+  }
+
 }
 
 
