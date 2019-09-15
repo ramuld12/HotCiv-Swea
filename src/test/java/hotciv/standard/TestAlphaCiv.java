@@ -299,6 +299,17 @@ public class TestAlphaCiv {
     assertThat(game.getUnitAt(p).getTypeString(), is(GameConstants.LEGION));
   }
 
+  @Test
+  public void shouldCreateUnitNorthOfBlueCity() {
+    Position p = new Position(3,1);
+    assertNull(game.getUnitAt(p));
+    endOfRound();
+    endOfRound();
+    endOfRound();
+    endOfRound();
+    assertThat(game.getUnitAt(p).getTypeString(), is(GameConstants.ARCHER));
+  }
+
 }
 
 

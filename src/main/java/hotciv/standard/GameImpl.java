@@ -87,13 +87,13 @@ public class GameImpl implements Game {
         String unitType = units.get(from).getTypeString();
         units.put(to, new UnitImpl(unitType, p));
         units.remove(from);
-        ((UnitImpl)units.get(to)).decreaseMoveCount();
+        units.get(to).decreaseMoveCount();
         return true;
       }
     }
     return false;
   }
-  public void endOfTurn() {//Not fully implemented
+  public void endOfTurn() {
     if (p.equals(Player.RED)) {
       p = Player.BLUE;
     } else {
@@ -109,8 +109,19 @@ public class GameImpl implements Game {
   private void produceUnitInCityAt(Position p, CityImpl c) {
     if (c.hasEnoughTreasure()) {
       c.reduceTreasury(c.getProdCost());
-      units.put(p, new UnitImpl(c.getProduction(), c.getOwner()));
+      if (units.get(p) == null) {
+        units.put(p, new UnitImpl(c.getProduction(), c.getOwner()));
+      }
     }
+      else {
+        for (Position po : Utility.get8neighborhoodOf(p)) {
+          //find the next vacant spot around the city
+          if (units.get(po) == null) {
+          units.put(po, new UnitImpl(c.getProduction(), c.getOwner()));
+          break;
+          }
+        }
+      }
   }
 
   public void changeWorkForceFocusInCityAt( Position p, String balance ) {}//Not implemented
