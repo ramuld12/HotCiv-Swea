@@ -13,4 +13,9 @@ public class TileImpl implements Tile {
   public String getTypeString() {
     return gc;
   }
+
+  public Boolean isNotValidMovementTile () {
+    if (gc.equals(GameConstants.OCEANS) || gc.equals(GameConstants.MOUNTAINS)) {return true;}
+    return false;
+  }
 }

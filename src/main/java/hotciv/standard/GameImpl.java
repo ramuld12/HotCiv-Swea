@@ -35,11 +35,11 @@ import java.util.HashMap;
 public class GameImpl implements Game {
   private Player p = Player.RED; //The current player in turn, initially set to red
   private int gameAge = -4000; //The current age of the game, initially set to -4000
-  private HashMap<Position, Tile> map; //HashMap for representing the different tiletypes
+  private HashMap<Position, TileImpl> map; //HashMap for representing the different tiletypes
   private HashMap<Position, CityImpl> cities; //HashMap representing the cities
   private HashMap<Position, UnitImpl> units; //HashMap representing the units
 
-  /**Constructor method for gameImp
+  /**Constructor method for GameImpl
    * Initializes the private variables with tiletypes and city initial positions for the cities.
    */
   public GameImpl() {
@@ -76,8 +76,7 @@ public class GameImpl implements Game {
   }
   public int getAge() { return gameAge; }
   public boolean moveUnit( Position from, Position to ) {
-    String toType = map.get(to).getTypeString();
-    if (toType.equals(GameConstants.OCEANS) || toType.equals(GameConstants.MOUNTAINS)) {return false;}
+    if (map.get(to).isNotValidMovementTile()) {return false;}
     if (units.get(from) == null) {return false;} //Making sure there is a unit at from position
     if (units.get(from).getOwner() != p) {return false;} //Making sure the player in turn can only move his/her own units
     if (units.get(to) != null) {units.remove(to);} //Attacking unit should always win
@@ -99,8 +98,8 @@ public class GameImpl implements Game {
     } else {
       p = Player.RED;
       gameAge += 100;
-      cities.get(new Position(1,1)).incrementTreas();
-      cities.get(new Position(4,1)).incrementTreas();
+      cities.get(new Position(1,1)).increaseTreas();
+      cities.get(new Position(4,1)).increaseTreas();
       units.values().forEach(UnitImpl::resetMoveCounter);
       cities.keySet().forEach(p -> produceUnitInCityAt(p, cities.get(p)));
     }
@@ -116,9 +115,9 @@ public class GameImpl implements Game {
       else {
         for (Position po : Utility.get8neighborhoodOf(p)) {
           //find the next vacant spot around the city
-          if (units.get(po) == null) {
-          units.put(po, new UnitImpl(c.getProduction(), c.getOwner()));
-          break;
+          if (units.get(po) == null && !map.get(po).isNotValidMovementTile()) {
+            units.put(po, new UnitImpl(c.getProduction(), c.getOwner()));
+            break;
           }
         }
       }

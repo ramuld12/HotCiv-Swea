@@ -40,7 +40,7 @@ public class CityImpl implements City {
     return null;
   }//Not done
 
-  public void incrementTreas() {
+  public void increaseTreas() {
     treas += 6;
   }
 
@@ -48,8 +48,8 @@ public class CityImpl implements City {
     prod = unitType;
   }
 
-  public void reduceTreasury(int i) {
-    treas -= i;
+  public void reduceTreasury(int amount) {
+    treas -= amount;
   }
 
   public int getProdCost() {
