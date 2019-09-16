@@ -37,7 +37,7 @@ import java.util.HashMap;
 public class GameImpl implements Game {
   private final WinningStrategy winningStrategy;
   private final AgingStrategy agingStrategy;
-  private Player p = Player.RED; //The current player in turn, initially set to red
+  private Player playerInTurn = Player.RED; //The current player in turn, initially set to red
   private int gameAge = -4000; //The current age of the game, initially set to -4000
   private HashMap<Position, TileImpl> world; //HashMap for representing the different tiletypes
   private HashMap<Position, CityImpl> cities; //HashMap representing the cities
@@ -76,26 +76,44 @@ public class GameImpl implements Game {
   public Tile getTileAt( Position p ) { return world.get(p);}
   public Unit getUnitAt( Position p ) { return units.get(p); }
   public City getCityAt( Position p ) { return cities.get(p); }
-  public Player getPlayerInTurn() { return p;}
+  public Player getPlayerInTurn() { return playerInTurn;}
   public Player getWinner() {
     return winningStrategy.getWinner(this);
   }
   public int getAge() { return gameAge; }
+
+  public boolean isOpponentCityEmpty(Position from, Position to){
+      boolean isTheCityVacant = units.get(to) == null;
+      boolean isTheCityForeign = cities.get(to).getOwner() != playerInTurn;
+      if (isTheCityVacant && isTheCityForeign) {
+        return true;
+      } return false;
+    }
+
   public boolean moveUnit( Position from, Position to ) {
+    boolean isThereACityAtPositionTo = cities.get(to) != null;
+
     if (!world.containsKey(from) || !world.containsKey(to)) {return false;} //Only allow units to move within the boundries of the map
-    if (!world.get(to).isValidMovementTileType()) {return false;} //Units can not moce to certain tiles
+    if (!world.get(to).isValidMovementTileType()) {return false;} //Units can not move to certain tiles
     if (units.get(from) == null) {return false;} //Making sure there is a unit at from position
-    if (units.get(from).getOwner() != p) {return false;} //Making sure the player in turn can only move his/her own units
+    if (units.get(from).getOwner() != playerInTurn) {return false;} //Making sure the player in turn can only move his/her own units
     if (units.get(to) != null &&
             units.get(from).getOwner() == units.get(to).getOwner()) {return false;} //Units should not move to tile with other units from the same owner
     if (units.get(to) != null) {units.remove(to);} //Attacking unit should always win
     if (units.get(from).getMoveCount() < 1) {return false;} //Units need to have a positive move counter to move
+
+    if (isThereACityAtPositionTo) {
+      if (isOpponentCityEmpty(from, to)) {
+        cities.get(to).changeOwner(playerInTurn);
+      }
+    }
+
     for (Position po : Utility.get8neighborhoodOf(from)) {
       if (po.equals(to)) {
         //Find the tile the unit is trying to move to,
         // create a new unit with moveCounter 0 of the same type there and remove the old
         String unitType = units.get(from).getTypeString();
-        units.put(to, new UnitImpl(unitType, p));
+        units.put(to, new UnitImpl(unitType, playerInTurn));
         units.remove(from);
         units.get(to).decreaseMoveCount();
         return true;
@@ -104,10 +122,10 @@ public class GameImpl implements Game {
     return false;
   }
   public void endOfTurn() {
-    if (p.equals(Player.RED)) {
-      p = Player.BLUE;
+    if (playerInTurn.equals(Player.RED)) {
+      playerInTurn = Player.BLUE;
     } else {
-      p = Player.RED;
+      playerInTurn = Player.RED;
       gameAge += agingStrategy.getAgeStep(this);
       cities.get(new Position(1,1)).increaseTreas();
       cities.get(new Position(4,1)).increaseTreas();

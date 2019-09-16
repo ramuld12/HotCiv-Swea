@@ -373,7 +373,18 @@ public class TestBetaCiv {
     assertThat(game.getAge(), is(1972));
   }
 
+  @Test
+  public void redShouldConquerVacantBlueCityUponEntering(){
+    Position p1 = new Position(4,3);
+    Position p2 = new Position(4,2);
+    Position p3 = new Position(4,1);
 
+    game.moveUnit(p1,p2);
+    endOfRound();
+    assertNull(game.getUnitAt(p3));
+    game.moveUnit(p2,p3);
+    assertThat(game.getCityAt(p3).getOwner(), is(Player.RED));
+  }
 
 }
 

@@ -66,4 +66,7 @@ public class CityImpl implements City {
     return false;
   }
 
+  public void changeOwner(Player playerInTurn) {
+    this.p = playerInTurn;
+  }
 }
