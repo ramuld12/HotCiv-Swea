@@ -80,6 +80,8 @@ public class GameImpl implements Game {
     if (!world.get(to).isValidMovementTileType()) {return false;} //Units can not moce to certain tiles
     if (units.get(from) == null) {return false;} //Making sure there is a unit at from position
     if (units.get(from).getOwner() != p) {return false;} //Making sure the player in turn can only move his/her own units
+    if (units.get(to) != null &&
+            units.get(from).getOwner() == units.get(to).getOwner()) {return false;} //Units should not move to tile with other units from the same owner
     if (units.get(to) != null) {units.remove(to);} //Attacking unit should always win
     if (units.get(from).getMoveCount() < 1) {return false;} //Units need to have a positive move counter to move
     for (Position po : Utility.get8neighborhoodOf(from)) {
