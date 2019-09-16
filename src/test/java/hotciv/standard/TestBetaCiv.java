@@ -344,6 +344,37 @@ public class TestBetaCiv {
     assertThat(game.getAge(), is(50));
   }
 
+  @Test
+  public void gameShouldAdvance50PrRoundAtYear50ToYear1750() {
+    game.setGameAge(50);
+    endOfRound();
+    assertThat(game.getAge(), is(100));
+  }
+
+  @Test
+  public void gameShouldAdvance25PrRoundAtYear1750ToYear1900() {
+    game.setGameAge(1750);
+    endOfRound();
+    assertThat(game.getAge(), is(1775));
+  }
+
+  @Test
+  public void gameShouldAdvance5PrRoundAtYear1900ToYear1970() {
+    game.setGameAge(1905);
+    endOfRound();
+    assertThat(game.getAge(), is(1910));
+  }
+
+  @Test
+  public void gameShouldAdvance1PrRoundAtYear1970AndOn() {
+    game.setGameAge(1970);
+    endOfRound();
+    endOfRound();
+    assertThat(game.getAge(), is(1972));
+  }
+
+
+
 }
 
 
