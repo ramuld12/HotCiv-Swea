@@ -35,7 +35,7 @@ import java.util.HashMap;
 public class GameImpl implements Game {
   private Player p = Player.RED; //The current player in turn, initially set to red
   private int gameAge = -4000; //The current age of the game, initially set to -4000
-  private HashMap<Position, TileImpl> map; //HashMap for representing the different tiletypes
+  private HashMap<Position, TileImpl> world; //HashMap for representing the different tiletypes
   private HashMap<Position, CityImpl> cities; //HashMap representing the cities
   private HashMap<Position, UnitImpl> units; //HashMap representing the units
 
@@ -44,15 +44,15 @@ public class GameImpl implements Game {
    */
   public GameImpl() {
     //Initialize the gameboard
-    map = new HashMap<>();
+    world = new HashMap<>();
     for (int i = 0; i < GameConstants.WORLDSIZE; i++){
       for (int j = 0; j < GameConstants.WORLDSIZE; j++){
-        map.put(new Position(i,j), new TileImpl(GameConstants.PLAINS));
+        world.put(new Position(i,j), new TileImpl(GameConstants.PLAINS));
       }
     }
-    map.put(new Position(1,0), new TileImpl(GameConstants.OCEANS));
-    map.put(new Position(0,1), new TileImpl(GameConstants.HILLS));
-    map.put(new Position(2,2), new TileImpl(GameConstants.MOUNTAINS));
+    world.put(new Position(1,0), new TileImpl(GameConstants.OCEANS));
+    world.put(new Position(0,1), new TileImpl(GameConstants.HILLS));
+    world.put(new Position(2,2), new TileImpl(GameConstants.MOUNTAINS));
 
     //Initialize the citites map
     cities = new HashMap<>();
@@ -66,7 +66,7 @@ public class GameImpl implements Game {
     units.put(new Position(4,3), new UnitImpl(GameConstants.SETTLER, Player.RED));
   }
 
-  public Tile getTileAt( Position p ) { return map.get(p);}
+  public Tile getTileAt( Position p ) { return world.get(p);}
   public Unit getUnitAt( Position p ) { return units.get(p); }
   public City getCityAt( Position p ) { return cities.get(p); }
   public Player getPlayerInTurn() { return p;}
@@ -76,8 +76,8 @@ public class GameImpl implements Game {
   }
   public int getAge() { return gameAge; }
   public boolean moveUnit( Position from, Position to ) {
-    if (!map.containsKey(from) || !map.containsKey(to)) {return false;} //Only allow units to move within the boundries of the map
-    if (!map.get(to).isValidMovementTileType()) {return false;} //Units can not moce to certain tiles
+    if (!world.containsKey(from) || !world.containsKey(to)) {return false;} //Only allow units to move within the boundries of the map
+    if (!world.get(to).isValidMovementTileType()) {return false;} //Units can not moce to certain tiles
     if (units.get(from) == null) {return false;} //Making sure there is a unit at from position
     if (units.get(from).getOwner() != p) {return false;} //Making sure the player in turn can only move his/her own units
     if (units.get(to) != null) {units.remove(to);} //Attacking unit should always win
@@ -111,14 +111,14 @@ public class GameImpl implements Game {
   private void produceUnitInCityAt(Position p, CityImpl c) {
     if (c.hasEnoughTreasure()) {
       c.reduceTreasury(c.getProdCost());
-      if (units.get(p) == null) {
+      if (units.get(p) == null) { // create boolean for clean code next week
         units.put(p, new UnitImpl(c.getProduction(), c.getOwner()));
       }
     }
       else {
-        for (Position po : Utility.get8neighborhoodOf(p)) {
+        for (Position po : Utility.get8neighborhoodOf(p)) { // rename values for clean code princibles
           //find the next vacant spot around the city
-          if (units.get(po) == null && map.get(po).isValidMovementTileType()) {
+          if (units.get(po) == null && world.get(po).isValidMovementTileType()) {
             units.put(po, new UnitImpl(c.getProduction(), c.getOwner()));
             break;
           }
