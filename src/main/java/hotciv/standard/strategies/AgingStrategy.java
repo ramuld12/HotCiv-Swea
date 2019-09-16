@@ -1,8 +1,8 @@
 package hotciv.standard.strategies;
 
-import hotciv.framework.Player;
+import hotciv.standard.GameImpl;
 
 public interface AgingStrategy {
 
-  public int getAgeStep();
+  public int getAgeStep(GameImpl game);
 }

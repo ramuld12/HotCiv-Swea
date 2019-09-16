@@ -2,8 +2,7 @@ package hotciv.standard;
 
 import hotciv.framework.*;
 
-import hotciv.standard.strategies.AlphaCivAgingStrategy;
-import hotciv.standard.strategies.AlphaCivWInningStrategy;
+import hotciv.standard.strategies.*;
 import org.junit.*;
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
@@ -44,7 +43,7 @@ public class TestAlphaCiv {
   /** Fixture for alphaciv testing. */
   @Before
   public void setUp() {
-    game = new GameImpl(new AlphaCivAgingStrategy(), new AlphaCivWInningStrategy());
+    game = new GameImpl(new AlphaCivAgingStrategy(), new AlphaCivWinningStrategy());
     assertThat(game, is(notNullValue()));
   }
 

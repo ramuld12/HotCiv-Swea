@@ -108,7 +108,7 @@ public class GameImpl implements Game {
       p = Player.BLUE;
     } else {
       p = Player.RED;
-      gameAge += agingStrategy.getAgeStep();
+      gameAge += agingStrategy.getAgeStep(this);
       cities.get(new Position(1,1)).increaseTreas();
       cities.get(new Position(4,1)).increaseTreas();
       units.values().forEach(UnitImpl::resetMoveCounter);
@@ -134,6 +134,11 @@ public class GameImpl implements Game {
           }
         }
       }
+  }
+
+
+  public void setGameAge(int newGameAge){
+    gameAge = newGameAge;
   }
 
   public void changeWorkForceFocusInCityAt( Position p, String balance ) {}//Not implemented
