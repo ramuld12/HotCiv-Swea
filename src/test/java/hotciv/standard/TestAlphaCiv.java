@@ -324,6 +324,18 @@ public class TestAlphaCiv {
     assertFalse(game.moveUnit(p2, p1));
   }
 
+  @Test
+  public void shouldNotAllowBlueLegionToMoveToTileWithBlueUnit() {
+    Position p1 = new Position(4,1);
+    Position p2 = new Position(3,2);
+
+    game.changeProductionInCityAt(p1,GameConstants.LEGION);
+    endOfRound();
+    endOfRound();
+    endOfRound();
+    assertFalse(game.moveUnit(p1, p2));
+  }
+
 }
 
 
