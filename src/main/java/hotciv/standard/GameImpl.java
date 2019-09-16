@@ -76,14 +76,16 @@ public class GameImpl implements Game {
   }
   public int getAge() { return gameAge; }
   public boolean moveUnit( Position from, Position to ) {
-    if (!map.containsKey(from) || !map.containsKey(to)) {return false;}
-    if (!map.get(to).isValidMovementTileType()) {return false;}
+    if (!map.containsKey(from) || !map.containsKey(to)) {return false;} //Only allow units to move within the boundries of the map
+    if (!map.get(to).isValidMovementTileType()) {return false;} //Units can not moce to certain tiles
     if (units.get(from) == null) {return false;} //Making sure there is a unit at from position
     if (units.get(from).getOwner() != p) {return false;} //Making sure the player in turn can only move his/her own units
     if (units.get(to) != null) {units.remove(to);} //Attacking unit should always win
-    if (units.get(from).getMoveCount() < 1) {return false;}
+    if (units.get(from).getMoveCount() < 1) {return false;} //Units need to have a positive move counter to move
     for (Position po : Utility.get8neighborhoodOf(from)) {
       if (po.equals(to)) {
+        //Find the tile the unit is trying to move to,
+        // create a new unit with moveCounter 0 of the same type there and remove the old
         String unitType = units.get(from).getTypeString();
         units.put(to, new UnitImpl(unitType, p));
         units.remove(from);
