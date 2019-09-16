@@ -109,17 +109,19 @@ public class GameImpl implements Game {
   }
 
   private void produceUnitInCityAt(Position p, CityImpl c) {
+    boolean isThereAUnitAtPosition = units.get(p) == null;
     if (c.hasEnoughTreasure()) {
       c.reduceTreasury(c.getProdCost());
-      if (units.get(p) == null) { // create boolean for clean code next week
+      if (isThereAUnitAtPosition) {
         units.put(p, new UnitImpl(c.getProduction(), c.getOwner()));
       }
     }
       else {
-        for (Position po : Utility.get8neighborhoodOf(p)) { // rename values for clean code princibles
-          //find the next vacant spot around the city
-          if (units.get(po) == null && world.get(po).isValidMovementTileType()) {
-            units.put(po, new UnitImpl(c.getProduction(), c.getOwner()));
+        for (Position neighbourPosition : Utility.get8neighborhoodOf(p)) {
+          boolean isThereAUnitAtNeighbourPosition = units.get(neighbourPosition) == null;
+          boolean isValidTileInWorld = world.get(neighbourPosition).isValidMovementTileType();
+          if (isThereAUnitAtNeighbourPosition && isValidTileInWorld) {
+            units.put(neighbourPosition, new UnitImpl(c.getProduction(), c.getOwner()));
             break;
           }
         }
