@@ -1,6 +1,8 @@
 package hotciv.standard;
 
 import hotciv.framework.*;
+import hotciv.standard.strategies.AgingStrategy;
+import hotciv.standard.strategies.WinningStrategy;
 import hotciv.utility.*;
 
 import java.util.HashMap;
@@ -33,6 +35,8 @@ import java.util.HashMap;
 */
 
 public class GameImpl implements Game {
+  private final WinningStrategy winningStrategy;
+  private final AgingStrategy agingStrategy;
   private Player p = Player.RED; //The current player in turn, initially set to red
   private int gameAge = -4000; //The current age of the game, initially set to -4000
   private HashMap<Position, TileImpl> world; //HashMap for representing the different tiletypes
@@ -42,7 +46,10 @@ public class GameImpl implements Game {
   /**Constructor method for GameImpl
    * Initializes the private variables with tiletypes and city initial positions for the cities.
    */
-  public GameImpl() {
+  public GameImpl(AgingStrategy a, WinningStrategy w) {
+    this.agingStrategy = a;
+    this.winningStrategy = w;
+
     //Initialize the gameboard
     world = new HashMap<>();
     for (int i = 0; i < GameConstants.WORLDSIZE; i++){
@@ -71,8 +78,7 @@ public class GameImpl implements Game {
   public City getCityAt( Position p ) { return cities.get(p); }
   public Player getPlayerInTurn() { return p;}
   public Player getWinner() {
-    if (this.gameAge >= -3000) {return Player.RED;}
-    return null;
+    return winningStrategy.getWinner(this);
   }
   public int getAge() { return gameAge; }
   public boolean moveUnit( Position from, Position to ) {
@@ -102,7 +108,7 @@ public class GameImpl implements Game {
       p = Player.BLUE;
     } else {
       p = Player.RED;
-      gameAge += 100;
+      gameAge += agingStrategy.getAgeStep();
       cities.get(new Position(1,1)).increaseTreas();
       cities.get(new Position(4,1)).increaseTreas();
       units.values().forEach(UnitImpl::resetMoveCounter);
