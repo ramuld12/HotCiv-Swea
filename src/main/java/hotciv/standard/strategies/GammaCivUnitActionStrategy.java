@@ -1,9 +1,7 @@
 package hotciv.standard.strategies;
 
-import hotciv.framework.GameConstants;
-import hotciv.framework.Player;
-import hotciv.framework.Position;
-import hotciv.standard.GameImpl;
+import hotciv.framework.*;
+import hotciv.standard.*;
 
 public class GammaCivUnitActionStrategy implements UnitActionStrategy {
 
@@ -19,7 +17,7 @@ public class GammaCivUnitActionStrategy implements UnitActionStrategy {
   }
 
   public void performArcherActionAt(GameImpl game, Position p) {
-
+    game.getUnitAt(p).fortifyArcher();
   }
 
   public void performSettlerActionAt(GameImpl game, Position settlerPosition) {

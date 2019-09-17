@@ -79,15 +79,15 @@ public class GameImpl implements Game {
     units.put(new Position(4, 3), new UnitImpl(GameConstants.SETTLER, Player.RED));
   }
 
-  public Tile getTileAt(Position p) {
+  public TileImpl getTileAt(Position p) {
     return world.get(p);
   }
 
-  public Unit getUnitAt(Position p) {
+  public UnitImpl getUnitAt(Position p) {
     return units.get(p);
   }
 
-  public City getCityAt(Position p) {
+  public CityImpl getCityAt(Position p) {
     return cities.get(p);
   }
 
@@ -131,6 +131,11 @@ public class GameImpl implements Game {
             units.get(from).getOwner() == units.get(to).getOwner()) {
       return false;
     } //Units should not move to tile with other units from the same owner
+
+    boolean isArcherFortified = units.get(from).getDefensiveStrength() == 6;
+    boolean isThereAnArcherAtPositionFrom = units.get(from).getTypeString().equals(GameConstants.ARCHER);
+    if  (isArcherFortified && isThereAnArcherAtPositionFrom) {return false;}
+
     if (units.get(to) != null) {
       units.remove(to);
     } //Attacking unit should always win
@@ -154,7 +159,9 @@ public class GameImpl implements Game {
         units.get(to).decreaseMoveCount();
         return true;
       }
+
     }
+
     return false;
   }
 
