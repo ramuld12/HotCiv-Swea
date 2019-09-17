@@ -8,7 +8,7 @@ import static org.hamcrest.CoreMatchers.*;
 
 import java.util.*;
 
-/** Skeleton class for AlphaCiv test cases
+/** Skeleton class for GammaCiv test cases
 
  Updated Oct 2015 for using Hamcrest matchers
 
@@ -39,7 +39,7 @@ import java.util.*;
 public class TestGammaCiv {
   private GameImpl game;
 
-  /** Fixture for alphaciv testing. */
+  /** Fixture for GammeCiv testing. */
   @Before
   public void setUp() {
     game = new GameImpl(new AlphaCivAgingStrategy(), new AlphaCivWinningStrategy(), new GammaCivUnitActionStrategy(), new AlphaCivWorldLayoutStrategy());

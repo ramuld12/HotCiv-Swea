@@ -7,7 +7,6 @@ import hotciv.standard.strategies.WinningStrategy;
 import hotciv.standard.strategies.WorldLayoutStrategy;
 import hotciv.utility.*;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.*;
 
@@ -50,8 +49,10 @@ public class GameImpl implements Game {
   private HashMap<Position, UnitImpl> units; //HashMap representing the units
 
   /**
-   * Constructor method for GameImpl
-   * Initializes the private variables with tiletypes and city initial positions for the cities.
+   * Constructor method for GameImpl, which can create a GameImpl for Alpha-, Beta-, Delta-
+   * and GammaCiv depending on strategies given.
+   * Initializes the private variables with tiletypes, city initial positions for the cities
+   * and initial unit placements in the world.
    */
   public GameImpl(AgingStrategy a, WinningStrategy w, UnitActionStrategy ua, WorldLayoutStrategy ws) {
     this.agingStrategy = a;
@@ -64,6 +65,7 @@ public class GameImpl implements Game {
     worldLayoutStrategy.createTheWorld(this);
   }
 
+  //Simple accessor and setter methods
   public HashMap<Position, TileImpl> getWorld() {
     return world;
   }
@@ -92,13 +94,19 @@ public class GameImpl implements Game {
     return playerInTurn;
   }
 
+  public int getAge() {
+    return gameAge;
+  }
+
+  public void setGameAge(int newGameAge) {
+    gameAge = newGameAge;
+  }
+
   public Player getWinner() {
     return winningStrategy.getWinner(this);
   }
 
-  public int getAge() {
-    return gameAge;
-  }
+
 
   public boolean isOpponentCityEmpty(Position from, Position to) {
     boolean isTheCityVacant = units.get(to) == null;
@@ -194,9 +202,7 @@ public class GameImpl implements Game {
   }
 
 
-  public void setGameAge(int newGameAge) {
-    gameAge = newGameAge;
-  }
+
 
   public void changeWorkForceFocusInCityAt(Position p, String balance) {
   }//Not implemented

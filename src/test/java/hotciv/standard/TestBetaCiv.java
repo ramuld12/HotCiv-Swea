@@ -9,7 +9,7 @@ import static org.hamcrest.CoreMatchers.*;
 
 import java.util.*;
 
-/** Skeleton class for AlphaCiv test cases
+/** Skeleton class for BetaCiv test cases
 
  Updated Oct 2015 for using Hamcrest matchers
 
