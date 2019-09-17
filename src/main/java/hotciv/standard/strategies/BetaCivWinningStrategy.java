@@ -3,9 +3,16 @@ package hotciv.standard.strategies;
 import hotciv.framework.Player;
 import hotciv.standard.GameImpl;
 
+import java.util.HashMap;
+
 public class BetaCivWinningStrategy implements WinningStrategy {
   @Override
   public Player getWinner(GameImpl game) {
+    if (game.doesPlayerInTurnOwnAllCities()) {
+      return game.getPlayerInTurn();
+    }
     return null;
   }
 }
+
+

@@ -43,7 +43,7 @@ public class TestBetaCiv {
   /** Fixture for betaciv testing. */
   @Before
   public void setUp() {
-    game = new GameImpl(new BetaCivAgingStrategy(), new BetaCivWinningStrategy());
+    game = new GameImpl(new BetaCivAgingStrategy(), new BetaCivWinningStrategy(), new AlphaCivUnitActionStrategy());
     assertThat(game, is(notNullValue()));
   }
 
@@ -384,6 +384,44 @@ public class TestBetaCiv {
     assertNull(game.getUnitAt(p3));
     game.moveUnit(p2,p3);
     assertThat(game.getCityAt(p3).getOwner(), is(Player.RED));
+  }
+
+  @Test
+  public void redShouldConquerOccupiedBlueCityUponEntering(){
+    Position p1 = new Position(4,3);
+    Position p2 = new Position(4,2);
+    Position p3 = new Position(4,1);
+
+    game.moveUnit(p1,p2);
+    endOfRound();
+    endOfRound();
+    assertNotNull(game.getUnitAt(p3));
+    game.moveUnit(p2,p3);
+    assertThat(game.getCityAt(p3).getOwner(), is(Player.RED));
+  }
+
+  @Test
+  public void redShouldWinGameWhenConqueringAllBlueCities() {
+    Position p1 = new Position(4,3);
+    Position p2 = new Position(4,2);
+    Position p3 = new Position(4,1);
+
+    game.moveUnit(p1,p2);
+    endOfRound();
+    game.moveUnit(p2,p3);
+    assertThat(game.getWinner(), is(Player.RED));
+  }
+
+  @Test
+  public void blueShouldWinGameWhenConqueringAllRedCities() {
+    Position p1 = new Position(3,2);
+    Position p2 = new Position(2,1);
+    Position p3 = new Position(1,1);
+    game.endOfTurn();
+    game.moveUnit(p1,p2);
+    endOfRound();
+    game.moveUnit(p2,p3);
+    assertThat(game.getWinner(), is(Player.BLUE));
   }
 
 }
