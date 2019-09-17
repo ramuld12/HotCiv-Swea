@@ -13,7 +13,6 @@ public class GammaCivUnitActionStrategy implements UnitActionStrategy {
       if (UnitForAction.equals(GameConstants.ARCHER)) {performArcherActionAt(game,p);}
       else if (UnitForAction.equals(GameConstants.SETTLER)) {performSettlerActionAt(game,p);}
     }
-
   }
 
   public void performArcherActionAt(GameImpl game, Position p) {

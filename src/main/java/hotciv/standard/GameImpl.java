@@ -4,6 +4,7 @@ import hotciv.framework.*;
 import hotciv.standard.strategies.AgingStrategy;
 import hotciv.standard.strategies.UnitActionStrategy;
 import hotciv.standard.strategies.WinningStrategy;
+import hotciv.standard.strategies.WorldLayoutStrategy;
 import hotciv.utility.*;
 
 import java.util.ArrayList;
@@ -41,6 +42,7 @@ public class GameImpl implements Game {
   private final WinningStrategy winningStrategy;
   private final AgingStrategy agingStrategy;
   private final UnitActionStrategy unitActionStrategy;
+  private final WorldLayoutStrategy worldLayoutStrategy;
   private Player playerInTurn = Player.RED; //The current player in turn, initially set to red
   private int gameAge = -4000; //The current age of the game, initially set to -4000
   private HashMap<Position, TileImpl> world; //HashMap for representing the different tiletypes
@@ -51,32 +53,27 @@ public class GameImpl implements Game {
    * Constructor method for GameImpl
    * Initializes the private variables with tiletypes and city initial positions for the cities.
    */
-  public GameImpl(AgingStrategy a, WinningStrategy w, UnitActionStrategy ua) {
+  public GameImpl(AgingStrategy a, WinningStrategy w, UnitActionStrategy ua, WorldLayoutStrategy ws) {
     this.agingStrategy = a;
     this.winningStrategy = w;
     this.unitActionStrategy = ua;
-
-    //Initialize the gameboard
+    this.worldLayoutStrategy = ws;
     world = new HashMap<>();
-    for (int i = 0; i < GameConstants.WORLDSIZE; i++) {
-      for (int j = 0; j < GameConstants.WORLDSIZE; j++) {
-        world.put(new Position(i, j), new TileImpl(GameConstants.PLAINS));
-      }
-    }
-    world.put(new Position(1, 0), new TileImpl(GameConstants.OCEANS));
-    world.put(new Position(0, 1), new TileImpl(GameConstants.HILLS));
-    world.put(new Position(2, 2), new TileImpl(GameConstants.MOUNTAINS));
-
-    //Initialize the citites map
     cities = new HashMap<>();
-    cities.put(new Position(1, 1), new CityImpl(Player.RED));
-    cities.put(new Position(4, 1), new CityImpl(Player.BLUE));
-
-    //Initialize the units map
     units = new HashMap<>();
-    units.put(new Position(2, 0), new UnitImpl(GameConstants.ARCHER, Player.RED));
-    units.put(new Position(3, 2), new UnitImpl(GameConstants.LEGION, Player.BLUE));
-    units.put(new Position(4, 3), new UnitImpl(GameConstants.SETTLER, Player.RED));
+    worldLayoutStrategy.createTheWorld(this);
+  }
+
+  public HashMap<Position, TileImpl> getWorld() {
+    return world;
+  }
+
+  public HashMap<Position, CityImpl> getCities() {
+    return cities;
+  }
+
+  public HashMap<Position, UnitImpl> getUnits() {
+    return units;
   }
 
   public TileImpl getTileAt(Position p) {
@@ -171,8 +168,7 @@ public class GameImpl implements Game {
     } else {
       playerInTurn = Player.RED;
       gameAge += agingStrategy.getAgeStep(this);
-      cities.get(new Position(1, 1)).increaseTreas();
-      cities.get(new Position(4, 1)).increaseTreas();
+      cities.values().forEach(CityImpl::increaseTreas);
       units.values().forEach(UnitImpl::resetMoveCounter);
       cities.keySet().forEach(p -> produceUnitInCityAt(p, cities.get(p)));
     }

@@ -43,7 +43,7 @@ public class TestBetaCiv {
   /** Fixture for betaciv testing. */
   @Before
   public void setUp() {
-    game = new GameImpl(new BetaCivAgingStrategy(), new BetaCivWinningStrategy(), new AlphaCivUnitActionStrategy());
+    game = new GameImpl(new BetaCivAgingStrategy(), new BetaCivWinningStrategy(), new AlphaCivUnitActionStrategy(), new AlphaCivWorldLayoutStrategy());
     assertThat(game, is(notNullValue()));
   }
 
