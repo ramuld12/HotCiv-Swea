@@ -38,7 +38,7 @@ import java.util.*;
 
 */
 public class TestAlphaCiv {
-  private Game game;
+  private GameImpl game;
 
   /** Fixture for alphaciv testing. */
   @Before
@@ -335,6 +335,13 @@ public class TestAlphaCiv {
     endOfRound();
     endOfRound();
     assertFalse(game.moveUnit(p1, p2));
+  }
+
+  @Test
+  public void shouldCreateCityAtPosition () {
+    Position p = new Position(4,5);
+    game.createCityAtPosition(p);
+    assertNotNull(game.getCityAt(p));
   }
 
 }

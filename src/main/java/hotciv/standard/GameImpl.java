@@ -106,16 +106,15 @@ public class GameImpl implements Game {
     return winningStrategy.getWinner(this);
   }
 
-
-
-  public boolean isOpponentCityEmpty(Position from, Position to) {
-    boolean isTheCityVacant = units.get(to) == null;
-    boolean isTheCityForeign = cities.get(to).getOwner() != playerInTurn;
-    if (isTheCityVacant && isTheCityForeign) {
-      return true;
+  public void createCityAtPosition(Position position) {
+    boolean isPositionVacantForCity = cities.get(position) == null;
+    if (isPositionVacantForCity) {
+      cities.put(position, new CityImpl(playerInTurn));
     }
-    return false;
   }
+
+
+
 
   public boolean moveUnit(Position from, Position to) {
     boolean isThereACityAtPositionTo = cities.get(to) != null;
@@ -222,6 +221,9 @@ public class GameImpl implements Game {
     }
   }
 
+
+
+  //Simple boolean methods
   public boolean doesPlayerInTurnOwnAllCities() {
     Set<Player> owners = new HashSet<>();
     cities.values().forEach(city -> owners.add(city.getOwner()));
@@ -231,11 +233,13 @@ public class GameImpl implements Game {
     return false;
   }
 
-  public void createCityAtPosition(Position position) {
-    boolean isPositionVacantForCity = cities.get(position) == null;
-    if (isPositionVacantForCity) {
-      cities.put(position, new CityImpl(playerInTurn));
+  public boolean isOpponentCityEmpty(Position from, Position to) {
+    boolean isTheCityVacant = units.get(to) == null;
+    boolean isTheCityForeign = cities.get(to).getOwner() != playerInTurn;
+    if (isTheCityVacant && isTheCityForeign) {
+      return true;
     }
+    return false;
   }
 
 
