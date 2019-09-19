@@ -65,7 +65,8 @@ public class GameImpl implements Game {
     worldLayoutStrategy.createTheWorld(this);
   }
 
-  //Simple accessor and setter methods
+  // === Accessor methods ======================================
+  
   public HashMap<Position, TileImpl> getWorld() {
     return world;
   }
@@ -98,21 +99,34 @@ public class GameImpl implements Game {
     return gameAge;
   }
 
-  public void setGameAge(int newGameAge) {
-    gameAge = newGameAge;
-  }
-
   public Player getWinner() {
     return winningStrategy.getWinner(this);
   }
 
+  // === Setter methods ======================================
+
+
+  /**
+   * Sets the game age to a given age
+   * @param newGameAge the age the game will now have
+   */
+  public void setGameAge(int newGameAge) {
+    gameAge = newGameAge;
+  }
+
+  // === Mutator methods ======================================
+  /**
+   * Creates a city at a given position. The owner of
+   * the new city is set to the player in turn.
+   * Precondition: There can not be a city at the position given
+   * @param position position of the new city
+   */
   public void createCityAtPosition(Position position) {
     boolean isPositionVacantForCity = cities.get(position) == null;
     if (isPositionVacantForCity) {
       cities.put(position, new CityImpl(playerInTurn));
     }
   }
-
 
   public boolean moveUnit(Position from, Position to) {
     boolean isFromInTheWorld = world.containsKey(from);
@@ -191,9 +205,6 @@ public class GameImpl implements Game {
     }
   }
 
-
-
-
   public void changeWorkForceFocusInCityAt(Position p, String balance) {
   }//Not implemented
 
@@ -207,8 +218,8 @@ public class GameImpl implements Game {
 
 
   /**
-   * Removes a unit at a certain position from the units map,
-   * if a unit is present at that position
+   * Removes a unit at a certain position from the units map
+   * Precondition: There has to be a unit at the given position
    * @param unitPosition the position of the unit to be removed
    */
   public void removeUnitFromUnitsMapAtPosition(Position unitPosition) {
@@ -218,21 +229,18 @@ public class GameImpl implements Game {
 
 
 
-  // === Simple Boolean methods ======================================
+  // === Boolean methods ======================================
 
   /**
-   *  Creates a set, and check if it has a size of one,
-   *  indicating one player owns all cities
+   *  Checks if the player currently in turn owns all citites
    * @return true if player in turn owns all the cities
    */
   public boolean doesPlayerInTurnOwnAllCities() {
-
-
-
     Set<Player> owners = new HashSet<>();
     cities.values().forEach(city -> owners.add(city.getOwner()));
-    boolean doesAPlayerOwnAllCitites = owners.size() == 1;
-    return doesAPlayerOwnAllCitites && owners.contains(playerInTurn);
+
+    boolean doesAPlayerOwnAllCities = owners.size() == 1;
+    return doesAPlayerOwnAllCities && owners.contains(playerInTurn);
   }
 
 
