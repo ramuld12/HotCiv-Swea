@@ -114,47 +114,39 @@ public class GameImpl implements Game {
   }
 
 
-
-
   public boolean moveUnit(Position from, Position to) {
-    boolean isThereACityAtPositionTo = cities.get(to) != null;
+    boolean isFromInTheWorld = world.containsKey(from);
+    boolean isToInTheWorld = world.containsKey(to);
+    boolean isTileTypeAtToValidForMovement = world.get(to).isValidMovementTileType();
+    boolean isThereAUnitAtFrom = units.get(from) != null;
+    boolean isThereAUnitAtTo = units.get(to) != null;
+    boolean isUnitOwnedByPlayerInTurn = isThereAUnitAtFrom && units.get(from).getOwner() == playerInTurn;
+    boolean isThereAlreadyAFriendlyUnitAtTo = isThereAUnitAtFrom && isThereAUnitAtTo && units.get(from).getOwner() == units.get(to).getOwner();
+    boolean isThereAnArcherAtPositionFrom = isThereAUnitAtFrom && units.get(from).getTypeString().equals(GameConstants.ARCHER);
+    boolean isArcherFortified = isThereAUnitAtFrom && units.get(from).getDefensiveStrength() == 6;
+    boolean hasMovesLeft = isThereAUnitAtFrom && units.get(from).getMoveCount() > 0;
 
-    if (!world.containsKey(from) || !world.containsKey(to)) {
+    if ( ! (isFromInTheWorld &&
+            isToInTheWorld &&
+            isTileTypeAtToValidForMovement &&
+            isThereAUnitAtFrom &&
+            isUnitOwnedByPlayerInTurn &&
+            !isThereAlreadyAFriendlyUnitAtTo &&
+            !(isThereAnArcherAtPositionFrom && isArcherFortified) &&
+            hasMovesLeft))
       return false;
-    } //Only allow units to move within the boundries of the map
-    if (!world.get(to).isValidMovementTileType()) {
-      return false;
-    } //Units can not move to certain tiles
-    if (units.get(from) == null) {
-      return false;
-    } //Making sure there is a unit at from position
-    if (units.get(from).getOwner() != playerInTurn) {
-      return false;
-    } //Making sure the player in turn can only move his/her own units
-    if (units.get(to) != null &&
-            units.get(from).getOwner() == units.get(to).getOwner()) {
-      return false;
-    } //Units should not move to tile with other units from the same owner
 
-    boolean isArcherFortified = units.get(from).getDefensiveStrength() == 6;
-    boolean isThereAnArcherAtPositionFrom = units.get(from).getTypeString().equals(GameConstants.ARCHER);
-    if  (isArcherFortified && isThereAnArcherAtPositionFrom) {return false;}
+    //Handling of attack on a city
+    boolean isThereACityAtPositionTo = cities.containsKey(to);
+    boolean isTheCityForeign = isThereACityAtPositionTo && cities.get(to).getOwner() != playerInTurn;
 
-    if (units.get(to) != null) {
-      units.remove(to);
-    } //Attacking unit should always win
-    if (units.get(from).getMoveCount() < 1) {
-      return false;
-    } //Units need to have a positive move counter to move
-
-    if (isThereACityAtPositionTo) {
-      if (isOpponentCityEmpty(from, to)) {
+    if (    isThereACityAtPositionTo &&
+            isTheCityForeign)
         cities.get(to).changeOwner(playerInTurn);
-      }
-    }
 
-    for (Position po : Utility.get8neighborhoodOf(from)) {
-      if (po.equals(to)) {
+    //Handling of movement for the unit
+    for (Position unitPosition : Utility.get8neighborhoodOf(from)) {
+      if (unitPosition.equals(to)) {
         //Find the tile the unit is trying to move to,
         // create a new unit with moveCounter 0 of the same type there and remove the old
         String unitType = units.get(from).getTypeString();
@@ -163,9 +155,7 @@ public class GameImpl implements Game {
         units.get(to).decreaseMoveCount();
         return true;
       }
-
     }
-
     return false;
   }
 
@@ -188,7 +178,8 @@ public class GameImpl implements Game {
       if (!isThereAUnitAtPosition) {
         units.put(p, new UnitImpl(c.getProduction(), c.getOwner()));
       }
-    } else {
+    }
+    else {
       for (Position neighbourPosition : Utility.get8neighborhoodOf(p)) {
         boolean isThereAUnitAtNeighbourPosition = units.get(neighbourPosition) == null;
         boolean isValidTileInWorld = world.get(neighbourPosition).isValidMovementTileType();
@@ -227,20 +218,14 @@ public class GameImpl implements Game {
   public boolean doesPlayerInTurnOwnAllCities() {
     Set<Player> owners = new HashSet<>();
     cities.values().forEach(city -> owners.add(city.getOwner()));
-    if (owners.size() == 1) {
-      return true;
-    }
+
+    boolean doesAPlayerOwnAllCitites = owners.size() == 1;
+    boolean isTheOnlyPlayerLeftPlayerInTurn = doesAPlayerOwnAllCitites && owners.contains(playerInTurn);
+    if (isTheOnlyPlayerLeftPlayerInTurn) { return true; }
     return false;
   }
 
-  public boolean isOpponentCityEmpty(Position from, Position to) {
-    boolean isTheCityVacant = units.get(to) == null;
-    boolean isTheCityForeign = cities.get(to).getOwner() != playerInTurn;
-    if (isTheCityVacant && isTheCityForeign) {
-      return true;
-    }
-    return false;
-  }
+
 
 
 }

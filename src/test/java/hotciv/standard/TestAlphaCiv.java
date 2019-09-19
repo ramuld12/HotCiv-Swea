@@ -306,6 +306,8 @@ public class TestAlphaCiv {
     assertNull(game.getUnitAt(p));
     endOfRound();
     endOfRound();
+    //Unit created in blue city at (4,1)
+
     endOfRound();
     endOfRound();
     assertThat(game.getUnitAt(p).getTypeString(), is(GameConstants.ARCHER));
@@ -315,7 +317,7 @@ public class TestAlphaCiv {
   public void shouldNotAllowMovingFromMinus1_Minus0 () {
     Position p1 = new Position (0,1);
     Position p2 = new Position (-1,0);
-    assertFalse(game.moveUnit(p1, p2));
+    assertFalse(game.moveUnit(p2, p1));
   }
 
   @Test

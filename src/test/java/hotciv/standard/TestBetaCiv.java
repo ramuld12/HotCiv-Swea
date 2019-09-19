@@ -134,6 +134,7 @@ public class TestBetaCiv {
     game.moveUnit(p1,p2);
     endOfRound();
     endOfRound();
+    //Unit has been produced in city
     assertNotNull(game.getUnitAt(p3));
     game.moveUnit(p2,p3);
     assertThat(game.getCityAt(p3).getOwner(), is(Player.RED));
