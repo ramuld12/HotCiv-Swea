@@ -346,6 +346,13 @@ public class TestAlphaCiv {
     assertNotNull(game.getCityAt(p));
   }
 
+  @Test
+  public void shouldRemoveUnitAt4_3() {
+    Position unitPosition = new Position(4,3);
+    game.removeUnitFromUnitsMapAtPosition(unitPosition);
+    assertNull(game.getUnitAt(unitPosition));
+  }
+
 }
 
 

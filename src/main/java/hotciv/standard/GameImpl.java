@@ -205,24 +205,34 @@ public class GameImpl implements Game {
     unitActionStrategy.performUnitActionAt(this, p);
   }
 
+
+  /**
+   * Removes a unit at a certain position from the units map,
+   * if a unit is present at that position
+   * @param unitPosition the position of the unit to be removed
+   */
   public void removeUnitFromUnitsMapAtPosition(Position unitPosition) {
     boolean isThereAUnitAtPosition = units.get(unitPosition) != null;
-    if (isThereAUnitAtPosition) {
-      units.remove(unitPosition);
-    }
+    if (isThereAUnitAtPosition) { units.remove(unitPosition); }
   }
 
 
 
-  //Simple boolean methods
+  // === Simple Boolean methods ======================================
+
+  /**
+   *  Creates a set, and check if it has a size of one,
+   *  indicating one player owns all cities
+   * @return true if player in turn owns all the cities
+   */
   public boolean doesPlayerInTurnOwnAllCities() {
+
+
+
     Set<Player> owners = new HashSet<>();
     cities.values().forEach(city -> owners.add(city.getOwner()));
-
     boolean doesAPlayerOwnAllCitites = owners.size() == 1;
-    boolean isTheOnlyPlayerLeftPlayerInTurn = doesAPlayerOwnAllCitites && owners.contains(playerInTurn);
-    if (isTheOnlyPlayerLeftPlayerInTurn) { return true; }
-    return false;
+    return doesAPlayerOwnAllCitites && owners.contains(playerInTurn);
   }
 
 
