@@ -196,21 +196,20 @@ public class GameImpl implements Game {
     boolean isCityPositionVacantForUnit = units.get(cityPosition) == null;
     boolean doesCityHaveEnoughTreasure = city.hasEnoughTreasure();
 
-    if (doesCityHaveEnoughTreasure) {
-      city.reduceTreasury(city.getProdCost());
-      if (isCityPositionVacantForUnit) {
-        units.put(cityPosition, new UnitImpl(city.getProduction(), city.getOwner()));
-      }
-      else {
-        for (Position neighbourPosition : Utility.get8neighborhoodOf(cityPosition)) {
-          boolean isNeighbourPositionVacantForUnit = units.get(neighbourPosition) == null;
-          boolean isValidTileInWorld = world.get(neighbourPosition).isValidMovementTileType();
+    if (!doesCityHaveEnoughTreasure) { return; }
+    city.reduceTreasury(city.getProdCost());
+    if (isCityPositionVacantForUnit) {
+      units.put(cityPosition, new UnitImpl(city.getProduction(), city.getOwner()));
+    }
+    else {
+      for (Position neighbourPosition : Utility.get8neighborhoodOf(cityPosition)) {
+        boolean isNeighbourPositionVacantForUnit = units.get(neighbourPosition) == null;
+        boolean isValidTileInWorld = world.get(neighbourPosition).isValidMovementTileType();
 
-          if (    isNeighbourPositionVacantForUnit &&
-                  isValidTileInWorld) {
-            units.put(neighbourPosition, new UnitImpl(city.getProduction(), city.getOwner()));
-            break;
-          }
+        if (    isNeighbourPositionVacantForUnit &&
+                isValidTileInWorld) {
+          units.put(neighbourPosition, new UnitImpl(city.getProduction(), city.getOwner()));
+          break;
         }
       }
     }
@@ -243,8 +242,7 @@ public class GameImpl implements Game {
     cities.values().forEach(city -> owners.add(city.getOwner()));
 
     boolean doesAPlayerOwnAllCities = owners.size() == 1;
-    boolean isThatThePlayerInTurn = doesAPlayerOwnAllCities && owners.contains(playerInTurn);
-    return isThatThePlayerInTurn;
+    return doesAPlayerOwnAllCities && owners.contains(playerInTurn);
   }
 
 
