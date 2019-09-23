@@ -220,7 +220,6 @@ public class GameImpl implements Game {
     unitActionStrategy.performUnitActionAt(this, p);
   }
 
-
   /**
    * Removes a unit at a certain position from the units map
    * Precondition: There has to be a unit at the given position
@@ -244,7 +243,8 @@ public class GameImpl implements Game {
     cities.values().forEach(city -> owners.add(city.getOwner()));
 
     boolean doesAPlayerOwnAllCities = owners.size() == 1;
-    return doesAPlayerOwnAllCities && owners.contains(playerInTurn);
+    boolean isThatThePlayerInTurn = doesAPlayerOwnAllCities && owners.contains(playerInTurn);
+    return isThatThePlayerInTurn;
   }
 
 
