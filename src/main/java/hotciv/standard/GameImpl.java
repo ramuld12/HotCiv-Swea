@@ -151,16 +151,18 @@ public class GameImpl implements Game {
             isUnitOwnedByPlayerInTurn &&
             !isThereAlreadyAFriendlyUnitAtTo &&
             isUnitMoveable &&
-            hasMovesLeft))
+            hasMovesLeft)) {
       return false;
+    }
 
     //Handling of attack on a city
     boolean isThereACityAtPositionTo = cities.containsKey(to);
     boolean isTheCityForeign = isThereACityAtPositionTo && cities.get(to).getOwner() != playerInTurn;
 
     if (    isThereACityAtPositionTo &&
-            isTheCityForeign)
-        cities.get(to).changeOwner(playerInTurn);
+            isTheCityForeign) {
+      cities.get(to).changeOwner(playerInTurn);
+    }
 
     //Handling of movement for the unit
     for (Position unitPosition : Utility.get8neighborhoodOf(from)) {
@@ -193,6 +195,7 @@ public class GameImpl implements Game {
   private void produceUnitInCityAt(Position cityPosition, CityImpl city) {
     boolean isCityPositionVacantForUnit = units.get(cityPosition) == null;
     boolean doesCityHaveEnoughTreasure = city.hasEnoughTreasure();
+
     if (doesCityHaveEnoughTreasure) {
       city.reduceTreasury(city.getProdCost());
       if (isCityPositionVacantForUnit) {
@@ -202,7 +205,9 @@ public class GameImpl implements Game {
         for (Position neighbourPosition : Utility.get8neighborhoodOf(cityPosition)) {
           boolean isNeighbourPositionVacantForUnit = units.get(neighbourPosition) == null;
           boolean isValidTileInWorld = world.get(neighbourPosition).isValidMovementTileType();
-          if (isNeighbourPositionVacantForUnit && isValidTileInWorld) {
+
+          if (    isNeighbourPositionVacantForUnit &&
+                  isValidTileInWorld) {
             units.put(neighbourPosition, new UnitImpl(city.getProduction(), city.getOwner()));
             break;
           }

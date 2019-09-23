@@ -87,7 +87,6 @@ public class TestGammaCiv {
     Position settlerPosition = new Position(4,3);
     assertThat(game.getUnitAt(settlerPosition).getDefensiveStrength(), is(3));
     assertThat(game.getUnitAt(settlerPosition).getAttackingStrength(), is(0));
-
   }
 
   @Test
@@ -96,7 +95,6 @@ public class TestGammaCiv {
     assertThat(game.getUnitAt(archerPosition).getDefensiveStrength(), is(3));
     game.performUnitActionAt(archerPosition);
     assertThat(game.getUnitAt(archerPosition).getDefensiveStrength(), is(6));
-
   }
 
   @Test
@@ -113,7 +111,6 @@ public class TestGammaCiv {
     game.performUnitActionAt(archerPosition);
     assertThat(game.getUnitAt(archerPosition).getDefensiveStrength(), is(3));
     assertTrue(game.getUnitAt(archerPosition).isMoveable());
-
   }
 
 }
