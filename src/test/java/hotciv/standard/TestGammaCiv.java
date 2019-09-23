@@ -104,6 +104,15 @@ public class TestGammaCiv {
     Position archerPosition = new Position(2,0);
     game.performUnitActionAt(archerPosition);
     assertThat(game.moveUnit(archerPosition, new Position(2,1)), is(false));
+  }
+
+  @Test
+  public void shouldRemoveFortificationFromArcher() {
+    Position archerPosition = new Position(2,0);
+    game.performUnitActionAt(archerPosition);
+    game.performUnitActionAt(archerPosition);
+    assertThat(game.getUnitAt(archerPosition).getDefensiveStrength(), is(3));
+    assertTrue(game.getUnitAt(archerPosition).isMoveable());
 
   }
 

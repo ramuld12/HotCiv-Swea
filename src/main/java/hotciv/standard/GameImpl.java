@@ -66,7 +66,7 @@ public class GameImpl implements Game {
   }
 
   // === Accessor methods ======================================
-  
+
   public HashMap<Position, TileImpl> getWorld() {
     return world;
   }
@@ -104,8 +104,6 @@ public class GameImpl implements Game {
   }
 
   // === Setter methods ======================================
-
-
   /**
    * Sets the game age to a given age
    * @param newGameAge the age the game will now have
@@ -113,6 +111,13 @@ public class GameImpl implements Game {
   public void setGameAge(int newGameAge) {
     gameAge = newGameAge;
   }
+
+  public void changeProductionInCityAt(Position p, String unitType) {
+    cities.get(p).changeProduction(unitType);
+  }
+
+  public void changeWorkForceFocusInCityAt(Position p, String balance) {
+  }//Not implemented
 
   // === Mutator methods ======================================
   /**
@@ -136,8 +141,7 @@ public class GameImpl implements Game {
     boolean isThereAUnitAtTo = units.get(to) != null;
     boolean isUnitOwnedByPlayerInTurn = isThereAUnitAtFrom && units.get(from).getOwner() == playerInTurn;
     boolean isThereAlreadyAFriendlyUnitAtTo = isThereAUnitAtFrom && isThereAUnitAtTo && units.get(from).getOwner() == units.get(to).getOwner();
-    boolean isThereAnArcherAtPositionFrom = isThereAUnitAtFrom && units.get(from).getTypeString().equals(GameConstants.ARCHER);
-    boolean isArcherFortified = isThereAUnitAtFrom && units.get(from).getDefensiveStrength() == 6;
+    boolean isUnitMoveable = isThereAUnitAtFrom && units.get(from).isMoveable();
     boolean hasMovesLeft = isThereAUnitAtFrom && units.get(from).getMoveCount() > 0;
 
     if ( ! (isFromInTheWorld &&
@@ -146,7 +150,7 @@ public class GameImpl implements Game {
             isThereAUnitAtFrom &&
             isUnitOwnedByPlayerInTurn &&
             !isThereAlreadyAFriendlyUnitAtTo &&
-            !(isThereAnArcherAtPositionFrom && isArcherFortified) &&
+            isUnitMoveable &&
             hasMovesLeft))
       return false;
 
@@ -174,7 +178,8 @@ public class GameImpl implements Game {
   }
 
   public void endOfTurn() {
-    if (playerInTurn.equals(Player.RED)) {
+    boolean isPlayerInTurnRed = playerInTurn.equals(Player.RED);
+    if (isPlayerInTurnRed) {
       playerInTurn = Player.BLUE;
     } else {
       playerInTurn = Player.RED;
@@ -185,31 +190,25 @@ public class GameImpl implements Game {
     }
   }
 
-  private void produceUnitInCityAt(Position p, CityImpl c) {
-    boolean isThereAUnitAtPosition = units.get(p) != null;
-    if (c.hasEnoughTreasure()) {
-      c.reduceTreasury(c.getProdCost());
-      if (!isThereAUnitAtPosition) {
-        units.put(p, new UnitImpl(c.getProduction(), c.getOwner()));
+  private void produceUnitInCityAt(Position cityPosition, CityImpl city) {
+    boolean isCityPositionVacantForUnit = units.get(cityPosition) == null;
+    boolean doesCityHaveEnoughTreasure = city.hasEnoughTreasure();
+    if (doesCityHaveEnoughTreasure) {
+      city.reduceTreasury(city.getProdCost());
+      if (isCityPositionVacantForUnit) {
+        units.put(cityPosition, new UnitImpl(city.getProduction(), city.getOwner()));
       }
-    }
-    else {
-      for (Position neighbourPosition : Utility.get8neighborhoodOf(p)) {
-        boolean isThereAUnitAtNeighbourPosition = units.get(neighbourPosition) == null;
-        boolean isValidTileInWorld = world.get(neighbourPosition).isValidMovementTileType();
-        if (isThereAUnitAtNeighbourPosition && isValidTileInWorld) {
-          units.put(neighbourPosition, new UnitImpl(c.getProduction(), c.getOwner()));
-          break;
+      else {
+        for (Position neighbourPosition : Utility.get8neighborhoodOf(cityPosition)) {
+          boolean isNeighbourPositionVacantForUnit = units.get(neighbourPosition) == null;
+          boolean isValidTileInWorld = world.get(neighbourPosition).isValidMovementTileType();
+          if (isNeighbourPositionVacantForUnit && isValidTileInWorld) {
+            units.put(neighbourPosition, new UnitImpl(city.getProduction(), city.getOwner()));
+            break;
+          }
         }
       }
     }
-  }
-
-  public void changeWorkForceFocusInCityAt(Position p, String balance) {
-  }//Not implemented
-
-  public void changeProductionInCityAt(Position p, String unitType) {
-    cities.get(p).changeProduction(unitType);
   }
 
   public void performUnitActionAt(Position p) {
