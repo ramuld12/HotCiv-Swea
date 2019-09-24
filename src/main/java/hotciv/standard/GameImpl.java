@@ -209,17 +209,23 @@ public class GameImpl implements Game {
       units.put(cityPosition, new UnitImpl(city.getProduction(), city.getOwner()));
     }
     else {
-      for (Position neighbourPosition : Utility.get8neighborhoodOf(cityPosition)) {
-        boolean isNeighbourPositionVacantForUnit = units.get(neighbourPosition) == null;
-        boolean isValidTileInWorld = world.get(neighbourPosition).isValidMovementTileType();
-
-        if (    isNeighbourPositionVacantForUnit &&
-                isValidTileInWorld) {
-          units.put(neighbourPosition, new UnitImpl(city.getProduction(), city.getOwner()));
-          break;
-        }
+      Position vacantNeighbourPosition = findFirstVacantNeighbourPosition(cityPosition);
+      units.put(vacantNeighbourPosition, new UnitImpl(city.getProduction(), city.getOwner()));
       }
     }
+
+  public Position findFirstVacantNeighbourPosition(Position centerPosition) {
+    for (Position neighbourPosition : Utility.get8neighborhoodOf(centerPosition)) {
+      boolean isNeighbourPositionVacantForUnit = units.get(neighbourPosition) == null;
+      boolean isValidTileInWorld = world.get(neighbourPosition).isValidMovementTileType();
+
+      if (!(isNeighbourPositionVacantForUnit &&
+              isValidTileInWorld)) {
+        continue;
+      }
+      return neighbourPosition;
+    }
+    return null;
   }
 
   public void performUnitActionAt(Position p) {
