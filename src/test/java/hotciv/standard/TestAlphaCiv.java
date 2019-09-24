@@ -369,6 +369,16 @@ public class TestAlphaCiv {
     assertFalse(game.doesPlayerInTurnOwnAllCities());
   }
 
+  @Test
+  public void shouldReturnFirstVacantPositionAroundCenterPosition(){
+    Position centerPosition = new Position(1,1);
+    Position vacantPosition = game.findFirstVacantNeighbourPosition(centerPosition);
+    assertThat(vacantPosition, is(new Position(0,1)));
+    Position centerPosition2 = new Position(3,0);
+    Position vacantPosition2 = game.findFirstVacantNeighbourPosition(centerPosition2);
+    assertThat(vacantPosition2, is(new Position(2,1)));
+  }
+
 
 }
 

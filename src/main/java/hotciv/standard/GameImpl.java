@@ -202,8 +202,8 @@ public class GameImpl implements Game {
   private void produceUnitInCityAt(Position cityPosition, CityImpl city) {
     boolean isCityPositionVacantForUnit = units.get(cityPosition) == null;
     boolean doesCityHaveEnoughTreasure = city.hasEnoughTreasure();
-
     if (!doesCityHaveEnoughTreasure) { return; }
+
     city.reduceTreasury(city.getProdCost());
     if (isCityPositionVacantForUnit) {
       units.put(cityPosition, new UnitImpl(city.getProduction(), city.getOwner()));
