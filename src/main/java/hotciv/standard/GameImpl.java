@@ -202,24 +202,37 @@ public class GameImpl implements Game {
   private void produceUnitInCityAt(Position cityPosition, CityImpl city) {
     boolean isCityPositionVacantForUnit = units.get(cityPosition) == null;
     boolean doesCityHaveEnoughTreasure = city.hasEnoughTreasure();
-
     if (!doesCityHaveEnoughTreasure) { return; }
+
     city.reduceTreasury(city.getProdCost());
     if (isCityPositionVacantForUnit) {
       units.put(cityPosition, new UnitImpl(city.getProduction(), city.getOwner()));
     }
     else {
-      for (Position neighbourPosition : Utility.get8neighborhoodOf(cityPosition)) {
-        boolean isNeighbourPositionVacantForUnit = units.get(neighbourPosition) == null;
-        boolean isValidTileInWorld = world.get(neighbourPosition).isValidMovementTileType();
-
-        if (    isNeighbourPositionVacantForUnit &&
-                isValidTileInWorld) {
-          units.put(neighbourPosition, new UnitImpl(city.getProduction(), city.getOwner()));
-          break;
-        }
+      Position vacantNeighbourPosition = findFirstVacantNeighbourPosition(cityPosition);
+      units.put(vacantNeighbourPosition, new UnitImpl(city.getProduction(), city.getOwner()));
       }
     }
+
+  /**
+   * Find the first vacant position around a
+   * given centerposition. Returns null if none
+   * of the neighbour positions are vacant.
+   * @param centerPosition the center position
+   * @return the first eligible neighbour position.
+   */
+  public Position findFirstVacantNeighbourPosition(Position centerPosition) {
+    for (Position neighbourPosition : Utility.get8neighborhoodOf(centerPosition)) {
+      boolean isNeighbourPositionVacantForUnit = units.get(neighbourPosition) == null;
+      boolean isValidTileInWorld = world.get(neighbourPosition).isValidMovementTileType();
+
+      if (!(isNeighbourPositionVacantForUnit &&
+              isValidTileInWorld)) {
+        continue;
+      }
+      return neighbourPosition;
+    }
+    return null;
   }
 
   public void performUnitActionAt(Position p) {
