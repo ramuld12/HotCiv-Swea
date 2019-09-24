@@ -192,6 +192,13 @@ public class GameImpl implements Game {
     }
   }
 
+  /**
+   * Produces unit in a city. If the city already has a unit
+   * in the city, it will produce a unit at a neighbour position
+   * , first looking to the north then going clockwise
+   * @param cityPosition position of the city to produce unit
+   * @param city the city at cityPosition
+   */
   private void produceUnitInCityAt(Position cityPosition, CityImpl city) {
     boolean isCityPositionVacantForUnit = units.get(cityPosition) == null;
     boolean doesCityHaveEnoughTreasure = city.hasEnoughTreasure();
