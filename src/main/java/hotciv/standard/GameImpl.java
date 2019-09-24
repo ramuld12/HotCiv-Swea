@@ -265,7 +265,7 @@ public class GameImpl implements Game {
     return doesAPlayerOwnAllCities && owners.contains(playerInTurn);
   }
 
-
+//Test for release4
 
 
 }
