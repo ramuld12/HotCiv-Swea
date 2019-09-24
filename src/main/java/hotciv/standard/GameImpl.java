@@ -214,6 +214,13 @@ public class GameImpl implements Game {
       }
     }
 
+  /**
+   * Find the first vacant position around a
+   * given centerposition. Returns null if none
+   * of the neighbour positions are vacant.
+   * @param centerPosition the center position
+   * @return the first eligible neighbour position.
+   */
   public Position findFirstVacantNeighbourPosition(Position centerPosition) {
     for (Position neighbourPosition : Utility.get8neighborhoodOf(centerPosition)) {
       boolean isNeighbourPositionVacantForUnit = units.get(neighbourPosition) == null;
