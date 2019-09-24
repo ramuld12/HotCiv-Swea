@@ -40,7 +40,7 @@ public class CityImpl implements City {
     return null;
   }//Not done
 
-  public void incrementTreas() {
+  public void increaseTreas() {
     treas += 6;
   }
 
@@ -48,8 +48,8 @@ public class CityImpl implements City {
     prod = unitType;
   }
 
-  public void reduceTreasury(int i) {
-    treas -= i;
+  public void reduceTreasury(int amount) {
+    treas -= amount;
   }
 
   public int getProdCost() {
@@ -59,11 +59,14 @@ public class CityImpl implements City {
     return 0;
   }
 
-  public boolean hasEnoughProduction() {
+  public boolean hasEnoughTreasure() {
     if (treas >= getProdCost()){
       return true;
     }
     return false;
   }
 
+  public void changeOwner(Player playerInTurn) {
+    this.p = playerInTurn;
+  }
 }

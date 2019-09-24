@@ -5,19 +5,37 @@ import hotciv.framework.Player;
 import hotciv.framework.Unit;
 
 public class UnitImpl implements Unit {
-  private String gc;
+  private int defenseStrength;
+  private int attackStrength;
+  private String type;
   private Player owner;
-  private int move;
+  private int moveCounter;
+  private boolean isMoveable;
+  private boolean isFortified;
 
-  public UnitImpl(String gc, Player owner) {
-    this.gc = gc;
+  public UnitImpl(String type, Player owner) {
+    this.type = type;
     this.owner = owner;
-    this.move = 1;
+    this.moveCounter = 1;
+    this.isMoveable = true;
+    if (type.equals(GameConstants.ARCHER)) {
+      this.defenseStrength = 3;
+      this.attackStrength = 2;
+      this.isFortified = false;
+    }
+    if (type.equals(GameConstants.LEGION)) {
+      this.defenseStrength = 2;
+      this.attackStrength = 4;
+    }
+    if (type.equals(GameConstants.SETTLER)) {
+      this.defenseStrength = 3;
+      this.attackStrength = 0;
+    }
   }
 
   @Override
   public String getTypeString() {
-    return gc;
+    return type;
   }
 
   @Override
@@ -27,24 +45,42 @@ public class UnitImpl implements Unit {
 
   @Override
   public int getMoveCount() {
-    return move;
+    return moveCounter;
   }
 
   @Override
-  public int getDefensiveStrength() {
-    return 0;
+  public int getDefensiveStrength() { return defenseStrength;}
+
+  public void fortifyArcher(){
+    boolean isArcherAlreadyFortified = isFortified;
+
+    if (isArcherAlreadyFortified) {
+      isMoveable = true;
+      defenseStrength /= 2;
+    }
+    else {
+      isFortified = true;
+      isMoveable = false;
+      defenseStrength *= 2;
+    }
   }
+
 
   @Override
   public int getAttackingStrength() {
-    return 0;
+    return attackStrength;
+  }
+
+  @Override
+  public boolean isMoveable() {
+    return isMoveable;
   }
 
   public void decreaseMoveCount() {
-    move --;
+    moveCounter --;
   }
 
   public void resetMoveCounter() {
-    move = 1;
+    moveCounter = 1;
   }
 }

@@ -3,6 +3,7 @@ package hotciv.standard;
 
 import hotciv.framework.*;
 
+import hotciv.standard.strategies.*;
 import org.junit.*;
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
@@ -38,12 +39,12 @@ import java.util.*;
 
 */
 public class TestAlphaCiv {
-  private Game game;
+  private GameImpl game;
 
   /** Fixture for alphaciv testing. */
   @Before
   public void setUp() {
-    game = new GameImpl();
+    game = new GameImpl(new AlphaCivAgingStrategy(), new AlphaCivWinningStrategy(), new AlphaCivUnitActionStrategy(), new AlphaCivWorldLayoutStrategy());
     assertThat(game, is(notNullValue()));
   }
 
@@ -299,6 +300,86 @@ public class TestAlphaCiv {
     endOfRound();
     assertThat(game.getUnitAt(p).getTypeString(), is(GameConstants.LEGION));
   }
+
+  @Test
+  public void shouldCreateUnitNorthOfBlueCity() {
+    Position p = new Position(3,1);
+    assertNull(game.getUnitAt(p));
+    endOfRound();
+    endOfRound();
+    //Unit created in blue city at (4,1)
+
+    endOfRound();
+    endOfRound();
+    assertThat(game.getUnitAt(p).getTypeString(), is(GameConstants.ARCHER));
+  }
+
+  @Test
+  public void shouldNotAllowMovingFromMinus1_Minus0 () {
+    Position p1 = new Position (0,1);
+    Position p2 = new Position (-1,0);
+    assertFalse(game.moveUnit(p2, p1));
+  }
+
+  @Test
+  public void shouldNotAllowMovingToMinus1_Minus0 () {
+    Position p1 = new Position (0,1);
+    Position p2 = new Position (-1,0);
+    assertFalse(game.moveUnit(p2, p1));
+  }
+
+  @Test
+  public void shouldNotAllowBlueLegionToMoveToTileWithBlueUnit() {
+    Position p1 = new Position(4,1);
+    Position p2 = new Position(3,2);
+
+    game.changeProductionInCityAt(p1,GameConstants.LEGION);
+    endOfRound();
+    endOfRound();
+    endOfRound();
+    assertFalse(game.moveUnit(p1, p2));
+  }
+
+  @Test
+  public void shouldCreateCityAtPosition () {
+    Position p = new Position(4,5);
+    game.createCityAtPosition(p);
+    assertNotNull(game.getCityAt(p));
+  }
+
+  @Test
+  public void shouldRemoveUnitAt4_3() {
+    Position unitPosition = new Position(4,3);
+    game.removeUnitFromUnitsMapAtPosition(unitPosition);
+    assertNull(game.getUnitAt(unitPosition));
+  }
+
+  @Test
+  public void shouldReturnTrueIfPlayerOwnsAllCities(){
+    Position blueCity = new Position(4,1);
+    Position unitPosition = new Position(4,3);
+    game.moveUnit(unitPosition, new Position(4,2));
+    endOfRound();
+    game.moveUnit(new Position(4,2),blueCity);
+    assertTrue(game.doesPlayerInTurnOwnAllCities());
+
+  }
+
+  @Test
+  public void shouldReturnFalseIfPlayerDoesNotOWnAllCities(){
+    assertFalse(game.doesPlayerInTurnOwnAllCities());
+  }
+
+  @Test
+  public void shouldReturnFirstVacantPositionAroundCenterPosition(){
+    Position centerPosition = new Position(1,1);
+    Position vacantPosition = game.findFirstVacantNeighbourPosition(centerPosition);
+    assertThat(vacantPosition, is(new Position(0,1)));
+    Position centerPosition2 = new Position(3,0);
+    Position vacantPosition2 = game.findFirstVacantNeighbourPosition(centerPosition2);
+    assertThat(vacantPosition2, is(new Position(2,1)));
+  }
+
 
 }
 
