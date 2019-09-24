@@ -7,7 +7,6 @@ import hotciv.standard.strategies.WinningStrategy;
 import hotciv.standard.strategies.WorldLayoutStrategy;
 import hotciv.utility.*;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.*;
 
@@ -50,8 +49,10 @@ public class GameImpl implements Game {
   private HashMap<Position, UnitImpl> units; //HashMap representing the units
 
   /**
-   * Constructor method for GameImpl
-   * Initializes the private variables with tiletypes and city initial positions for the cities.
+   * Constructor method for GameImpl, which can create a GameImpl for Alpha-, Beta-, Delta-
+   * and GammaCiv depending on strategies given.
+   * Initializes the private variables with tiletypes, city initial positions for the cities
+   * and initial unit placements in the world.
    */
   public GameImpl(AgingStrategy a, WinningStrategy w, UnitActionStrategy ua, WorldLayoutStrategy ws) {
     this.agingStrategy = a;
@@ -63,6 +64,8 @@ public class GameImpl implements Game {
     units = new HashMap<>();
     worldLayoutStrategy.createTheWorld(this);
   }
+
+  // === Accessor methods ======================================
 
   public HashMap<Position, TileImpl> getWorld() {
     return world;
@@ -92,62 +95,78 @@ public class GameImpl implements Game {
     return playerInTurn;
   }
 
-  public Player getWinner() {
-    return winningStrategy.getWinner(this);
-  }
-
   public int getAge() {
     return gameAge;
   }
 
-  public boolean isOpponentCityEmpty(Position from, Position to) {
-    boolean isTheCityVacant = units.get(to) == null;
-    boolean isTheCityForeign = cities.get(to).getOwner() != playerInTurn;
-    if (isTheCityVacant && isTheCityForeign) {
-      return true;
+  public Player getWinner() {
+    return winningStrategy.getWinner(this);
+  }
+
+  // === Setter methods ======================================
+  /**
+   * Sets the game age to a given age
+   * @param newGameAge the age the game will now have
+   */
+  public void setGameAge(int newGameAge) {
+    gameAge = newGameAge;
+  }
+
+  public void changeProductionInCityAt(Position p, String unitType) {
+    cities.get(p).changeProduction(unitType);
+  }
+
+  public void changeWorkForceFocusInCityAt(Position p, String balance) {
+  }//Not implemented
+
+  // === Mutator methods ======================================
+  /**
+   * Creates a city at a given position. The owner of
+   * the new city is set to the player in turn.
+   * Precondition: There can not be a city at the position given
+   * @param position position of the new city
+   */
+  public void createCityAtPosition(Position position) {
+    boolean isPositionVacantForCity = cities.get(position) == null;
+    if (isPositionVacantForCity) {
+      cities.put(position, new CityImpl(playerInTurn));
     }
-    return false;
   }
 
   public boolean moveUnit(Position from, Position to) {
-    boolean isThereACityAtPositionTo = cities.get(to) != null;
+    boolean isFromInTheWorld = world.containsKey(from);
+    boolean isToInTheWorld = world.containsKey(to);
+    boolean isTileTypeAtToValidForMovement = world.get(to).isValidMovementTileType();
+    boolean isThereAUnitAtFrom = units.get(from) != null;
+    boolean isThereAUnitAtTo = units.get(to) != null;
+    boolean isUnitOwnedByPlayerInTurn = isThereAUnitAtFrom && units.get(from).getOwner() == playerInTurn;
+    boolean isThereAlreadyAFriendlyUnitAtTo = isThereAUnitAtFrom && isThereAUnitAtTo && units.get(from).getOwner() == units.get(to).getOwner();
+    boolean isUnitMoveable = isThereAUnitAtFrom && units.get(from).isMoveable();
+    boolean hasMovesLeft = isThereAUnitAtFrom && units.get(from).getMoveCount() > 0;
 
-    if (!world.containsKey(from) || !world.containsKey(to)) {
+    if ( ! (isFromInTheWorld &&
+            isToInTheWorld &&
+            isTileTypeAtToValidForMovement &&
+            isThereAUnitAtFrom &&
+            isUnitOwnedByPlayerInTurn &&
+            !isThereAlreadyAFriendlyUnitAtTo &&
+            isUnitMoveable &&
+            hasMovesLeft)) {
       return false;
-    } //Only allow units to move within the boundries of the map
-    if (!world.get(to).isValidMovementTileType()) {
-      return false;
-    } //Units can not move to certain tiles
-    if (units.get(from) == null) {
-      return false;
-    } //Making sure there is a unit at from position
-    if (units.get(from).getOwner() != playerInTurn) {
-      return false;
-    } //Making sure the player in turn can only move his/her own units
-    if (units.get(to) != null &&
-            units.get(from).getOwner() == units.get(to).getOwner()) {
-      return false;
-    } //Units should not move to tile with other units from the same owner
-
-    boolean isArcherFortified = units.get(from).getDefensiveStrength() == 6;
-    boolean isThereAnArcherAtPositionFrom = units.get(from).getTypeString().equals(GameConstants.ARCHER);
-    if  (isArcherFortified && isThereAnArcherAtPositionFrom) {return false;}
-
-    if (units.get(to) != null) {
-      units.remove(to);
-    } //Attacking unit should always win
-    if (units.get(from).getMoveCount() < 1) {
-      return false;
-    } //Units need to have a positive move counter to move
-
-    if (isThereACityAtPositionTo) {
-      if (isOpponentCityEmpty(from, to)) {
-        cities.get(to).changeOwner(playerInTurn);
-      }
     }
 
-    for (Position po : Utility.get8neighborhoodOf(from)) {
-      if (po.equals(to)) {
+    //Handling of attack on a city
+    boolean isThereACityAtPositionTo = cities.containsKey(to);
+    boolean isTheCityForeign = isThereACityAtPositionTo && cities.get(to).getOwner() != playerInTurn;
+
+    if (    isThereACityAtPositionTo &&
+            isTheCityForeign) {
+      cities.get(to).changeOwner(playerInTurn);
+    }
+
+    //Handling of movement for the unit
+    for (Position unitPosition : Utility.get8neighborhoodOf(from)) {
+      if (unitPosition.equals(to)) {
         //Find the tile the unit is trying to move to,
         // create a new unit with moveCounter 0 of the same type there and remove the old
         String unitType = units.get(from).getTypeString();
@@ -156,14 +175,13 @@ public class GameImpl implements Game {
         units.get(to).decreaseMoveCount();
         return true;
       }
-
     }
-
     return false;
   }
 
   public void endOfTurn() {
-    if (playerInTurn.equals(Player.RED)) {
+    boolean isPlayerInTurnRed = playerInTurn.equals(Player.RED);
+    if (isPlayerInTurnRed) {
       playerInTurn = Player.BLUE;
     } else {
       playerInTurn = Player.RED;
@@ -174,63 +192,67 @@ public class GameImpl implements Game {
     }
   }
 
-  private void produceUnitInCityAt(Position p, CityImpl c) {
-    boolean isThereAUnitAtPosition = units.get(p) != null;
-    if (c.hasEnoughTreasure()) {
-      c.reduceTreasury(c.getProdCost());
-      if (!isThereAUnitAtPosition) {
-        units.put(p, new UnitImpl(c.getProduction(), c.getOwner()));
-      }
-    } else {
-      for (Position neighbourPosition : Utility.get8neighborhoodOf(p)) {
-        boolean isThereAUnitAtNeighbourPosition = units.get(neighbourPosition) == null;
+  /**
+   * Produces unit in a city. If the city already has a unit
+   * in the city, it will produce a unit at a neighbour position
+   * , first looking to the north then going clockwise
+   * @param cityPosition position of the city to produce unit
+   * @param city the city at cityPosition
+   */
+  private void produceUnitInCityAt(Position cityPosition, CityImpl city) {
+    boolean isCityPositionVacantForUnit = units.get(cityPosition) == null;
+    boolean doesCityHaveEnoughTreasure = city.hasEnoughTreasure();
+
+    if (!doesCityHaveEnoughTreasure) { return; }
+    city.reduceTreasury(city.getProdCost());
+    if (isCityPositionVacantForUnit) {
+      units.put(cityPosition, new UnitImpl(city.getProduction(), city.getOwner()));
+    }
+    else {
+      for (Position neighbourPosition : Utility.get8neighborhoodOf(cityPosition)) {
+        boolean isNeighbourPositionVacantForUnit = units.get(neighbourPosition) == null;
         boolean isValidTileInWorld = world.get(neighbourPosition).isValidMovementTileType();
-        if (isThereAUnitAtNeighbourPosition && isValidTileInWorld) {
-          units.put(neighbourPosition, new UnitImpl(c.getProduction(), c.getOwner()));
+
+        if (    isNeighbourPositionVacantForUnit &&
+                isValidTileInWorld) {
+          units.put(neighbourPosition, new UnitImpl(city.getProduction(), city.getOwner()));
           break;
         }
       }
     }
   }
 
-
-  public void setGameAge(int newGameAge) {
-    gameAge = newGameAge;
-  }
-
-  public void changeWorkForceFocusInCityAt(Position p, String balance) {
-  }//Not implemented
-
-  public void changeProductionInCityAt(Position p, String unitType) {
-    cities.get(p).changeProduction(unitType);
-  }
-
   public void performUnitActionAt(Position p) {
     unitActionStrategy.performUnitActionAt(this, p);
   }
 
+  /**
+   * Removes a unit at a certain position from the units map
+   * Precondition: There has to be a unit at the given position
+   * @param unitPosition the position of the unit to be removed
+   */
   public void removeUnitFromUnitsMapAtPosition(Position unitPosition) {
     boolean isThereAUnitAtPosition = units.get(unitPosition) != null;
-    if (isThereAUnitAtPosition) {
-      units.remove(unitPosition);
-    }
+    if (isThereAUnitAtPosition) { units.remove(unitPosition); }
   }
 
+
+
+  // === Boolean methods ======================================
+
+  /**
+   *  Checks if the player currently in turn owns all citites
+   * @return true if player in turn owns all the cities
+   */
   public boolean doesPlayerInTurnOwnAllCities() {
     Set<Player> owners = new HashSet<>();
     cities.values().forEach(city -> owners.add(city.getOwner()));
-    if (owners.size() == 1) {
-      return true;
-    }
-    return false;
+
+    boolean doesAPlayerOwnAllCities = owners.size() == 1;
+    return doesAPlayerOwnAllCities && owners.contains(playerInTurn);
   }
 
-  public void createCityAtPosition(Position position) {
-    boolean isPositionVacantForCity = cities.get(position) == null;
-    if (isPositionVacantForCity) {
-      cities.put(position, new CityImpl(playerInTurn));
-    }
-  }
+
 
 
 }

@@ -9,15 +9,19 @@ public class UnitImpl implements Unit {
   private int attackStrength;
   private String type;
   private Player owner;
-  private int move;
+  private int moveCounter;
+  private boolean isMoveable;
+  private boolean isFortified;
 
   public UnitImpl(String type, Player owner) {
     this.type = type;
     this.owner = owner;
-    this.move = 1;
+    this.moveCounter = 1;
+    this.isMoveable = true;
     if (type.equals(GameConstants.ARCHER)) {
       this.defenseStrength = 3;
       this.attackStrength = 2;
+      this.isFortified = false;
     }
     if (type.equals(GameConstants.LEGION)) {
       this.defenseStrength = 2;
@@ -41,14 +45,24 @@ public class UnitImpl implements Unit {
 
   @Override
   public int getMoveCount() {
-    return move;
+    return moveCounter;
   }
 
   @Override
   public int getDefensiveStrength() { return defenseStrength;}
 
   public void fortifyArcher(){
-    defenseStrength *= 2;
+    boolean isArcherAlreadyFortified = isFortified;
+
+    if (isArcherAlreadyFortified) {
+      isMoveable = true;
+      defenseStrength /= 2;
+    }
+    else {
+      isFortified = true;
+      isMoveable = false;
+      defenseStrength *= 2;
+    }
   }
 
 
@@ -57,11 +71,16 @@ public class UnitImpl implements Unit {
     return attackStrength;
   }
 
+  @Override
+  public boolean isMoveable() {
+    return isMoveable;
+  }
+
   public void decreaseMoveCount() {
-    move --;
+    moveCounter --;
   }
 
   public void resetMoveCounter() {
-    move = 1;
+    moveCounter = 1;
   }
 }

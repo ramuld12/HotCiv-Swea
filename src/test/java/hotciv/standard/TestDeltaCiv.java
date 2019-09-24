@@ -74,45 +74,6 @@ public class TestDeltaCiv {
     assertThat(game.getCityAt(p).getOwner(), is(Player.BLUE));
   }
 
-
-  @Test
-  public void blueShouldBeAfterRed() {
-    game.endOfTurn();
-    assertThat(game.getPlayerInTurn(), is(Player.BLUE));
-  }
-
-  @Test
-  public void redShouldBeginEachRound(){
-    endOfRound();
-    assertThat(game.getPlayerInTurn(), is(Player.RED));
-  }
-
-  @Test
-  public void gameShouldBeginInYear4000BC() {
-    assertThat(game.getAge(), is(-4000));
-  }
-
-  @Test
-  public void gameShouldAdvances100YearsPrRound() {
-    endOfRound();
-    endOfRound();
-    assertThat(game.getAge(), is(-3800));
-  }
-
-  @Test
-  public void redShouldWinInYear3000BC() {
-    for (int i = 0; i<10; i++) { endOfRound(); }
-    assertThat(game.getWinner(), is(Player.RED));
-  }
-
-  @Test
-  public void winnerShouldBeNullBetween4000BCAnd3100BC() {
-    for (int i = 0; i<9; i++) {
-      endOfRound();
-      assertNull(game.getWinner());
-    }
-  }
-
   @Test
   public void shouldBeOceanAtTile1_0() {
     Position p = new Position(0,1);
@@ -137,64 +98,6 @@ public class TestDeltaCiv {
     assertThat(game.getTileAt(new Position(10,4)).getTypeString(), is(GameConstants.PLAINS));
   }
 
-  @Test
-  public void shouldAdd6ProductionEachRound() {
-    endOfRound();
-    assertThat(game.getCityAt(new Position(8,12)).getTreasury(), is(6));
-  }
-
-  @Test
-  public void shouldChangeProductionUnit(){
-    Position p = new Position(8,12);
-    game.changeProductionInCityAt(p,GameConstants.ARCHER);
-    assertThat(game.getCityAt(p).getProduction(), is(GameConstants.ARCHER));
-
-    Position m = new Position(4,5);
-    game.changeProductionInCityAt(m,GameConstants.SETTLER);
-    assertThat(game.getCityAt(m).getProduction(), is(GameConstants.SETTLER));
-  }
-
-  @Test
-  public void shouldCreateUnitInVacantRedCity() {
-    Position p = new Position(8,12);
-    assertNull(game.getUnitAt(p));
-    endOfRound();
-    endOfRound();
-    assertThat(game.getUnitAt(p).getTypeString(), is(GameConstants.ARCHER));
-  }
-
-  @Test
-  public void shouldReduceTreasuryWhenProducingUnit() {
-    Position p = new Position(8,12);
-    endOfRound();
-    endOfRound();
-    assertThat(game.getCityAt(p).getTreasury(), is(2));
-  }
-
-  @Test
-  public void shouldCreateUnitInVacantBlueCity() {
-    Position p = new Position(4,5);
-    game.changeProductionInCityAt(p,GameConstants.LEGION);
-    assertNull(game.getUnitAt(p));
-    endOfRound();
-    endOfRound();
-    endOfRound();
-    assertThat(game.getUnitAt(p).getTypeString(), is(GameConstants.LEGION));
-  }
-
-  @Test
-  public void shouldNotAllowMovingFromMinus1_Minus0 () {
-    Position p1 = new Position (0,1);
-    Position p2 = new Position (-1,0);
-    assertFalse(game.moveUnit(p1, p2));
-  }
-
-  @Test
-  public void shouldNotAllowMovingToMinus1_Minus0 () {
-    Position p1 = new Position (0,1);
-    Position p2 = new Position (-1,0);
-    assertFalse(game.moveUnit(p2, p1));
-  }
 
 }
 

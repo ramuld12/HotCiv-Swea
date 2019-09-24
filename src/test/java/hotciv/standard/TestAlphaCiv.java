@@ -39,7 +39,7 @@ import java.util.*;
 
 */
 public class TestAlphaCiv {
-  private Game game;
+  private GameImpl game;
 
   /** Fixture for alphaciv testing. */
   @Before
@@ -307,6 +307,8 @@ public class TestAlphaCiv {
     assertNull(game.getUnitAt(p));
     endOfRound();
     endOfRound();
+    //Unit created in blue city at (4,1)
+
     endOfRound();
     endOfRound();
     assertThat(game.getUnitAt(p).getTypeString(), is(GameConstants.ARCHER));
@@ -316,7 +318,7 @@ public class TestAlphaCiv {
   public void shouldNotAllowMovingFromMinus1_Minus0 () {
     Position p1 = new Position (0,1);
     Position p2 = new Position (-1,0);
-    assertFalse(game.moveUnit(p1, p2));
+    assertFalse(game.moveUnit(p2, p1));
   }
 
   @Test
@@ -337,6 +339,37 @@ public class TestAlphaCiv {
     endOfRound();
     assertFalse(game.moveUnit(p1, p2));
   }
+
+  @Test
+  public void shouldCreateCityAtPosition () {
+    Position p = new Position(4,5);
+    game.createCityAtPosition(p);
+    assertNotNull(game.getCityAt(p));
+  }
+
+  @Test
+  public void shouldRemoveUnitAt4_3() {
+    Position unitPosition = new Position(4,3);
+    game.removeUnitFromUnitsMapAtPosition(unitPosition);
+    assertNull(game.getUnitAt(unitPosition));
+  }
+
+  @Test
+  public void shouldReturnTrueIfPlayerOwnsAllCities(){
+    Position blueCity = new Position(4,1);
+    Position unitPosition = new Position(4,3);
+    game.moveUnit(unitPosition, new Position(4,2));
+    endOfRound();
+    game.moveUnit(new Position(4,2),blueCity);
+    assertTrue(game.doesPlayerInTurnOwnAllCities());
+
+  }
+
+  @Test
+  public void shouldReturnFalseIfPlayerDoesNotOWnAllCities(){
+    assertFalse(game.doesPlayerInTurnOwnAllCities());
+  }
+
 
 }
 
