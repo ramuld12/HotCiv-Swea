@@ -353,6 +353,23 @@ public class TestAlphaCiv {
     assertNull(game.getUnitAt(unitPosition));
   }
 
+  @Test
+  public void shouldReturnTrueIfPlayerOwnsAllCities(){
+    Position blueCity = new Position(4,1);
+    Position unitPosition = new Position(4,3);
+    game.moveUnit(unitPosition, new Position(4,2));
+    endOfRound();
+    game.moveUnit(new Position(4,2),blueCity);
+    assertTrue(game.doesPlayerInTurnOwnAllCities());
+
+  }
+
+  @Test
+  public void shouldReturnFalseIfPlayerDoesNotOWnAllCities(){
+    assertFalse(game.doesPlayerInTurnOwnAllCities());
+  }
+
+
 }
 
 
