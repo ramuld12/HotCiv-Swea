@@ -1,5 +1,6 @@
 package hotciv.standard.strategies;
 
+import hotciv.framework.GameConstants;
 import hotciv.framework.Player;
 import hotciv.framework.Position;
 import hotciv.standard.CityImpl;
@@ -20,14 +21,23 @@ public class EpsilonCivBattleStrategy implements BattleStrategy {
     Player playerInTurn = game.getPlayerInTurn();
     UnitImpl attackingUnit = units.get(attackingPosition);
     UnitImpl defendingUnit = units.get(defendingPosition);
+
+
     boolean isAttackingUnitInACity = cities.containsKey(attackingPosition);
     boolean isDefendingUnitInACity = cities.containsKey(defendingPosition);
+    boolean isAttackingUnitOnHill = world.get(attackingPosition).getTypeString().equals(GameConstants.HILLS);
+    boolean isDefendingUnitOnHill = world.get(defendingPosition).getTypeString().equals(GameConstants.HILLS);
     if (isAttackingUnitInACity) {
       attackingUnit.changeAttackStrength(attackingUnit.getAttackingStrength() * 3);
     }
     if (isDefendingUnitInACity){
       defendingUnit.changeDefenseStrength(defendingUnit.getDefensiveStrength() * 3);
-
+    }
+    if (isAttackingUnitOnHill) {
+      attackingUnit.changeAttackStrength(attackingUnit.getAttackingStrength() * 2);
+    }
+    if (isDefendingUnitOnHill) {
+      defendingUnit.changeDefenseStrength(defendingUnit.getDefensiveStrength() * 2);
     }
 
 
