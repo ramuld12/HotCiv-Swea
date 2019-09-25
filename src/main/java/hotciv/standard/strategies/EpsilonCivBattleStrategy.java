@@ -11,11 +11,9 @@ public class EpsilonCivBattleStrategy implements BattleStrategy {
   private int defenseUnitStrength;
 
   public void battleTest(GameImpl game, Position attackingPosition, Position defendingPosition) {
-    HashMap<Player, Integer> players = game.getPlayers();
     HashMap<Position,UnitImpl> units = game.getUnits();
     HashMap<Position, CityImpl> cities = game.getCities();
     HashMap<Position, TileImpl> world = game.getWorld();
-    Player playerInTurn = game.getPlayerInTurn();
     UnitImpl attackingUnit = units.get(attackingPosition);
     UnitImpl defendingUnit = units.get(defendingPosition);
     int numberOfFriendlySorroundingAttackUnits = game.findNumberOfFriendlyNeighbourUnits(attackingPosition);
@@ -44,14 +42,19 @@ public class EpsilonCivBattleStrategy implements BattleStrategy {
     }
     if (isDefendingUnitOnHill) {
       defenseUnitStrength *= 2;    }
-
-    players.put(playerInTurn, players.get(playerInTurn) + 1 );
   }
 
   @Override
   public boolean battle(GameImpl game, Position attacking, Position defending) {
+    HashMap<Player, Integer> players = game.getPlayers();
+    Player playerInTurn = game.getPlayerInTurn();
+
     battleTest(game, attacking, defending);
-    return attackingUnitStrength > defenseUnitStrength;
+    boolean didAttackWin = attackingUnitStrength > defenseUnitStrength;
+    if (didAttackWin) {
+      players.put(playerInTurn, players.get(playerInTurn) + 1 );
+    }
+    return didAttackWin;
   }
 
   public int getAttackingUnitStrength() {return attackingUnitStrength;}

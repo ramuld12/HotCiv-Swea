@@ -59,6 +59,7 @@ public class TestEpsilonCiv {
     Position blueLegion = new Position(3,2);
     game.moveUnit(redArcher, new Position(3,1));
     endOfRound();
+    game.getUnitAt(new Position(3,1)).changeAttackStrength(20);
     game.moveUnit(new Position(3,1), blueLegion);
     assertThat(game.getVictoriesForPlayer(Player.RED), is(1));
   }
@@ -78,23 +79,30 @@ public class TestEpsilonCiv {
   public void redShouldWinWhenVictoryCountReach3(){
     units.put(new Position(3,1), new UnitImpl(GameConstants.SETTLER,Player.BLUE));
     units.put(new Position(2,1), new UnitImpl(GameConstants.SETTLER,Player.BLUE));
+    game.getUnitAt(new Position(2,0)).changeAttackStrength(20);
     game.moveUnit(new Position(2,0), new Position(2,1));
     endOfRound();
+    game.getUnitAt(new Position(2,1)).changeAttackStrength(20);
     game.moveUnit(new Position(2,1),new Position(3,1));
     endOfRound();
+    game.getUnitAt(new Position(3,1)).changeAttackStrength(20);
     game.moveUnit(new Position(3,1), new Position(3,2));
     assertThat(game.getWinner(), is(Player.RED));
   }
 
+  //Blue Unit wins against 3 red units
   @Test
   public void blueShouldWinWhenVictoryCountReach3(){
     game.endOfTurn();
     units.put(new Position(3,1), new UnitImpl(GameConstants.SETTLER,Player.RED));
     units.put(new Position(2,1), new UnitImpl(GameConstants.SETTLER,Player.RED));
+    game.getUnitAt(new Position(3,2)).changeAttackStrength(20);
     game.moveUnit(new Position(3,2), new Position(3,1));
     endOfRound();
+    game.getUnitAt(new Position(3,1)).changeAttackStrength(20);
     game.moveUnit(new Position(3,1),new Position(2,1));
     endOfRound();
+    game.getUnitAt(new Position(2,1)).changeAttackStrength(20);
     game.moveUnit(new Position(2,1), new Position(2,0));
     assertThat(game.getWinner(), is(Player.BLUE));
   }
