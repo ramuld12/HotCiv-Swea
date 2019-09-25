@@ -1,12 +1,8 @@
 package hotciv.standard.strategies;
 
-import hotciv.framework.GameConstants;
-import hotciv.framework.Player;
-import hotciv.framework.Position;
-import hotciv.standard.CityImpl;
-import hotciv.standard.GameImpl;
-import hotciv.standard.TileImpl;
-import hotciv.standard.UnitImpl;
+import hotciv.framework.*;
+import hotciv.standard.*;
+import hotciv.utility.Utility;
 
 import java.util.HashMap;
 
@@ -21,12 +17,22 @@ public class EpsilonCivBattleStrategy implements BattleStrategy {
     Player playerInTurn = game.getPlayerInTurn();
     UnitImpl attackingUnit = units.get(attackingPosition);
     UnitImpl defendingUnit = units.get(defendingPosition);
+    int numberOfFriendlySorroundingUnits = 0;
 
 
     boolean isAttackingUnitInACity = cities.containsKey(attackingPosition);
     boolean isDefendingUnitInACity = cities.containsKey(defendingPosition);
     boolean isAttackingUnitOnHill = world.get(attackingPosition).getTypeString().equals(GameConstants.HILLS);
     boolean isDefendingUnitOnHill = world.get(defendingPosition).getTypeString().equals(GameConstants.HILLS);
+
+    for (Position friendlyUnitPosition : Utility.get8neighborhoodOf(attackingPosition)) {
+      boolean isThereAUnitAtNeighbourPosition = game.getUnitAt(friendlyUnitPosition) != null;
+      boolean isFriendlyUnit = isThereAUnitAtNeighbourPosition && game.getUnitAt(friendlyUnitPosition).getOwner().equals(game.getUnitAt(attackingPosition).getOwner());
+      if(isFriendlyUnit) {
+        numberOfFriendlySorroundingUnits ++;
+      }
+    }
+    attackingUnit.changeAttackStrength(attackingUnit.getAttackingStrength() + numberOfFriendlySorroundingUnits);
     if (isAttackingUnitInACity) {
       attackingUnit.changeAttackStrength(attackingUnit.getAttackingStrength() * 3);
     }
@@ -39,6 +45,8 @@ public class EpsilonCivBattleStrategy implements BattleStrategy {
     if (isDefendingUnitOnHill) {
       defendingUnit.changeDefenseStrength(defendingUnit.getDefensiveStrength() * 2);
     }
+
+
 
 
     players.put(playerInTurn, players.get(playerInTurn) + 1 );

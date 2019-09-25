@@ -16,6 +16,7 @@ import java.util.*;
 
 public class TestEpsilonCiv {
   private GameImpl game;
+  private HashMap<Position, UnitImpl> units;
 
   /**
    * Fixture for alphaciv testing.
@@ -24,6 +25,7 @@ public class TestEpsilonCiv {
   public void setUp() {
     game = new GameImpl(new AlphaCivAgingStrategy(), new EpsilonCivWinningStrategy(), new AlphaCivUnitActionStrategy(), new AlphaCivWorldLayoutStrategy(), new EpsilonCivBattleStrategy());
     assertThat(game, is(notNullValue()));
+    units = game.getUnits();
   }
 
   /**
@@ -64,7 +66,6 @@ public class TestEpsilonCiv {
 
   @Test
   public void redShouldWinWhenVictoryCountReach3(){
-    HashMap<Position, UnitImpl> units = game.getUnits();
     units.put(new Position(3,1), new UnitImpl(GameConstants.SETTLER,Player.BLUE));
     units.put(new Position(2,1), new UnitImpl(GameConstants.SETTLER,Player.BLUE));
     game.moveUnit(new Position(2,0), new Position(2,1));
@@ -78,7 +79,6 @@ public class TestEpsilonCiv {
   @Test
   public void blueShouldWinWhenVictoryCountReach3(){
     game.endOfTurn();
-    HashMap<Position, UnitImpl> units = game.getUnits();
     units.put(new Position(3,1), new UnitImpl(GameConstants.SETTLER,Player.RED));
     units.put(new Position(2,1), new UnitImpl(GameConstants.SETTLER,Player.RED));
     game.moveUnit(new Position(3,2), new Position(3,1));
@@ -91,9 +91,9 @@ public class TestEpsilonCiv {
 
   @Test
   public void redArcherInCityShouldHave6AttackStrength(){
-    HashMap<Position, UnitImpl> units = game.getUnits();
     Position attackingUnitInCity = new Position(1,1);
     Position defendingUnit = new Position(2,1);
+    units.remove(new Position(2,0));
     units.put(defendingUnit, new UnitImpl(GameConstants.LEGION,Player.BLUE));
     endOfRound();
     endOfRound();
@@ -103,7 +103,6 @@ public class TestEpsilonCiv {
 
   @Test
   public void redArcherInCityShouldHave9DefenseStrength(){
-    HashMap<Position, UnitImpl> units = game.getUnits();
     Position defendingUnitInCity  = new Position(1,1);
     Position attackingUnit = new Position(2,1);
     units.put(attackingUnit, new UnitImpl(GameConstants.LEGION,Player.BLUE));
@@ -115,9 +114,9 @@ public class TestEpsilonCiv {
 
   @Test
   public void redLegionInCityShouldHave12AttackStrength(){
-    HashMap<Position, UnitImpl> units = game.getUnits();
     Position attackingUnitInCity = new Position(1,1);
     Position defendingUnit = new Position(2,1);
+    units.remove(new Position(2,0));
     game.changeProductionInCityAt(attackingUnitInCity, GameConstants.LEGION);
     units.put(defendingUnit, new UnitImpl(GameConstants.LEGION,Player.BLUE));
     endOfRound();
@@ -129,7 +128,6 @@ public class TestEpsilonCiv {
 
   @Test
   public void redLegionInCityShouldHave6DefenseStrength(){
-    HashMap<Position, UnitImpl> units = game.getUnits();
     Position defendingUnitInCity  = new Position(1,1);
     Position attackingUnit = new Position(2,1);
     game.changeProductionInCityAt(defendingUnitInCity, GameConstants.LEGION);
@@ -143,7 +141,6 @@ public class TestEpsilonCiv {
 
   @Test
   public void redArcherOnHillShouldHave4Attack(){
-    HashMap<Position, UnitImpl> units = game.getUnits();
     Position attackingUnitOnHill = new Position(0,1);
     Position defendingUnit = new Position(0,2);
     units.put(attackingUnitOnHill, new UnitImpl(GameConstants.ARCHER,Player.RED));
@@ -154,13 +151,26 @@ public class TestEpsilonCiv {
 
   @Test
   public void redArcherOnHillShouldHave6Defense(){
-    HashMap<Position, UnitImpl> units = game.getUnits();
     Position defendingUnitOnHill = new Position(0,1);
     Position attackingUnit = new Position(0,2);
     units.put(defendingUnitOnHill, new UnitImpl(GameConstants.ARCHER,Player.RED));
     units.put(attackingUnit, new UnitImpl(GameConstants.LEGION,Player.BLUE));
     game.getBattleStrategy().battle(game, attackingUnit, defendingUnitOnHill);
     assertThat(game.getUnitAt(defendingUnitOnHill).getDefensiveStrength(), is(6));
+  }
+
+  @Test
+  public void redArcherSorroundedBy2FriendlyUnitsShouldHave4Attack() {
+    Position archerPositionMain = new Position(8,8);
+    Position archerPosition2 = new Position(8,7);
+    Position archerPosition3 = new Position(7,8);
+    Position defendingPosition = new Position(8,9);
+    units.put(archerPositionMain, new UnitImpl(GameConstants.ARCHER,Player.RED));
+    units.put(archerPosition2, new UnitImpl(GameConstants.ARCHER,Player.RED));
+    units.put(archerPosition3, new UnitImpl(GameConstants.ARCHER,Player.RED));
+    units.put(defendingPosition, new UnitImpl(GameConstants.ARCHER,Player.BLUE));
+    game.getBattleStrategy().battle(game, archerPositionMain, defendingPosition);
+    assertThat(game.getUnitAt(archerPositionMain).getAttackingStrength(), is(4));
   }
 
 
