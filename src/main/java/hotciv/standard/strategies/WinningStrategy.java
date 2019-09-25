@@ -3,6 +3,8 @@ package hotciv.standard.strategies;
 import hotciv.framework.Player;
 import hotciv.standard.GameImpl;
 
+import java.util.HashMap;
+
 public interface WinningStrategy {
 
   /**
@@ -12,4 +14,6 @@ public interface WinningStrategy {
    * @return the Player who won
    */
   public Player getWinner(GameImpl game);
+
+  public void initializePlayerVictories(GameImpl game);
 }

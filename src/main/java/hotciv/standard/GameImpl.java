@@ -47,6 +47,7 @@ public class GameImpl implements Game {
   private HashMap<Position, TileImpl> world; //HashMap for representing the different tiletypes
   private HashMap<Position, CityImpl> cities; //HashMap representing the cities
   private HashMap<Position, UnitImpl> units; //HashMap representing the units
+  private HashMap<Player, Integer> playerVictories; //HashMap representing playervictories
 
   /**
    * Constructor method for GameImpl, which can create a GameImpl for Alpha-, Beta-, Delta-
@@ -63,6 +64,7 @@ public class GameImpl implements Game {
     cities = new HashMap<>();
     units = new HashMap<>();
     worldLayoutStrategy.createTheWorld(this);
+    winningStrategy.initializePlayerVictories(this);
   }
 
   // === Accessor methods ======================================
@@ -77,6 +79,10 @@ public class GameImpl implements Game {
 
   public HashMap<Position, UnitImpl> getUnits() {
     return units;
+  }
+
+  public HashMap<Player, Integer> getPlayers() {
+    return playerVictories;
   }
 
   public TileImpl getTileAt(Position p) {
@@ -98,6 +104,8 @@ public class GameImpl implements Game {
   public int getAge() {
     return gameAge;
   }
+
+  public int getVictories(Player p) { return playerVictories.get(p); }
 
   public Player getWinner() {
     return winningStrategy.getWinner(this);
@@ -249,8 +257,6 @@ public class GameImpl implements Game {
     if (isThereAUnitAtPosition) { units.remove(unitPosition); }
   }
 
-
-
   // === Boolean methods ======================================
 
   /**
@@ -264,8 +270,5 @@ public class GameImpl implements Game {
     boolean doesAPlayerOwnAllCities = owners.size() == 1;
     return doesAPlayerOwnAllCities && owners.contains(playerInTurn);
   }
-
-//Test for release4
-
 
 }

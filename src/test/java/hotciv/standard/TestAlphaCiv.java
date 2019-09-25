@@ -56,7 +56,6 @@ public class TestAlphaCiv {
     game.endOfTurn();
   }
 
-  // FRS p. 455 states that 'Red is the first player to take a turn'.
   @Test
   public void shouldBeRedAsStartingPlayer() {
     assertThat(game.getPlayerInTurn(), is(Player.RED));
