@@ -86,8 +86,36 @@ public class TestEpsilonCiv {
     game.moveUnit(new Position(3,1),new Position(2,1));
     endOfRound();
     game.moveUnit(new Position(2,1), new Position(2,0));
-
     assertThat(game.getWinner(), is(Player.BLUE));
   }
+
+  @Test
+  public void redArcherInCityShouldHave6AttackStrength(){
+    HashMap<Position, UnitImpl> units = game.getUnits();
+    Position attackingUnitInCity = new Position(1,1);
+    Position defendingUnit = new Position(2,1);
+    units.put(defendingUnit, new UnitImpl(GameConstants.LEGION,Player.BLUE));
+    endOfRound();
+    endOfRound();
+    game.getBattleStrategy().battle(game,attackingUnitInCity,defendingUnit);
+    assertThat(game.getUnitAt(attackingUnitInCity).getAttackingStrength(), is(6));
+  }
+
+  @Test
+  public void redArcherInCityShouldHave9DefenseStrength(){
+    HashMap<Position, UnitImpl> units = game.getUnits();
+    Position defendingUnitInCity  = new Position(1,1);
+    Position attackingUnit = new Position(2,1);
+    units.put(attackingUnit, new UnitImpl(GameConstants.LEGION,Player.BLUE));
+    endOfRound();
+    endOfRound();
+    game.getBattleStrategy().battle(game,attackingUnit,defendingUnitInCity);
+    assertThat(game.getUnitAt(defendingUnitInCity).getDefensiveStrength(), is(9));
+  }
+
+  @Test
+  public 
+
+
 }
 

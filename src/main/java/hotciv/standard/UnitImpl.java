@@ -83,4 +83,12 @@ public class UnitImpl implements Unit {
   public void resetMoveCounter() {
     moveCounter = 1;
   }
+
+  public void changeAttackStrength(int newAttackStrength) {
+    attackStrength = newAttackStrength;
+  }
+
+  public void changeDefenseStrength(int newDefenseStrength) {
+  defenseStrength = newDefenseStrength;
+  }
 }
