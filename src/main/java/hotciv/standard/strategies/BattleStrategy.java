@@ -6,5 +6,5 @@ import hotciv.standard.UnitImpl;
 
 public interface BattleStrategy {
 
-  public void battle(GameImpl game, Position attacking, Position defending);
+  public boolean battle(GameImpl game, Position attacking, Position defending);
 }

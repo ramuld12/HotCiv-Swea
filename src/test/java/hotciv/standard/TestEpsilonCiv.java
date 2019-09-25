@@ -107,8 +107,8 @@ public class TestEpsilonCiv {
     units.put(defendingUnit, new UnitImpl(GameConstants.LEGION,Player.BLUE));
     endOfRound();
     endOfRound();
-    game.getBattleStrategy().battle(game,attackingUnitInCity,defendingUnit);
-    assertThat(game.getUnitAt(attackingUnitInCity).getAttackingStrength(), is(6));
+    game.getBattleStrategy().battleTest(game,attackingUnitInCity,defendingUnit);
+    assertThat(game.getBattleStrategy().getAttackingUnitStrength(), is(6));
   }
 
   @Test
@@ -119,8 +119,8 @@ public class TestEpsilonCiv {
     units.put(attackingUnit, new UnitImpl(GameConstants.LEGION,Player.BLUE));
     endOfRound();
     endOfRound();
-    game.getBattleStrategy().battle(game,attackingUnit,defendingUnitInCity);
-    assertThat(game.getUnitAt(defendingUnitInCity).getDefensiveStrength(), is(9));
+    game.getBattleStrategy().battleTest(game,attackingUnit,defendingUnitInCity);
+    assertThat(game.getBattleStrategy().getDefenseUnitStrength(), is(9));
   }
 
   @Test
@@ -133,8 +133,8 @@ public class TestEpsilonCiv {
     endOfRound();
     endOfRound();
     endOfRound();
-    game.getBattleStrategy().battle(game,attackingUnitInCity,defendingUnit);
-    assertThat(game.getUnitAt(attackingUnitInCity).getAttackingStrength(), is(12));
+    game.getBattleStrategy().battleTest(game,attackingUnitInCity,defendingUnit);
+    assertThat(game.getBattleStrategy().getAttackingUnitStrength(), is(12));
   }
 
   @Test
@@ -147,8 +147,8 @@ public class TestEpsilonCiv {
     endOfRound();
     endOfRound();
     endOfRound();
-    game.getBattleStrategy().battle(game,attackingUnit,defendingUnitInCity);
-    assertThat(game.getUnitAt(defendingUnitInCity).getDefensiveStrength(), is(6));
+    game.getBattleStrategy().battleTest(game,attackingUnit,defendingUnitInCity);
+    assertThat(game.getBattleStrategy().getDefenseUnitStrength(), is(6));
   }
 
   @Test
@@ -157,8 +157,8 @@ public class TestEpsilonCiv {
     Position defendingUnit = new Position(0,2);
     units.put(attackingUnitOnHill, new UnitImpl(GameConstants.ARCHER,Player.RED));
     units.put(defendingUnit, new UnitImpl(GameConstants.LEGION,Player.BLUE));
-    game.getBattleStrategy().battle(game, attackingUnitOnHill, defendingUnit);
-    assertThat(game.getUnitAt(attackingUnitOnHill).getAttackingStrength(), is(4));
+    game.getBattleStrategy().battleTest(game, attackingUnitOnHill, defendingUnit);
+    assertThat(game.getBattleStrategy().getAttackingUnitStrength(), is(4));
   }
 
   @Test
@@ -167,8 +167,8 @@ public class TestEpsilonCiv {
     Position attackingUnit = new Position(0,2);
     units.put(defendingUnitOnHill, new UnitImpl(GameConstants.ARCHER,Player.RED));
     units.put(attackingUnit, new UnitImpl(GameConstants.LEGION,Player.BLUE));
-    game.getBattleStrategy().battle(game, attackingUnit, defendingUnitOnHill);
-    assertThat(game.getUnitAt(defendingUnitOnHill).getDefensiveStrength(), is(6));
+    game.getBattleStrategy().battleTest(game, attackingUnit, defendingUnitOnHill);
+    assertThat(game.getBattleStrategy().getDefenseUnitStrength(), is(6));
   }
 
   @Test
@@ -181,8 +181,8 @@ public class TestEpsilonCiv {
     units.put(archerPosition2, new UnitImpl(GameConstants.ARCHER,Player.RED));
     units.put(archerPosition3, new UnitImpl(GameConstants.ARCHER,Player.RED));
     units.put(defendingPosition, new UnitImpl(GameConstants.ARCHER,Player.BLUE));
-    game.getBattleStrategy().battle(game, archerPositionMain, defendingPosition);
-    assertThat(game.getUnitAt(archerPositionMain).getAttackingStrength(), is(4));
+    game.getBattleStrategy().battleTest(game, archerPositionMain, defendingPosition);
+    assertThat(game.getBattleStrategy().getAttackingUnitStrength(), is(4));
   }
 
   @Test
@@ -195,8 +195,8 @@ public class TestEpsilonCiv {
     units.put(archerPosition2, new UnitImpl(GameConstants.ARCHER,Player.RED));
     units.put(archerPosition3, new UnitImpl(GameConstants.ARCHER,Player.RED));
     units.put(attackingPosition, new UnitImpl(GameConstants.ARCHER,Player.BLUE));
-    game.getBattleStrategy().battle(game, attackingPosition, archerPositionMain);
-    assertThat(game.getUnitAt(archerPositionMain).getDefensiveStrength(), is(5));
+    game.getBattleStrategy().battleTest(game, attackingPosition, archerPositionMain);
+    assertThat(game.getBattleStrategy().getDefenseUnitStrength(), is(5));
   }
 
   @Test
@@ -211,8 +211,8 @@ public class TestEpsilonCiv {
     units.put(archerPosition2, new UnitImpl(GameConstants.ARCHER,Player.RED));
     units.put(archerPosition3, new UnitImpl(GameConstants.ARCHER,Player.RED));
     units.put(defendingPosition, new UnitImpl(GameConstants.ARCHER,Player.BLUE));
-    game.getBattleStrategy().battle(game, archerPositionMain, defendingPosition);
-    assertThat(game.getUnitAt(archerPositionMain).getAttackingStrength(), is(12));
+    game.getBattleStrategy().battleTest(game, archerPositionMain, defendingPosition);
+    assertThat(game.getBattleStrategy().getAttackingUnitStrength(), is(12));
   }
 
   @Test
@@ -227,8 +227,8 @@ public class TestEpsilonCiv {
     units.put(archerPosition2, new UnitImpl(GameConstants.ARCHER,Player.RED));
     units.put(archerPosition3, new UnitImpl(GameConstants.ARCHER,Player.RED));
     units.put(defendingPosition, new UnitImpl(GameConstants.ARCHER,Player.BLUE));
-    game.getBattleStrategy().battle(game, archerPositionMain, defendingPosition);
-    assertThat(game.getUnitAt(archerPositionMain).getAttackingStrength(), is(8));
+    game.getBattleStrategy().battleTest(game, archerPositionMain, defendingPosition);
+    assertThat(game.getBattleStrategy().getAttackingUnitStrength(), is(8));
   }
 
 
@@ -245,10 +245,57 @@ public class TestEpsilonCiv {
     units.put(archerPosition2, new UnitImpl(GameConstants.ARCHER,Player.RED));
     units.put(archerPosition3, new UnitImpl(GameConstants.ARCHER,Player.RED));
     units.put(defendingPosition, new UnitImpl(GameConstants.ARCHER,Player.BLUE));
-    game.getBattleStrategy().battle(game, archerPositionMain, defendingPosition);
-    assertThat(game.getUnitAt(archerPositionMain).getAttackingStrength(), is(24));
+    game.getBattleStrategy().battleTest(game, archerPositionMain, defendingPosition);
+    assertThat(game.getBattleStrategy().getAttackingUnitStrength(), is(24));
   }
 
+  @Test
+  public void redArcherShouldWin() {
+    Position redArcher = new Position(8,8);
+    Position redArcher2 = new Position(8,7);
+    Position redArcher3 = new Position(7,8);
+    Position blueArcher = new Position(8,9);
+    game.createTileAtPosition(redArcher, new TileImpl(GameConstants.HILLS));
+    game.createCityAtPosition(redArcher);
 
+    units.put(redArcher, new UnitImpl(GameConstants.ARCHER,Player.RED));
+    units.put(redArcher2, new UnitImpl(GameConstants.ARCHER,Player.RED));
+    units.put(redArcher3, new UnitImpl(GameConstants.ARCHER,Player.RED));
+    units.put(blueArcher, new UnitImpl(GameConstants.ARCHER,Player.BLUE));
+    assertTrue(game.getBattleStrategy().battle(game, redArcher, blueArcher));
+  }
+
+  @Test
+  public void blueArcherShouldWin() {
+    game.endOfTurn();
+    Position redArcher = new Position(8,8);
+    Position redArcher2 = new Position(8,7);
+    Position redArcher3 = new Position(7,8);
+    Position blueArcher = new Position(8,9);
+    game.createTileAtPosition(redArcher, new TileImpl(GameConstants.HILLS));
+
+    units.put(redArcher, new UnitImpl(GameConstants.ARCHER,Player.RED));
+    units.put(redArcher2, new UnitImpl(GameConstants.ARCHER,Player.RED));
+    units.put(redArcher3, new UnitImpl(GameConstants.ARCHER,Player.RED));
+    units.put(blueArcher, new UnitImpl(GameConstants.ARCHER,Player.BLUE));
+    units.get(blueArcher).changeAttackStrength(25);
+    assertTrue(game.getBattleStrategy().battle(game, blueArcher, redArcher));
+  }
+
+  @Test
+  public void blueArcherShouldLose() {
+    game.endOfTurn();
+    Position redArcher = new Position(8,8);
+    Position redArcher2 = new Position(8,7);
+    Position redArcher3 = new Position(7,8);
+    Position blueArcher = new Position(8,9);
+    game.createTileAtPosition(redArcher, new TileImpl(GameConstants.HILLS));
+
+    units.put(redArcher, new UnitImpl(GameConstants.ARCHER,Player.RED));
+    units.put(redArcher2, new UnitImpl(GameConstants.ARCHER,Player.RED));
+    units.put(redArcher3, new UnitImpl(GameConstants.ARCHER,Player.RED));
+    units.put(blueArcher, new UnitImpl(GameConstants.ARCHER,Player.BLUE));;
+    assertFalse(game.getBattleStrategy().battle(game, blueArcher, redArcher));
+  }
 }
 

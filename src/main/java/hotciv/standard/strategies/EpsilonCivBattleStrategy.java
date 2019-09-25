@@ -7,9 +7,10 @@ import hotciv.utility.Utility;
 import java.util.HashMap;
 
 public class EpsilonCivBattleStrategy implements BattleStrategy {
+  private int attackingUnitStrength;
+  private int defenseUnitStrength;
 
-  @Override
-  public void battle(GameImpl game, Position attackingPosition, Position defendingPosition) {
+  public void battleTest(GameImpl game, Position attackingPosition, Position defendingPosition) {
     HashMap<Player, Integer> players = game.getPlayers();
     HashMap<Position,UnitImpl> units = game.getUnits();
     HashMap<Position, CityImpl> cities = game.getCities();
@@ -19,8 +20,8 @@ public class EpsilonCivBattleStrategy implements BattleStrategy {
     UnitImpl defendingUnit = units.get(defendingPosition);
     int numberOfFriendlySorroundingAttackUnits = game.findNumberOfFriendlyNeighbourUnits(attackingPosition);
     int numberOfFriendlySorroundingDefenseUnits = game.findNumberOfFriendlyNeighbourUnits(defendingPosition);
-    int attackingUnitStrength =  attackingUnit.getAttackingStrength();
-    int defenseUnitStrength = defendingUnit.getDefensiveStrength();
+    attackingUnitStrength = attackingUnit.getAttackingStrength();
+    defenseUnitStrength = defendingUnit.getDefensiveStrength();
 
 
     boolean isAttackingUnitInACity = cities.containsKey(attackingPosition);
@@ -28,27 +29,32 @@ public class EpsilonCivBattleStrategy implements BattleStrategy {
     boolean isAttackingUnitOnHill = world.get(attackingPosition).getTypeString().equals(GameConstants.HILLS);
     boolean isDefendingUnitOnHill = world.get(defendingPosition).getTypeString().equals(GameConstants.HILLS);
 
-    defendingUnit.changeDefenseStrength((defenseUnitStrength + numberOfFriendlySorroundingDefenseUnits));
+    defenseUnitStrength += numberOfFriendlySorroundingDefenseUnits;
 
-    attackingUnit.changeAttackStrength(attackingUnitStrength + numberOfFriendlySorroundingAttackUnits);
+    attackingUnitStrength += numberOfFriendlySorroundingAttackUnits;
 
     if (isAttackingUnitInACity) {
-      attackingUnit.changeAttackStrength(attackingUnit.getAttackingStrength() * 3);
+      attackingUnitStrength *= 3;
     }
     if (isDefendingUnitInACity){
-      defendingUnit.changeDefenseStrength(defendingUnit.getDefensiveStrength() * 3);
+      defenseUnitStrength *= 3;
     }
     if (isAttackingUnitOnHill) {
-      attackingUnit.changeAttackStrength(attackingUnit.getAttackingStrength() * 2);
+      attackingUnitStrength *= 2;
     }
     if (isDefendingUnitOnHill) {
-      defendingUnit.changeDefenseStrength(defendingUnit.getDefensiveStrength() * 2);
-    }
-
-
-
+      defenseUnitStrength *= 2;    }
 
     players.put(playerInTurn, players.get(playerInTurn) + 1 );
   }
 
+  @Override
+  public boolean battle(GameImpl game, Position attacking, Position defending) {
+    battleTest(game, attacking, defending);
+    return attackingUnitStrength > defenseUnitStrength;
+  }
+
+  public int getAttackingUnitStrength() {return attackingUnitStrength;}
+
+  public int getDefenseUnitStrength() {return defenseUnitStrength;}
 }

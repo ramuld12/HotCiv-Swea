@@ -7,7 +7,7 @@ public class AlphaCivBattleStrategy implements BattleStrategy {
 
 
   @Override
-  public void battle(GameImpl game, Position attacking, Position defending) {
-
+  public boolean battle(GameImpl game, Position attacking, Position defending) {
+    return false;
   }
 }
