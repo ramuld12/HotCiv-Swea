@@ -3,6 +3,7 @@ package hotciv.standard;
 import hotciv.framework.*;
 
 import hotciv.standard.strategies.*;
+import hotciv.utility.Utility;
 import org.junit.*;
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
@@ -34,6 +35,15 @@ public class TestEpsilonCiv {
   public void endOfRound() {
     game.endOfTurn();
     game.endOfTurn();
+  }
+
+  private void removeNeighbours(Position p){
+    for (Position neighbourPosition : Utility.get8neighborhoodOf(p)) {
+      boolean isUnitPresent = game.getUnitAt(neighbourPosition) != null;
+      if(isUnitPresent){
+        units.remove(neighbourPosition);
+      }
+    }
   }
 
   @Test
@@ -93,7 +103,7 @@ public class TestEpsilonCiv {
   public void redArcherInCityShouldHave6AttackStrength(){
     Position attackingUnitInCity = new Position(1,1);
     Position defendingUnit = new Position(2,1);
-    units.remove(new Position(2,0));
+    removeNeighbours(attackingUnitInCity);
     units.put(defendingUnit, new UnitImpl(GameConstants.LEGION,Player.BLUE));
     endOfRound();
     endOfRound();
@@ -105,6 +115,7 @@ public class TestEpsilonCiv {
   public void redArcherInCityShouldHave9DefenseStrength(){
     Position defendingUnitInCity  = new Position(1,1);
     Position attackingUnit = new Position(2,1);
+    removeNeighbours(defendingUnitInCity);
     units.put(attackingUnit, new UnitImpl(GameConstants.LEGION,Player.BLUE));
     endOfRound();
     endOfRound();
@@ -116,7 +127,7 @@ public class TestEpsilonCiv {
   public void redLegionInCityShouldHave12AttackStrength(){
     Position attackingUnitInCity = new Position(1,1);
     Position defendingUnit = new Position(2,1);
-    units.remove(new Position(2,0));
+    removeNeighbours(attackingUnitInCity);
     game.changeProductionInCityAt(attackingUnitInCity, GameConstants.LEGION);
     units.put(defendingUnit, new UnitImpl(GameConstants.LEGION,Player.BLUE));
     endOfRound();
@@ -130,6 +141,7 @@ public class TestEpsilonCiv {
   public void redLegionInCityShouldHave6DefenseStrength(){
     Position defendingUnitInCity  = new Position(1,1);
     Position attackingUnit = new Position(2,1);
+    removeNeighbours(defendingUnitInCity);
     game.changeProductionInCityAt(defendingUnitInCity, GameConstants.LEGION);
     units.put(attackingUnit, new UnitImpl(GameConstants.LEGION,Player.BLUE));
     endOfRound();
@@ -171,6 +183,20 @@ public class TestEpsilonCiv {
     units.put(defendingPosition, new UnitImpl(GameConstants.ARCHER,Player.BLUE));
     game.getBattleStrategy().battle(game, archerPositionMain, defendingPosition);
     assertThat(game.getUnitAt(archerPositionMain).getAttackingStrength(), is(4));
+  }
+
+  @Test
+  public void redArcherSorroundedBy2FriendlyUnitsShouldHave5Defense() {
+    Position archerPositionMain = new Position(8,8);
+    Position archerPosition2 = new Position(8,7);
+    Position archerPosition3 = new Position(7,8);
+    Position attackingPosition = new Position(8,9);
+    units.put(archerPositionMain, new UnitImpl(GameConstants.ARCHER,Player.RED));
+    units.put(archerPosition2, new UnitImpl(GameConstants.ARCHER,Player.RED));
+    units.put(archerPosition3, new UnitImpl(GameConstants.ARCHER,Player.RED));
+    units.put(attackingPosition, new UnitImpl(GameConstants.ARCHER,Player.BLUE));
+    game.getBattleStrategy().battle(game, attackingPosition, archerPositionMain);
+    assertThat(game.getUnitAt(archerPositionMain).getDefensiveStrength(), is(5));
   }
 
 

@@ -17,7 +17,8 @@ public class EpsilonCivBattleStrategy implements BattleStrategy {
     Player playerInTurn = game.getPlayerInTurn();
     UnitImpl attackingUnit = units.get(attackingPosition);
     UnitImpl defendingUnit = units.get(defendingPosition);
-    int numberOfFriendlySorroundingUnits = 0;
+    int numberOfFriendlySorroundingAttackUnits = 0;
+    int numberOfFriendlySorroundingDefenseUnits = 0;
 
 
     boolean isAttackingUnitInACity = cities.containsKey(attackingPosition);
@@ -25,14 +26,24 @@ public class EpsilonCivBattleStrategy implements BattleStrategy {
     boolean isAttackingUnitOnHill = world.get(attackingPosition).getTypeString().equals(GameConstants.HILLS);
     boolean isDefendingUnitOnHill = world.get(defendingPosition).getTypeString().equals(GameConstants.HILLS);
 
+    for (Position friendlyUnitPosition : Utility.get8neighborhoodOf(defendingPosition)) {
+      boolean isThereAUnitAtNeighbourPosition = game.getUnitAt(friendlyUnitPosition) != null;
+      boolean isFriendlyUnit = isThereAUnitAtNeighbourPosition && game.getUnitAt(friendlyUnitPosition).getOwner().equals(game.getUnitAt(defendingPosition).getOwner());
+      if(isFriendlyUnit) {
+        numberOfFriendlySorroundingDefenseUnits ++;
+      }
+    }
+    defendingUnit.changeDefenseStrength((defendingUnit.getDefensiveStrength() + numberOfFriendlySorroundingDefenseUnits));
+
     for (Position friendlyUnitPosition : Utility.get8neighborhoodOf(attackingPosition)) {
       boolean isThereAUnitAtNeighbourPosition = game.getUnitAt(friendlyUnitPosition) != null;
       boolean isFriendlyUnit = isThereAUnitAtNeighbourPosition && game.getUnitAt(friendlyUnitPosition).getOwner().equals(game.getUnitAt(attackingPosition).getOwner());
       if(isFriendlyUnit) {
-        numberOfFriendlySorroundingUnits ++;
+        numberOfFriendlySorroundingAttackUnits ++;
       }
     }
-    attackingUnit.changeAttackStrength(attackingUnit.getAttackingStrength() + numberOfFriendlySorroundingUnits);
+    attackingUnit.changeAttackStrength(attackingUnit.getAttackingStrength() + numberOfFriendlySorroundingAttackUnits);
+
     if (isAttackingUnitInACity) {
       attackingUnit.changeAttackStrength(attackingUnit.getAttackingStrength() * 3);
     }
