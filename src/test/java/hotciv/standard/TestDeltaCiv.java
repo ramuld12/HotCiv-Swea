@@ -43,7 +43,7 @@ public class TestDeltaCiv {
   /** Fixture for Deltaciv testing. */
   @Before
   public void setUp() {
-    game = new GameImpl(new AlphaCivAgingStrategy(), new AlphaCivWinningStrategy(), new AlphaCivUnitActionStrategy(), new DeltaCivWorldLayoutStrategy());
+    game = new GameImpl(new AlphaCivAgingStrategy(), new AlphaCivWinningStrategy(), new AlphaCivUnitActionStrategy(), new DeltaCivWorldLayoutStrategy(), new AlphaCivBattleStrategy());
     assertThat(game, is(notNullValue()));
   }
 

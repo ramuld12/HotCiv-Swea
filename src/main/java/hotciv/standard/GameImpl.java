@@ -1,10 +1,7 @@
 package hotciv.standard;
 
 import hotciv.framework.*;
-import hotciv.standard.strategies.AgingStrategy;
-import hotciv.standard.strategies.UnitActionStrategy;
-import hotciv.standard.strategies.WinningStrategy;
-import hotciv.standard.strategies.WorldLayoutStrategy;
+import hotciv.standard.strategies.*;
 import hotciv.utility.*;
 
 import java.util.HashMap;
@@ -42,6 +39,7 @@ public class GameImpl implements Game {
   private final AgingStrategy agingStrategy;
   private final UnitActionStrategy unitActionStrategy;
   private final WorldLayoutStrategy worldLayoutStrategy;
+  private final BattleStrategy battleStrategy;
   private Player playerInTurn = Player.RED; //The current player in turn, initially set to red
   private int gameAge = -4000; //The current age of the game, initially set to -4000
   private HashMap<Position, TileImpl> world; //HashMap for representing the different tiletypes
@@ -49,20 +47,23 @@ public class GameImpl implements Game {
   private HashMap<Position, UnitImpl> units; //HashMap representing the units
   private HashMap<Player, Integer> playerVictories; //HashMap representing playervictories
 
+
   /**
    * Constructor method for GameImpl, which can create a GameImpl for Alpha-, Beta-, Delta-
    * and GammaCiv depending on strategies given.
    * Initializes the private variables with tiletypes, city initial positions for the cities
    * and initial unit placements in the world.
    */
-  public GameImpl(AgingStrategy a, WinningStrategy w, UnitActionStrategy ua, WorldLayoutStrategy ws) {
+  public GameImpl(AgingStrategy a, WinningStrategy w, UnitActionStrategy ua, WorldLayoutStrategy ws, BattleStrategy bs) {
     this.agingStrategy = a;
     this.winningStrategy = w;
     this.unitActionStrategy = ua;
     this.worldLayoutStrategy = ws;
+    this.battleStrategy = bs;
     world = new HashMap<>();
     cities = new HashMap<>();
     units = new HashMap<>();
+    playerVictories = new HashMap<>();
     worldLayoutStrategy.createTheWorld(this);
     winningStrategy.initializePlayerVictories(this);
   }
@@ -105,7 +106,7 @@ public class GameImpl implements Game {
     return gameAge;
   }
 
-  public int getVictories(Player p) { return playerVictories.get(p); }
+  public int getVictoriesForPlayer(Player p) { return playerVictories.get(p); }
 
   public Player getWinner() {
     return winningStrategy.getWinner(this);
@@ -148,6 +149,7 @@ public class GameImpl implements Game {
     boolean isThereAUnitAtFrom = units.get(from) != null;
     boolean isThereAUnitAtTo = units.get(to) != null;
     boolean isUnitOwnedByPlayerInTurn = isThereAUnitAtFrom && units.get(from).getOwner() == playerInTurn;
+    boolean isThereAnEnemyUnitAtTo = isThereAUnitAtFrom && isThereAUnitAtTo && units.get(from).getOwner() != units.get(to).getOwner();
     boolean isThereAlreadyAFriendlyUnitAtTo = isThereAUnitAtFrom && isThereAUnitAtTo && units.get(from).getOwner() == units.get(to).getOwner();
     boolean isUnitMoveable = isThereAUnitAtFrom && units.get(from).isMoveable();
     boolean hasMovesLeft = isThereAUnitAtFrom && units.get(from).getMoveCount() > 0;
@@ -161,6 +163,11 @@ public class GameImpl implements Game {
             isUnitMoveable &&
             hasMovesLeft)) {
       return false;
+    }
+
+    //Handling of unit Battle
+    if (isThereAnEnemyUnitAtTo) {
+      battleStrategy.battle(this);
     }
 
     //Handling of attack on a city

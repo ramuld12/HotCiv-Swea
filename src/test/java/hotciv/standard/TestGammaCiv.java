@@ -42,7 +42,7 @@ public class TestGammaCiv {
   /** Fixture for GammeCiv testing. */
   @Before
   public void setUp() {
-    game = new GameImpl(new AlphaCivAgingStrategy(), new AlphaCivWinningStrategy(), new GammaCivUnitActionStrategy(), new AlphaCivWorldLayoutStrategy());
+    game = new GameImpl(new AlphaCivAgingStrategy(), new AlphaCivWinningStrategy(), new GammaCivUnitActionStrategy(), new AlphaCivWorldLayoutStrategy(), new AlphaCivBattleStrategy());
     assertThat(game, is(notNullValue()));
   }
 

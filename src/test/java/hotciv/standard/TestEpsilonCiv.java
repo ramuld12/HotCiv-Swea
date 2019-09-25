@@ -22,7 +22,7 @@ public class TestEpsilonCiv {
    */
   @Before
   public void setUp() {
-    game = new GameImpl(new AlphaCivAgingStrategy(), new EpsilonCivWinningStrategy(), new AlphaCivUnitActionStrategy(), new AlphaCivWorldLayoutStrategy());
+    game = new GameImpl(new AlphaCivAgingStrategy(), new EpsilonCivWinningStrategy(), new AlphaCivUnitActionStrategy(), new AlphaCivWorldLayoutStrategy(), new EpsilonCivBattleStrategy());
     assertThat(game, is(notNullValue()));
   }
 
@@ -35,14 +35,21 @@ public class TestEpsilonCiv {
   }
 
   @Test
-  public void redShouldStartWith0Victories() {
-    assertThat(game.getVictories(Player.RED), is(0));
+  public void redAndBlueShouldStartWith0Victories() {
+    assertThat(game.getVictoriesForPlayer(Player.RED), is(0));
+    assertThat(game.getVictoriesForPlayer(Player.BLUE), is(0));
   }
 
-  /*public void attackCountShouldIncrementWhenWinning() {
 
-
-  }*/
+  @Test
+  public void attackCountShouldIncrementWhenWinning() {
+    Position redArcher = new Position(2, 0);
+    Position blueLegion = new Position(3,2);
+    game.moveUnit(redArcher, new Position(3,1));
+    endOfRound();
+    game.moveUnit(new Position(3,1), blueLegion);
+    assertThat(game.getVictoriesForPlayer(Player.RED), is(1));
+  }
 
 }
 

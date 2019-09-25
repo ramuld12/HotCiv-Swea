@@ -44,7 +44,7 @@ public class TestAlphaCiv {
   /** Fixture for alphaciv testing. */
   @Before
   public void setUp() {
-    game = new GameImpl(new AlphaCivAgingStrategy(), new AlphaCivWinningStrategy(), new AlphaCivUnitActionStrategy(), new AlphaCivWorldLayoutStrategy());
+    game = new GameImpl(new AlphaCivAgingStrategy(), new AlphaCivWinningStrategy(), new AlphaCivUnitActionStrategy(), new AlphaCivWorldLayoutStrategy(), new AlphaCivBattleStrategy());
     assertThat(game, is(notNullValue()));
   }
 
