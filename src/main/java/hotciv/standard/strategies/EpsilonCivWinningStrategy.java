@@ -16,7 +16,8 @@ public class EpsilonCivWinningStrategy implements WinningStrategy {
 
   @Override
   public Player getWinner(GameImpl game) {
-    if (game.doesPlayerInTurnOwnAllCities()) {
+    boolean isPlayerInTurnTheWinner = game.getVictoriesForPlayer(game.getPlayerInTurn()) == 3;
+    if (isPlayerInTurnTheWinner) {
       return game.getPlayerInTurn();
     }
     return null;

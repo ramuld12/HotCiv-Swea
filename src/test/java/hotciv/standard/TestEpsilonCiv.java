@@ -42,7 +42,7 @@ public class TestEpsilonCiv {
 
 
   @Test
-  public void attackCountShouldIncrementWhenWinning() {
+  public void redVictoyCountShouldIncrementWhenWinning() {
     Position redArcher = new Position(2, 0);
     Position blueLegion = new Position(3,2);
     game.moveUnit(redArcher, new Position(3,1));
@@ -51,5 +51,43 @@ public class TestEpsilonCiv {
     assertThat(game.getVictoriesForPlayer(Player.RED), is(1));
   }
 
+  @Test
+  public void blueVictoyCountShouldIncrementWhenWinning() {
+    game.endOfTurn(); // So blue is in turn
+    Position redArcher = new Position(2, 0);
+    Position blueLegion = new Position(3,2);
+    game.moveUnit(blueLegion, new Position(3,1));
+    endOfRound();
+    game.moveUnit(new Position(3,1), redArcher);
+    assertThat(game.getVictoriesForPlayer(Player.BLUE), is(1));
+  }
+
+  @Test
+  public void redShouldWinWhenVictoryCountReach3(){
+    HashMap<Position, UnitImpl> units = game.getUnits();
+    units.put(new Position(3,1), new UnitImpl(GameConstants.SETTLER,Player.BLUE));
+    units.put(new Position(2,1), new UnitImpl(GameConstants.SETTLER,Player.BLUE));
+    game.moveUnit(new Position(2,0), new Position(2,1));
+    endOfRound();
+    game.moveUnit(new Position(2,1),new Position(3,1));
+    endOfRound();
+    game.moveUnit(new Position(3,1), new Position(3,2));
+    assertThat(game.getWinner(), is(Player.RED));
+  }
+
+  @Test
+  public void blueShouldWinWhenVictoryCountReach3(){
+    game.endOfTurn();
+    HashMap<Position, UnitImpl> units = game.getUnits();
+    units.put(new Position(3,1), new UnitImpl(GameConstants.SETTLER,Player.RED));
+    units.put(new Position(2,1), new UnitImpl(GameConstants.SETTLER,Player.RED));
+    game.moveUnit(new Position(3,2), new Position(3,1));
+    endOfRound();
+    game.moveUnit(new Position(3,1),new Position(2,1));
+    endOfRound();
+    game.moveUnit(new Position(2,1), new Position(2,0));
+
+    assertThat(game.getWinner(), is(Player.BLUE));
+  }
 }
 
