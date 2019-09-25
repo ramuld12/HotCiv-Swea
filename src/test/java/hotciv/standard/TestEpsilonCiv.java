@@ -199,6 +199,56 @@ public class TestEpsilonCiv {
     assertThat(game.getUnitAt(archerPositionMain).getDefensiveStrength(), is(5));
   }
 
+  @Test
+  public void redArcherInCityWith2FriendsShouldHave12Attack(){
+    Position archerPositionMain = new Position(8,8);
+    Position archerPosition2 = new Position(8,7);
+    Position archerPosition3 = new Position(7,8);
+    Position defendingPosition = new Position(8,9);
+    game.createCityAtPosition(archerPositionMain);
+
+    units.put(archerPositionMain, new UnitImpl(GameConstants.ARCHER,Player.RED));
+    units.put(archerPosition2, new UnitImpl(GameConstants.ARCHER,Player.RED));
+    units.put(archerPosition3, new UnitImpl(GameConstants.ARCHER,Player.RED));
+    units.put(defendingPosition, new UnitImpl(GameConstants.ARCHER,Player.BLUE));
+    game.getBattleStrategy().battle(game, archerPositionMain, defendingPosition);
+    assertThat(game.getUnitAt(archerPositionMain).getAttackingStrength(), is(12));
+  }
+
+  @Test
+  public void redArcherOnHillWith2FriendsShouldHave8Attack(){
+    Position archerPositionMain = new Position(8,8);
+    Position archerPosition2 = new Position(8,7);
+    Position archerPosition3 = new Position(7,8);
+    Position defendingPosition = new Position(8,9);
+    game.createTileAtPosition(archerPositionMain, new TileImpl(GameConstants.HILLS));
+
+    units.put(archerPositionMain, new UnitImpl(GameConstants.ARCHER,Player.RED));
+    units.put(archerPosition2, new UnitImpl(GameConstants.ARCHER,Player.RED));
+    units.put(archerPosition3, new UnitImpl(GameConstants.ARCHER,Player.RED));
+    units.put(defendingPosition, new UnitImpl(GameConstants.ARCHER,Player.BLUE));
+    game.getBattleStrategy().battle(game, archerPositionMain, defendingPosition);
+    assertThat(game.getUnitAt(archerPositionMain).getAttackingStrength(), is(8));
+  }
+
+
+  @Test
+  public void redArcherOnHillInCityWith2FriendsShouldHave24Attack(){
+    Position archerPositionMain = new Position(8,8);
+    Position archerPosition2 = new Position(8,7);
+    Position archerPosition3 = new Position(7,8);
+    Position defendingPosition = new Position(8,9);
+    game.createTileAtPosition(archerPositionMain, new TileImpl(GameConstants.HILLS));
+    game.createCityAtPosition(archerPositionMain);
+
+    units.put(archerPositionMain, new UnitImpl(GameConstants.ARCHER,Player.RED));
+    units.put(archerPosition2, new UnitImpl(GameConstants.ARCHER,Player.RED));
+    units.put(archerPosition3, new UnitImpl(GameConstants.ARCHER,Player.RED));
+    units.put(defendingPosition, new UnitImpl(GameConstants.ARCHER,Player.BLUE));
+    game.getBattleStrategy().battle(game, archerPositionMain, defendingPosition);
+    assertThat(game.getUnitAt(archerPositionMain).getAttackingStrength(), is(24));
+  }
+
 
 }
 

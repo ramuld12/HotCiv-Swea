@@ -7,32 +7,32 @@ import hotciv.utility.*;
 import java.util.HashMap;
 import java.util.*;
 
-/** Skeleton implementation of HotCiv.
- 
-   This source code is from the book 
-     "Flexible, Reliable Software:
-       Using Patterns and Agile Development"
-     published 2010 by CRC Press.
-   Author: 
-     Henrik B Christensen 
-     Department of Computer Science
-     Aarhus University
-   
-   Please visit http://www.baerbak.com/ for further information.
-
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
- 
-       http://www.apache.org/licenses/LICENSE-2.0
- 
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
-
-*/
+/**
+ * Skeleton implementation of HotCiv.
+ * <p>
+ * This source code is from the book
+ * "Flexible, Reliable Software:
+ * Using Patterns and Agile Development"
+ * published 2010 by CRC Press.
+ * Author:
+ * Henrik B Christensen
+ * Department of Computer Science
+ * Aarhus University
+ * <p>
+ * Please visit http://www.baerbak.com/ for further information.
+ * <p>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 public class GameImpl implements Game {
   private final WinningStrategy winningStrategy;
@@ -68,7 +68,7 @@ public class GameImpl implements Game {
     winningStrategy.initializePlayerVictories(this);
   }
 
-  public EpsilonCivBattleStrategy getBattleStrategy(){
+  public EpsilonCivBattleStrategy getBattleStrategy() {
     return (EpsilonCivBattleStrategy) battleStrategy;
   }
 
@@ -110,15 +110,19 @@ public class GameImpl implements Game {
     return gameAge;
   }
 
-  public int getVictoriesForPlayer(Player p) { return playerVictories.get(p); }
+  public int getVictoriesForPlayer(Player p) {
+    return playerVictories.get(p);
+  }
 
   public Player getWinner() {
     return winningStrategy.getWinner(this);
   }
 
   // === Setter methods ======================================
+
   /**
    * Sets the game age to a given age
+   *
    * @param newGameAge the age the game will now have
    */
   public void setGameAge(int newGameAge) {
@@ -133,10 +137,12 @@ public class GameImpl implements Game {
   }//Not implemented
 
   // === Mutator methods ======================================
+
   /**
    * Creates a city at a given position. The owner of
    * the new city is set to the player in turn.
    * Precondition: There can not be a city at the position given
+   *
    * @param position position of the new city
    */
   public void createCityAtPosition(Position position) {
@@ -144,6 +150,10 @@ public class GameImpl implements Game {
     if (isPositionVacantForCity) {
       cities.put(position, new CityImpl(playerInTurn));
     }
+  }
+
+  public void createTileAtPosition(Position position, TileImpl tiletype) {
+    world.put(position, tiletype);
   }
 
   public boolean moveUnit(Position from, Position to) {
@@ -158,7 +168,7 @@ public class GameImpl implements Game {
     boolean isUnitMoveable = isThereAUnitAtFrom && units.get(from).isMoveable();
     boolean hasMovesLeft = isThereAUnitAtFrom && units.get(from).getMoveCount() > 0;
 
-    if ( ! (isFromInTheWorld &&
+    if (!(isFromInTheWorld &&
             isToInTheWorld &&
             isTileTypeAtToValidForMovement &&
             isThereAUnitAtFrom &&
@@ -171,14 +181,14 @@ public class GameImpl implements Game {
 
     //Handling of unit Battle
     if (isThereAnEnemyUnitAtTo) {
-      battleStrategy.battle(this, from,to);
+      battleStrategy.battle(this, from, to);
     }
 
     //Handling of attack on a city
     boolean isThereACityAtPositionTo = cities.containsKey(to);
     boolean isTheCityForeign = isThereACityAtPositionTo && cities.get(to).getOwner() != playerInTurn;
 
-    if (    isThereACityAtPositionTo &&
+    if (isThereACityAtPositionTo &&
             isTheCityForeign) {
       cities.get(to).changeOwner(playerInTurn);
     }
@@ -215,28 +225,31 @@ public class GameImpl implements Game {
    * Produces unit in a city. If the city already has a unit
    * in the city, it will produce a unit at a neighbour position
    * , first looking to the north then going clockwise
+   *
    * @param cityPosition position of the city to produce unit
-   * @param city the city at cityPosition
+   * @param city         the city at cityPosition
    */
   private void produceUnitInCityAt(Position cityPosition, CityImpl city) {
     boolean isCityPositionVacantForUnit = units.get(cityPosition) == null;
     boolean doesCityHaveEnoughTreasure = city.hasEnoughTreasure();
-    if (!doesCityHaveEnoughTreasure) { return; }
+    if (!doesCityHaveEnoughTreasure) {
+      return;
+    }
 
     city.reduceTreasury(city.getProdCost());
     if (isCityPositionVacantForUnit) {
       units.put(cityPosition, new UnitImpl(city.getProduction(), city.getOwner()));
-    }
-    else {
+    } else {
       Position vacantNeighbourPosition = findFirstVacantNeighbourPosition(cityPosition);
       units.put(vacantNeighbourPosition, new UnitImpl(city.getProduction(), city.getOwner()));
-      }
     }
+  }
 
   /**
    * Find the first vacant position around a
    * given centerposition. Returns null if none
    * of the neighbour positions are vacant.
+   *
    * @param centerPosition the center position
    * @return the first eligible neighbour position.
    */
@@ -254,32 +267,47 @@ public class GameImpl implements Game {
     return null;
   }
 
-  public void performUnitActionAt(Position p) {
-    unitActionStrategy.performUnitActionAt(this, p);
+  public int findNumberOfFriendlyNeighbourUnits(Position centerPosition) {
+    int numberOfFriends = 0;
+    for (Position neighbourPosition : Utility.get8neighborhoodOf(centerPosition)) {
+      boolean isThereAUnitAtNeighbourPosition = getUnitAt(neighbourPosition) != null;
+      boolean isFriendlyUnit = isThereAUnitAtNeighbourPosition && getUnitAt(neighbourPosition).getOwner().equals(getUnitAt(centerPosition).getOwner());
+      if (isFriendlyUnit) {
+        numberOfFriends++;
+      }
+    }
+    return numberOfFriends;
   }
 
-  /**
-   * Removes a unit at a certain position from the units map
-   * Precondition: There has to be a unit at the given position
-   * @param unitPosition the position of the unit to be removed
-   */
-  public void removeUnitFromUnitsMapAtPosition(Position unitPosition) {
-    boolean isThereAUnitAtPosition = units.get(unitPosition) != null;
-    if (isThereAUnitAtPosition) { units.remove(unitPosition); }
-  }
+    public void performUnitActionAt (Position p){
+      unitActionStrategy.performUnitActionAt(this, p);
+    }
 
-  // === Boolean methods ======================================
+    /**
+     * Removes a unit at a certain position from the units map
+     * Precondition: There has to be a unit at the given position
+     * @param unitPosition the position of the unit to be removed
+     */
+    public void removeUnitFromUnitsMapAtPosition (Position unitPosition){
+      boolean isThereAUnitAtPosition = units.get(unitPosition) != null;
+      if (isThereAUnitAtPosition) {
+        units.remove(unitPosition);
+      }
+    }
 
-  /**
-   *  Checks if the player currently in turn owns all citites
-   * @return true if player in turn owns all the cities
-   */
-  public boolean doesPlayerInTurnOwnAllCities() {
-    Set<Player> owners = new HashSet<>();
-    cities.values().forEach(city -> owners.add(city.getOwner()));
+    // === Boolean methods ======================================
 
-    boolean doesAPlayerOwnAllCities = owners.size() == 1;
-    return doesAPlayerOwnAllCities && owners.contains(playerInTurn);
-  }
+    /**
+     *  Checks if the player currently in turn owns all citites
+     * @return true if player in turn owns all the cities
+     */
+    public boolean doesPlayerInTurnOwnAllCities () {
+      Set<Player> owners = new HashSet<>();
+      cities.values().forEach(city -> owners.add(city.getOwner()));
+
+      boolean doesAPlayerOwnAllCities = owners.size() == 1;
+      return doesAPlayerOwnAllCities && owners.contains(playerInTurn);
+    }
+
 
 }

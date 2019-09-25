@@ -17,8 +17,10 @@ public class EpsilonCivBattleStrategy implements BattleStrategy {
     Player playerInTurn = game.getPlayerInTurn();
     UnitImpl attackingUnit = units.get(attackingPosition);
     UnitImpl defendingUnit = units.get(defendingPosition);
-    int numberOfFriendlySorroundingAttackUnits = 0;
-    int numberOfFriendlySorroundingDefenseUnits = 0;
+    int numberOfFriendlySorroundingAttackUnits = game.findNumberOfFriendlyNeighbourUnits(attackingPosition);
+    int numberOfFriendlySorroundingDefenseUnits = game.findNumberOfFriendlyNeighbourUnits(defendingPosition);
+    int attackingUnitStrength =  attackingUnit.getAttackingStrength();
+    int defenseUnitStrength = defendingUnit.getDefensiveStrength();
 
 
     boolean isAttackingUnitInACity = cities.containsKey(attackingPosition);
@@ -26,23 +28,9 @@ public class EpsilonCivBattleStrategy implements BattleStrategy {
     boolean isAttackingUnitOnHill = world.get(attackingPosition).getTypeString().equals(GameConstants.HILLS);
     boolean isDefendingUnitOnHill = world.get(defendingPosition).getTypeString().equals(GameConstants.HILLS);
 
-    for (Position friendlyUnitPosition : Utility.get8neighborhoodOf(defendingPosition)) {
-      boolean isThereAUnitAtNeighbourPosition = game.getUnitAt(friendlyUnitPosition) != null;
-      boolean isFriendlyUnit = isThereAUnitAtNeighbourPosition && game.getUnitAt(friendlyUnitPosition).getOwner().equals(game.getUnitAt(defendingPosition).getOwner());
-      if(isFriendlyUnit) {
-        numberOfFriendlySorroundingDefenseUnits ++;
-      }
-    }
-    defendingUnit.changeDefenseStrength((defendingUnit.getDefensiveStrength() + numberOfFriendlySorroundingDefenseUnits));
+    defendingUnit.changeDefenseStrength((defenseUnitStrength + numberOfFriendlySorroundingDefenseUnits));
 
-    for (Position friendlyUnitPosition : Utility.get8neighborhoodOf(attackingPosition)) {
-      boolean isThereAUnitAtNeighbourPosition = game.getUnitAt(friendlyUnitPosition) != null;
-      boolean isFriendlyUnit = isThereAUnitAtNeighbourPosition && game.getUnitAt(friendlyUnitPosition).getOwner().equals(game.getUnitAt(attackingPosition).getOwner());
-      if(isFriendlyUnit) {
-        numberOfFriendlySorroundingAttackUnits ++;
-      }
-    }
-    attackingUnit.changeAttackStrength(attackingUnit.getAttackingStrength() + numberOfFriendlySorroundingAttackUnits);
+    attackingUnit.changeAttackStrength(attackingUnitStrength + numberOfFriendlySorroundingAttackUnits);
 
     if (isAttackingUnitInACity) {
       attackingUnit.changeAttackStrength(attackingUnit.getAttackingStrength() * 3);
@@ -62,4 +50,5 @@ public class EpsilonCivBattleStrategy implements BattleStrategy {
 
     players.put(playerInTurn, players.get(playerInTurn) + 1 );
   }
+
 }
