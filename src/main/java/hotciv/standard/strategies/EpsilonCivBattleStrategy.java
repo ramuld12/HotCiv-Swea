@@ -9,9 +9,10 @@ import java.util.HashMap;
 public class EpsilonCivBattleStrategy implements BattleStrategy {
   private int attackingUnitStrength;
   private int defenseUnitStrength;
+  private HashMap<Position, UnitImpl> units;
 
   public void battleTest(GameImpl game, Position attackingPosition, Position defendingPosition) {
-    HashMap<Position,UnitImpl> units = game.getUnits();
+    units = game.getUnits();
     HashMap<Position, CityImpl> cities = game.getCities();
     HashMap<Position, TileImpl> world = game.getWorld();
     UnitImpl attackingUnit = units.get(attackingPosition);
@@ -45,14 +46,17 @@ public class EpsilonCivBattleStrategy implements BattleStrategy {
   }
 
   @Override
-  public boolean battle(GameImpl game, Position attacking, Position defending) {
+  public boolean battle(GameImpl game, Position attackingPosition, Position defendingPosition) {
     HashMap<Player, Integer> players = game.getPlayers();
     Player playerInTurn = game.getPlayerInTurn();
 
-    battleTest(game, attacking, defending);
+    battleTest(game, attackingPosition, defendingPosition);
     boolean didAttackWin = attackingUnitStrength > defenseUnitStrength;
     if (didAttackWin) {
       players.put(playerInTurn, players.get(playerInTurn) + 1 );
+    }
+    else {
+      units.remove(attackingPosition);
     }
     return didAttackWin;
   }

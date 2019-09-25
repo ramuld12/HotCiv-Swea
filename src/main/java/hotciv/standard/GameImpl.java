@@ -164,7 +164,7 @@ public class GameImpl implements Game {
     boolean isThereAUnitAtTo = units.get(to) != null;
     boolean isUnitOwnedByPlayerInTurn = isThereAUnitAtFrom && units.get(from).getOwner() == playerInTurn;
     boolean isThereAnEnemyUnitAtTo = isThereAUnitAtFrom && isThereAUnitAtTo && units.get(from).getOwner() != units.get(to).getOwner();
-    boolean isThereAlreadyAFriendlyUnitAtTo = isThereAUnitAtFrom && isThereAUnitAtTo && units.get(from).getOwner() == units.get(to).getOwner();
+    boolean isThereAFriendlyUnitAtTo = isThereAUnitAtFrom && isThereAUnitAtTo && units.get(from).getOwner() == units.get(to).getOwner();
     boolean isUnitMoveable = isThereAUnitAtFrom && units.get(from).isMoveable();
     boolean hasMovesLeft = isThereAUnitAtFrom && units.get(from).getMoveCount() > 0;
 
@@ -173,15 +173,16 @@ public class GameImpl implements Game {
             isTileTypeAtToValidForMovement &&
             isThereAUnitAtFrom &&
             isUnitOwnedByPlayerInTurn &&
-            !isThereAlreadyAFriendlyUnitAtTo &&
+            !isThereAFriendlyUnitAtTo &&
             isUnitMoveable &&
             hasMovesLeft)) {
       return false;
     }
 
-    //Handling of unit Battle
-    if (isThereAnEnemyUnitAtTo) {
-      battleStrategy.battle(this, from, to);
+    boolean didDefenceWin = isThereAnEnemyUnitAtTo && !battleStrategy.battle(this, from, to);
+    //Removes attacking unit if attacking unit loses
+    if (didDefenceWin) {
+      return false;
     }
 
     //Handling of attack on a city

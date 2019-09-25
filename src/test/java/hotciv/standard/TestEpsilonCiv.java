@@ -69,6 +69,7 @@ public class TestEpsilonCiv {
     game.endOfTurn(); // So blue is in turn
     Position redArcher = new Position(2, 0);
     Position blueLegion = new Position(3,2);
+    removeNeighbours(redArcher);
     game.moveUnit(blueLegion, new Position(3,1));
     endOfRound();
     game.moveUnit(new Position(3,1), redArcher);
@@ -304,6 +305,22 @@ public class TestEpsilonCiv {
     units.put(redArcher3, new UnitImpl(GameConstants.ARCHER,Player.RED));
     units.put(blueArcher, new UnitImpl(GameConstants.ARCHER,Player.BLUE));;
     assertFalse(game.getBattleStrategy().battle(game, blueArcher, redArcher));
+  }
+
+  @Test
+  public void blueArcherShouldBeRemovedWhenLosing() {
+    game.endOfTurn();
+    Position redArcher = new Position(8,8);
+    Position redArcher2 = new Position(8,7);
+    Position redArcher3 = new Position(7,8);
+    Position blueArcher = new Position(8,9);
+
+    units.put(redArcher, new UnitImpl(GameConstants.ARCHER,Player.RED));
+    units.put(redArcher2, new UnitImpl(GameConstants.ARCHER,Player.RED));
+    units.put(redArcher3, new UnitImpl(GameConstants.ARCHER,Player.RED));
+    units.put(blueArcher, new UnitImpl(GameConstants.ARCHER,Player.BLUE));
+    game.moveUnit(blueArcher, redArcher);
+    assertNull(game.getUnitAt(blueArcher));
   }
 }
 
