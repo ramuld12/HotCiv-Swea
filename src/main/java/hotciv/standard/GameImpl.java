@@ -159,10 +159,7 @@ public class GameImpl implements Game {
    * @param owner the owner of the new unit
    */
   public void createUnitAtPosition(Position position, String unitType, Player owner) {
-    boolean isPositionVacantForUnit = units.get(position) == null;
-    if (isPositionVacantForUnit) {
-      units.put(position, new UnitImpl(unitType, owner));
-    }
+    units.put(position, new UnitImpl(unitType, owner));
   }
 
   public void createTileAtPosition(Position position, TileImpl tiletype) {
@@ -180,6 +177,9 @@ public class GameImpl implements Game {
     boolean isThereAFriendlyUnitAtTo = isThereAUnitAtFrom && isThereAUnitAtTo && units.get(from).getOwner() == units.get(to).getOwner();
     boolean isUnitMoveable = isThereAUnitAtFrom && units.get(from).isMoveable();
     boolean hasMovesLeft = isThereAUnitAtFrom && units.get(from).getMoveCount() > 0;
+    boolean didDefenceWin = isThereAnEnemyUnitAtTo && !battleStrategy.battle(this, from, to);
+    boolean isThereACityAtPositionTo = cities.containsKey(to);
+    boolean isTheCityForeign = isThereACityAtPositionTo && cities.get(to).getOwner() != playerInTurn;
 
     if (!(isFromInTheWorld &&
             isToInTheWorld &&
@@ -188,38 +188,33 @@ public class GameImpl implements Game {
             isUnitOwnedByPlayerInTurn &&
             !isThereAFriendlyUnitAtTo &&
             isUnitMoveable &&
-            hasMovesLeft)) {
+            hasMovesLeft &&
+            !didDefenceWin)) {
       return false;
     }
 
-    boolean didDefenceWin = isThereAnEnemyUnitAtTo && !battleStrategy.battle(this, from, to);
-    //Removes attacking unit if attacking unit loses
-    if (didDefenceWin) {
-      return false;
-    }
-
-    //Handling of attack on a city
-    boolean isThereACityAtPositionTo = cities.containsKey(to);
-    boolean isTheCityForeign = isThereACityAtPositionTo && cities.get(to).getOwner() != playerInTurn;
-
-    if (isThereACityAtPositionTo &&
-            isTheCityForeign) {
+    if (isThereACityAtPositionTo && isTheCityForeign) {
       cities.get(to).changeOwner(playerInTurn);
     }
 
     //Handling of movement for the unit
+    movingTheUnit(from, to);
+    boolean didMovingSucced = units.get(to) != null;
+    return didMovingSucced;
+  }
+  
+  public void movingTheUnit(Position from, Position to) {
     for (Position unitPosition : Utility.get8neighborhoodOf(from)) {
-      if (unitPosition.equals(to)) {
+      boolean isTheCurrentNeighbourTo = unitPosition.equals(to);
+      if (isTheCurrentNeighbourTo) {
         //Find the tile the unit is trying to move to,
         // create a new unit with moveCounter 0 of the same type there and remove the old
         String unitType = units.get(from).getTypeString();
-        units.put(to, new UnitImpl(unitType, playerInTurn));
         units.remove(from);
+        createUnitAtPosition(to, unitType, playerInTurn);
         units.get(to).decreaseMoveCount();
-        return true;
       }
     }
-    return false;
   }
 
   public void endOfTurn() {

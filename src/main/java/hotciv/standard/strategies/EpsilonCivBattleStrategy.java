@@ -51,13 +51,13 @@ public class EpsilonCivBattleStrategy implements BattleStrategy {
     HashMap<Player, Integer> players = game.getPlayers();
     Player playerInTurn = game.getPlayerInTurn();
     Random die = new Random();
-    int d1 = die.nextInt(6)+1;
-    int d2 = die.nextInt(6)+1;
+    //int d1 = die.nextInt(6)+1;
+    //int d2 = die.nextInt(6)+1;
 
 
     battleTest(game, attackingPosition, defendingPosition);
-    attackingUnitStrength *= d1;
-    defenseUnitStrength *= d2;
+    //attackingUnitStrength *= d1;
+    //defenseUnitStrength *= d2;
     boolean didAttackWin = attackingUnitStrength > defenseUnitStrength;
     if (didAttackWin) {
       players.put(playerInTurn, players.get(playerInTurn) + 1 );

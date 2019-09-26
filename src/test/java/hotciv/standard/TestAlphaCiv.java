@@ -179,8 +179,15 @@ public class TestAlphaCiv {
   @Test
   public void archersShouldOnlyMove1Tile() {
     Position p1 = new Position(2,0); Position p2 = new Position(3,0);
-    game.moveUnit(p1, p2);
+    game.movingTheUnit(p1, p2);
     assertThat(game.getUnitAt(p2).getTypeString(), is(GameConstants.ARCHER));
+  }
+
+  @Test
+  public void archersShouldNotBeAbleToMove2Tiles() {
+    Position p1 = new Position(2,0); Position p2 = new Position(4,0);
+    game.moveUnit(p1, p2);
+    assertFalse(game.moveUnit(p1, p2));
   }
 
   @Test
@@ -193,7 +200,7 @@ public class TestAlphaCiv {
   @Test
   public void movingAUnitShouldRemoveTheUnitAndCreateANew() {
     Position p1 = new Position(2,0); Position p2 = new Position(2,1);
-    game.moveUnit(p1,p2);
+    game.movingTheUnit(p1,p2);
     assertNull(game.getUnitAt(p1));
     assertThat(game.getUnitAt(p2).getTypeString(), is(GameConstants.ARCHER));
   }
@@ -202,8 +209,14 @@ public class TestAlphaCiv {
   public void aMovedUnitShouldHaveTheSameOwner() {
     Position p1 = new Position(3,2); Position p2 = new Position(2,1);
     game.endOfTurn();
-    game.moveUnit(p1,p2);
+    game.movingTheUnit(p1,p2);
     assertThat(game.getUnitAt(p2).getOwner(), is(Player.BLUE));
+  }
+
+  @Test
+  public void movingAUnitSuccesfullyShouldReturnTrue() {
+    Position p1 = new Position(2,0); Position p2 = new Position(2,1);
+    assertTrue(game.moveUnit(p1,p2));
   }
 
   @Test
@@ -378,7 +391,6 @@ public class TestAlphaCiv {
     Position vacantPosition2 = game.findFirstVacantNeighbourPosition(centerPosition2);
     assertThat(vacantPosition2, is(new Position(2,1)));
   }
-
 
 }
 
