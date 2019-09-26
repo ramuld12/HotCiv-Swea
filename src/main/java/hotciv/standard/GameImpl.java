@@ -152,6 +152,19 @@ public class GameImpl implements Game {
     }
   }
 
+  /**
+   * Creates a unit of a given type at position.
+   * @param position position for the unit
+   * @param unitType
+   * @param owner the owner of the new unit
+   */
+  public void createUnitAtPosition(Position position, String unitType, Player owner) {
+    boolean isPositionVacantForUnit = units.get(position) == null;
+    if (isPositionVacantForUnit) {
+      units.put(position, new UnitImpl(unitType, owner));
+    }
+  }
+
   public void createTileAtPosition(Position position, TileImpl tiletype) {
     world.put(position, tiletype);
   }
@@ -238,12 +251,22 @@ public class GameImpl implements Game {
     }
 
     city.reduceTreasury(city.getProdCost());
-    if (isCityPositionVacantForUnit) {
-      units.put(cityPosition, new UnitImpl(city.getProduction(), city.getOwner()));
+    if (!isCityPositionVacantForUnit) {
+      createUnitAtNeighbourPosition(cityPosition, city.getProduction(), city.getOwner());
     } else {
-      Position vacantNeighbourPosition = findFirstVacantNeighbourPosition(cityPosition);
-      units.put(vacantNeighbourPosition, new UnitImpl(city.getProduction(), city.getOwner()));
+      createUnitAtPosition(cityPosition, city.getProduction(), city.getOwner());
     }
+  }
+
+  /**
+   * Creates a unit at a neighbour position to the given position
+   * @param centerPosition position for which neighbours are found
+   * @param unitType type of the new unit
+   * @param owner owner of new unit
+   */
+  private void createUnitAtNeighbourPosition(Position centerPosition, String unitType, Player owner) {
+    Position vacantNeighbourPosition = findFirstVacantNeighbourPosition(centerPosition);
+    createUnitAtPosition(vacantNeighbourPosition, unitType, owner);
   }
 
   /**
