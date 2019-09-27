@@ -25,7 +25,7 @@ import java.util.*;
 public class TestEpsilonCiv {
   private GameImpl game;
   private HashMap<Position, UnitImpl> units;
-  private BattleStrategy battleStrategy = new TestEpsilonCivBattleStrategy();
+  private EpsilonCivBattleStrategy battleStrategy = new EpsilonCivBattleStrategy();
 
   /**
    * Fixture for alphaciv testing.

@@ -17,6 +17,8 @@ public class EpsilonCivBattleStrategy implements BattleStrategy {
 
   public void battleTest(GameImpl game, Position attackingPosition, Position defendingPosition) {
     units = game.getUnits();
+    cities = game.getCities();
+    world = game.getWorld();
     UnitImpl attackingUnit = units.get(attackingPosition);
     UnitImpl defendingUnit = units.get(defendingPosition);
     int numberOfFriendlySorroundingAttackUnits = game.findNumberOfFriendlyNeighbourUnits(attackingPosition);
@@ -24,8 +26,8 @@ public class EpsilonCivBattleStrategy implements BattleStrategy {
     attackingUnitStrength = attackingUnit.getAttackingStrength();
     defenseUnitStrength = defendingUnit.getDefensiveStrength();
 
-    defenseUnitStrength = findBattleStrength(defendingPosition, defenseUnitStrength,numberOfFriendlySorroundingDefenseUnits);
     attackingUnitStrength = findBattleStrength(attackingPosition, attackingUnitStrength, numberOfFriendlySorroundingAttackUnits);
+    defenseUnitStrength = findBattleStrength(defendingPosition, defenseUnitStrength, numberOfFriendlySorroundingDefenseUnits);
   }
 
   private int findBattleStrength(Position unitPosition, int initialUnitStrength,int numberOfFriendlySorroundingUnit) {
@@ -33,9 +35,7 @@ public class EpsilonCivBattleStrategy implements BattleStrategy {
     boolean isUnitInACity = cities.containsKey(unitPosition);
     boolean isUnitOnHill = world.get(unitPosition).getTypeString().equals(GameConstants.HILLS);
 
-    defenseUnitStrength += numberOfFriendlySorroundingUnit;
-
-    attackingUnitStrength += numberOfFriendlySorroundingUnit;
+    strength += numberOfFriendlySorroundingUnit;
 
     if (isUnitInACity){
       strength *= 3;
