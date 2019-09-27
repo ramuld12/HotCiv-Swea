@@ -22,7 +22,7 @@ public class FixedEpsilonCivFactory implements HotCivFactory {
 
   @Override
   public WinningStrategy createWinningStrategy() {
-    return new AlphaCivWinningStrategy();
+    return new EpsilonCivWinningStrategy();
   }
 
   @Override

@@ -18,12 +18,14 @@ public class EpsilonCivBattleStrategy implements BattleStrategy {
   private HashMap<Position, UnitImpl> units;
   private HashMap<Position, CityImpl> cities;
   private HashMap<Position, TileImpl> world;
+  private HashMap<Player, Integer> playerWins;
 
 
   public void battleTest(GameImpl game, Position attackingPosition, Position defendingPosition) {
     units = game.getUnits();
     cities = game.getCities();
     world = game.getWorld();
+    playerWins = game.getPlayers();
     UnitImpl attackingUnit = units.get(attackingPosition);
     UnitImpl defendingUnit = units.get(defendingPosition);
     int numberOfFriendlySorroundingAttackUnits = game.findNumberOfFriendlyNeighbourUnits(attackingPosition);
@@ -67,9 +69,8 @@ public class EpsilonCivBattleStrategy implements BattleStrategy {
   }
 
   public void incrementNumberOfSuccesfullAttacks(GameImpl game){
-    HashMap<Player, Integer> players = game.getPlayers();
     Player playerInTurn = game.getPlayerInTurn();
-    players.put(playerInTurn, players.get(playerInTurn) + 1 );
+    playerWins.put(playerInTurn, playerWins.get(playerInTurn) + 1 );
   }
 
   public int rollDie(){
