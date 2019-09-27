@@ -9,6 +9,8 @@ public class CityImpl implements City {
   private Player p;
   private int treas;
   private String prod;
+  private int foodAmount = 0;
+  private int citySize = 0;
 
   public CityImpl(Player p) {
     this.p = p;
@@ -22,7 +24,7 @@ public class CityImpl implements City {
 
   @Override
   public int getSize() {
-    return 1;
+    return citySize;
   }
 
   @Override
@@ -43,6 +45,11 @@ public class CityImpl implements City {
   public void increaseTreas() {
     treas += 6;
   }
+  public void changeFoodAmount() {
+    foodAmount += 1;
+  }
+
+
 
   public void changeProduction(String unitType){
     prod = unitType;
@@ -69,4 +76,17 @@ public class CityImpl implements City {
   public void changeOwner(Player playerInTurn) {
     this.p = playerInTurn;
   }
+
+  public int getFoodAmount() {
+    return foodAmount;
+  }
+
+  public void setFoodAmount(int value){
+    foodAmount = foodAmount + value;
+  }
+
+  public void incrementCitySize(){
+    citySize++;
+  }
+
 }

@@ -229,8 +229,11 @@ public class GameImpl implements Game {
       playerInTurn = Player.RED;
       gameAge += agingStrategy.getAgeStep(this);
       cities.values().forEach(CityImpl::increaseTreas);
+      cities.values().forEach(CityImpl::changeFoodAmount);
       units.values().forEach(UnitImpl::resetMoveCounter);
       cities.keySet().forEach(p -> produceUnitInCityAt(p, cities.get(p)));
+
+
       roundNumber ++;
     }
   }

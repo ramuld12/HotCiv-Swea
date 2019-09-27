@@ -15,7 +15,7 @@ public class TestEtaCiv {
   private GameImpl game;
 
   /**
-   * Fixture for alphaciv testing.
+   * Fixture for EtaCiv testing.
    */
   @Before
   public void setUp() {
@@ -29,5 +29,20 @@ public class TestEtaCiv {
   public void endOfRound() {
     game.endOfTurn();
     game.endOfTurn();
+  }
+
+  /*
+  @Test
+  public void redCitySizedShouldIncrease1(){
+    Position redCity = new Position(1,1);
+    endOfRound();
+    assertThat(game.getCityAt(redCity).getFoodAmount(), is(2));
+  }*/
+
+  @Test
+  public void citySize1ShouldProduce1FoodPrRound(){
+    Position redCity = new Position(1,1);
+    endOfRound();
+    assertTrue(game.getCityAt(redCity).getFoodAmount() == 1);
   }
 }
