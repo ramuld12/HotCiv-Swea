@@ -48,24 +48,29 @@ public class EpsilonCivBattleStrategy implements BattleStrategy {
 
   @Override
   public boolean battle(GameImpl game, Position attackingPosition, Position defendingPosition) {
-    HashMap<Player, Integer> players = game.getPlayers();
-    Player playerInTurn = game.getPlayerInTurn();
-    Random die = new Random();
-    //int d1 = die.nextInt(6)+1;
-    //int d2 = die.nextInt(6)+1;
-    battleTest(game, attackingPosition, defendingPosition);
-    //attackingUnitStrength *= d1;
-    //defenseUnitStrength *= d2;
+    battleTest(game, attackingPosition, defendingPosition); // Calculating values from the battle
+    //attackingUnitStrength *= rollDie();
+    //defenseUnitStrength *= rollDie();
     boolean didAttackWin = attackingUnitStrength > defenseUnitStrength;
     if (didAttackWin) {
-      players.put(playerInTurn, players.get(playerInTurn) + 1 );
+      incrementNumberOfSuccesfullAttacks(game);
     }
     else {
       units.remove(attackingPosition);
     }
-
-
     return didAttackWin;
+  }
+
+  public void incrementNumberOfSuccesfullAttacks(GameImpl game){
+    HashMap<Player, Integer> players = game.getPlayers();
+    Player playerInTurn = game.getPlayerInTurn();
+    players.put(playerInTurn, players.get(playerInTurn) + 1 );
+  }
+
+  public int rollDie(){
+    Random rand = new Random();
+    int die = rand.nextInt(6)+1;
+    return die;
   }
 
   public int getAttackingUnitStrength() {return attackingUnitStrength;}
