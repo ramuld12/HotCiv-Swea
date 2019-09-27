@@ -1,7 +1,11 @@
-package hotciv.standard;
+package hotciv.standard.HotCivVariantsTests;
 
 import hotciv.framework.*;
 
+import hotciv.standard.GameImpl;
+import hotciv.standard.TestStubs.TestEpsilonCivBattleStrategy;
+import hotciv.standard.TileImpl;
+import hotciv.standard.UnitImpl;
 import hotciv.standard.strategies.*;
 import hotciv.utility.Utility;
 import org.junit.*;
