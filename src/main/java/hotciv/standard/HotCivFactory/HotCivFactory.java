@@ -1,16 +1,18 @@
 package hotciv.standard.HotCivFactory;
 
+import hotciv.standard.strategies.*;
+
 public interface HotCivFactory {
 
-  public void createAgingStrategy();
+  public AgingStrategy createAgingStrategy();
 
-  public void createBattleStrategy();
+  public BattleStrategy createBattleStrategy();
 
-  public void createUnitActionStrategy();
+  public UnitActionStrategy createUnitActionStrategy();
 
-  public void createWinningStrategy();
+  public WinningStrategy createWinningStrategy();
 
-  public void createWorldLayoutStrategy();
+  public WorldLayoutStrategy createWorldLayoutStrategy();
 
 
 }

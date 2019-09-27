@@ -1,28 +1,32 @@
 package hotciv.standard.HotCivFactory;
 
+import hotciv.standard.strategies.*;
+
 public class BetaCivFactory implements HotCivFactory {
-  @Override
-  public void createAgingStrategy() {
 
+
+  @Override
+  public AgingStrategy createAgingStrategy() {
+    return new BetaCivAgingStrategy();
   }
 
   @Override
-  public void createBattleStrategy() {
-
+  public BattleStrategy createBattleStrategy() {
+    return new AlphaCivBattleStrategy();
   }
 
   @Override
-  public void createUnitActionStrategy() {
-
+  public UnitActionStrategy createUnitActionStrategy() {
+    return new AlphaCivUnitActionStrategy();
   }
 
   @Override
-  public void createWinningStrategy() {
-
+  public WinningStrategy createWinningStrategy() {
+    return new BetaCivWinningStrategy();
   }
 
   @Override
-  public void createWorldLayoutStrategy() {
-
+  public WorldLayoutStrategy createWorldLayoutStrategy() {
+    return new AlphaCivWorldLayoutStrategy();
   }
 }
