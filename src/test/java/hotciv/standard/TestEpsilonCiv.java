@@ -14,6 +14,13 @@ import java.util.*;
  *
  */
 
+/* Backlog
+- Clean Battle (rename methods)
+- Setup abstract factory
+- Implement zeta- og etaCiv
+
+ */
+
 
 public class TestEpsilonCiv {
   private GameImpl game;
@@ -67,12 +74,14 @@ public class TestEpsilonCiv {
   @Test
   public void blueVictoyCountShouldIncrementWhenWinning() {
     game.endOfTurn(); // So blue is in turn
-    Position redArcher = new Position(2, 0);
-    Position blueLegion = new Position(3,2);
-    removeNeighbours(redArcher);
-    game.moveUnit(blueLegion, new Position(3,1));
+    Position redArcherPos = new Position(2, 0);
+    Position blueLegionPos = new Position(3,2);
+    Position pos3_1 = new Position(3,1);
+    removeNeighbours(redArcherPos);
+    game.moveUnit(blueLegionPos, pos3_1);
     endOfRound();
-    game.moveUnit(new Position(3,1), redArcher);
+    game.getUnitAt(pos3_1).changeAttackStrength(20);
+    game.moveUnit(pos3_1, redArcherPos);
     assertThat(game.getVictoriesForPlayer(Player.BLUE), is(1));
   }
 

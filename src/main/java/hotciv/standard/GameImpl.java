@@ -246,10 +246,10 @@ public class GameImpl implements Game {
     }
 
     city.reduceTreasury(city.getProdCost());
-    if (!isCityPositionVacantForUnit) {
-      createUnitAtNeighbourPosition(cityPosition, city.getProduction(), city.getOwner());
-    } else {
+    if (isCityPositionVacantForUnit) {
       createUnitAtPosition(cityPosition, city.getProduction(), city.getOwner());
+    } else {
+      createUnitAtNeighbourPosition(cityPosition, city.getProduction(), city.getOwner());
     }
   }
 
