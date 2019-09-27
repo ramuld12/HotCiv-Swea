@@ -46,6 +46,7 @@ public class GameImpl implements Game {
   private HashMap<Position, CityImpl> cities; //HashMap representing the cities
   private HashMap<Position, UnitImpl> units; //HashMap representing the units
   private HashMap<Player, Integer> playerVictories; //HashMap representing playervictories
+  private int roundNumber;
 
 
   /**
@@ -104,6 +105,10 @@ public class GameImpl implements Game {
 
   public int getAge() {
     return gameAge;
+  }
+
+  public int getRoundNumber() {
+    return roundNumber;
   }
 
   public int getVictoriesForPlayer(Player p) {
@@ -223,6 +228,7 @@ public class GameImpl implements Game {
       cities.values().forEach(CityImpl::increaseTreas);
       units.values().forEach(UnitImpl::resetMoveCounter);
       cities.keySet().forEach(p -> produceUnitInCityAt(p, cities.get(p)));
+      roundNumber ++;
     }
   }
 
@@ -323,6 +329,4 @@ public class GameImpl implements Game {
       boolean doesAPlayerOwnAllCities = owners.size() == 1;
       return doesAPlayerOwnAllCities && owners.contains(playerInTurn);
     }
-
-
 }
