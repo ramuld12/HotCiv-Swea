@@ -392,6 +392,23 @@ public class TestAlphaCiv {
     assertThat(vacantPosition2, is(new Position(2,1)));
   }
 
+  @Test
+  public void shouldFind2FriendlyUnits(){
+    HashMap<Position, UnitImpl> units = game.getUnits();
+    Position archerPositionMain = new Position(8,8);
+    Position archerPosition2 = new Position(8,7);
+    Position archerPosition3 = new Position(7,8);
+    Position defendingPosition = new Position(8,9);
+    game.createCityAtPosition(archerPositionMain);
+
+    units.put(archerPositionMain, new UnitImpl(GameConstants.ARCHER,Player.RED));
+    units.put(archerPosition2, new UnitImpl(GameConstants.ARCHER,Player.RED));
+    units.put(archerPosition3, new UnitImpl(GameConstants.ARCHER,Player.RED));
+    units.put(defendingPosition, new UnitImpl(GameConstants.ARCHER,Player.BLUE));
+    int numberOfFriends = game.findNumberOfFriendlyNeighbourUnits(archerPositionMain);
+    assertTrue(numberOfFriends == 2);
+  }
+
 }
 
 

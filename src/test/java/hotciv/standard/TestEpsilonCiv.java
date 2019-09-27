@@ -332,5 +332,6 @@ public class TestEpsilonCiv {
     game.moveUnit(blueArcher, redArcher);
     assertNull(game.getUnitAt(blueArcher));
   }
+
 }
 
