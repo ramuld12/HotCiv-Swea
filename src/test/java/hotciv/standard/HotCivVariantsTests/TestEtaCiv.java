@@ -1,8 +1,10 @@
-package hotciv.standard;
+package hotciv.standard.HotCivVariantsTests;
 
 
 import hotciv.framework.*;
 
+import hotciv.standard.GameImpl;
+import hotciv.standard.HotCivFactory.EtaCivFactory;
 import hotciv.standard.strategies.*;
 import org.junit.*;
 import static org.junit.Assert.*;
@@ -17,7 +19,7 @@ public class TestEtaCiv {
    */
   @Before
   public void setUp() {
-    game = new GameImpl(new AlphaCivAgingStrategy(), new AlphaCivWinningStrategy(), new AlphaCivUnitActionStrategy(), new AlphaCivWorldLayoutStrategy(), new AlphaCivBattleStrategy());
+    game = new GameImpl(new EtaCivFactory());
     assertThat(game, is(notNullValue()));
   }
 
