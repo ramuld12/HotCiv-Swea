@@ -25,21 +25,23 @@ import java.util.*;
 public class TestEpsilonCiv {
   private GameImpl game;
   private HashMap<Position, UnitImpl> units;
+  private TestEpsilonCivBattleStrategy battleStrategy;
 
   /**
    * Fixture for alphaciv testing.
    */
   @Before
   public void setUp() {
-    game = new GameImpl(new AlphaCivAgingStrategy(), new EpsilonCivWinningStrategy(), new AlphaCivUnitActionStrategy(), new AlphaCivWorldLayoutStrategy(), new EpsilonCivBattleStrategy());
+    game = new GameImpl(new AlphaCivAgingStrategy(), new EpsilonCivWinningStrategy(), new AlphaCivUnitActionStrategy(), new AlphaCivWorldLayoutStrategy(), battleStrategy);
     assertThat(game, is(notNullValue()));
     units = game.getUnits();
+    battleStrategy = new TestEpsilonCivBattleStrategy();
   }
 
   /**
    * Method for testing end of round triggers
    */
-  public void endOfRound() {
+  private void endOfRound() {
     game.endOfTurn();
     game.endOfTurn();
   }
@@ -125,8 +127,8 @@ public class TestEpsilonCiv {
     units.put(defendingUnit, new UnitImpl(GameConstants.LEGION,Player.BLUE));
     endOfRound();
     endOfRound();
-    game.getBattleStrategy().battleTest(game,attackingUnitInCity,defendingUnit);
-    assertThat(game.getBattleStrategy().getAttackingUnitStrength(), is(6));
+    battleStrategy.battleTest(game,attackingUnitInCity,defendingUnit);
+    assertThat(battleStrategy.getAttackingUnitStrength(), is(6));
   }
 
   @Test
@@ -137,8 +139,8 @@ public class TestEpsilonCiv {
     units.put(attackingUnit, new UnitImpl(GameConstants.LEGION,Player.BLUE));
     endOfRound();
     endOfRound();
-    game.getBattleStrategy().battleTest(game,attackingUnit,defendingUnitInCity);
-    assertThat(game.getBattleStrategy().getDefenseUnitStrength(), is(9));
+    battleStrategy.battleTest(game,attackingUnit,defendingUnitInCity);
+    assertThat(battleStrategy.getDefenseUnitStrength(), is(9));
   }
 
   @Test
@@ -151,8 +153,8 @@ public class TestEpsilonCiv {
     endOfRound();
     endOfRound();
     endOfRound();
-    game.getBattleStrategy().battleTest(game,attackingUnitInCity,defendingUnit);
-    assertThat(game.getBattleStrategy().getAttackingUnitStrength(), is(12));
+    battleStrategy.battleTest(game,attackingUnitInCity,defendingUnit);
+    assertThat(battleStrategy.getAttackingUnitStrength(), is(12));
   }
 
   @Test
@@ -165,8 +167,8 @@ public class TestEpsilonCiv {
     endOfRound();
     endOfRound();
     endOfRound();
-    game.getBattleStrategy().battleTest(game,attackingUnit,defendingUnitInCity);
-    assertThat(game.getBattleStrategy().getDefenseUnitStrength(), is(6));
+    battleStrategy.battleTest(game,attackingUnit,defendingUnitInCity);
+    assertThat(battleStrategy.getDefenseUnitStrength(), is(6));
   }
 
   @Test
@@ -175,7 +177,7 @@ public class TestEpsilonCiv {
     Position defendingUnit = new Position(0,2);
     units.put(attackingUnitOnHill, new UnitImpl(GameConstants.ARCHER,Player.RED));
     units.put(defendingUnit, new UnitImpl(GameConstants.LEGION,Player.BLUE));
-    game.getBattleStrategy().battleTest(game, attackingUnitOnHill, defendingUnit);
+    battleStrategy.battleTest(game, attackingUnitOnHill, defendingUnit);
     assertThat(game.getBattleStrategy().getAttackingUnitStrength(), is(4));
   }
 

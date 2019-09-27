@@ -68,10 +68,6 @@ public class GameImpl implements Game {
     winningStrategy.initializePlayerVictories(this);
   }
 
-  public EpsilonCivBattleStrategy getBattleStrategy() {
-    return (EpsilonCivBattleStrategy) battleStrategy;
-  }
-
   // === Accessor methods ======================================
 
   public HashMap<Position, TileImpl> getWorld() {
