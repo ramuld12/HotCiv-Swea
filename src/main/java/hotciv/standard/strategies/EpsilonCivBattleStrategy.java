@@ -8,6 +8,11 @@ import java.util.Random;
 import java.util.HashMap;
 
 public class EpsilonCivBattleStrategy implements BattleStrategy {
+
+  private final DieStrategy dieStrategy;
+
+  public EpsilonCivBattleStrategy(DieStrategy dieStrategy) {this.dieStrategy = dieStrategy;}
+
   private int attackingUnitStrength;
   private int defenseUnitStrength;
   private HashMap<Position, UnitImpl> units;

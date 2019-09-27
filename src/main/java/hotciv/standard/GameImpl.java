@@ -1,6 +1,8 @@
 package hotciv.standard;
 
 import hotciv.framework.*;
+import hotciv.standard.*;
+import hotciv.standard.HotCivFactory.*;
 import hotciv.standard.strategies.*;
 import hotciv.utility.*;
 
@@ -35,11 +37,12 @@ import java.util.*;
  */
 
 public class GameImpl implements Game {
-  private final WinningStrategy winningStrategy;
-  private final AgingStrategy agingStrategy;
-  private final UnitActionStrategy unitActionStrategy;
-  private final WorldLayoutStrategy worldLayoutStrategy;
-  private final BattleStrategy battleStrategy;
+  private WinningStrategy winningStrategy;
+  private AgingStrategy agingStrategy;
+  private UnitActionStrategy unitActionStrategy;
+  private WorldLayoutStrategy worldLayoutStrategy;
+  private BattleStrategy battleStrategy;
+  private HotCivFactory concreteFactory;
   private Player playerInTurn = Player.RED; //The current player in turn, initially set to red
   private int gameAge = -4000; //The current age of the game, initially set to -4000
   private HashMap<Position, TileImpl> world; //HashMap for representing the different tiletypes
@@ -55,12 +58,12 @@ public class GameImpl implements Game {
    * Initializes the private variables with tiletypes, city initial positions for the cities
    * and initial unit placements in the world.
    */
-  public GameImpl(AgingStrategy a, WinningStrategy w, UnitActionStrategy ua, WorldLayoutStrategy ws, BattleStrategy bs) {
-    this.agingStrategy = a;
-    this.winningStrategy = w;
-    this.unitActionStrategy = ua;
-    this.worldLayoutStrategy = ws;
-    this.battleStrategy = bs;
+  public GameImpl(HotCivFactory concreteFactory) {
+    this.agingStrategy = concreteFactory.createAgingStrategy();
+    this.winningStrategy = concreteFactory.createWinningStrategy();
+    this.unitActionStrategy = concreteFactory.createUnitActionStrategy();
+    this.worldLayoutStrategy = concreteFactory.createWorldLayoutStrategy();
+    this.battleStrategy = concreteFactory.createBattleStrategy();
     world = new HashMap<>();
     cities = new HashMap<>();
     units = new HashMap<>();

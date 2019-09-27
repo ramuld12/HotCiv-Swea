@@ -1,5 +1,6 @@
 package hotciv.standard.TestStubs;
 
+import hotciv.standard.FixedTests.FixedDieStrategyImpl;
 import hotciv.standard.HotCivFactory.HotCivFactory;
 import hotciv.standard.strategies.*;
 
@@ -11,7 +12,7 @@ public class FixedEpsilonCivFactory implements HotCivFactory {
 
   @Override
   public BattleStrategy createBattleStrategy() {
-    return new EpsilonCivBattleStrategy();
+    return new EpsilonCivBattleStrategy(new FixedDieStrategyImpl());
   }
 
   @Override

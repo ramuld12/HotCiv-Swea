@@ -2,6 +2,7 @@ package hotciv.standard.HotCivVariantsTests;
 
 import hotciv.framework.*;
 import hotciv.standard.GameImpl;
+import hotciv.standard.HotCivFactory.GammaCivFactory;
 import hotciv.standard.strategies.*;
 import org.junit.*;
 import static org.junit.Assert.*;
@@ -43,7 +44,7 @@ public class TestGammaCiv {
   /** Fixture for GammeCiv testing. */
   @Before
   public void setUp() {
-    game = new GameImpl(new AlphaCivAgingStrategy(), new AlphaCivWinningStrategy(), new GammaCivUnitActionStrategy(), new AlphaCivWorldLayoutStrategy(), new AlphaCivBattleStrategy());
+    game = new GameImpl(new GammaCivFactory());
     assertThat(game, is(notNullValue()));
   }
 

@@ -3,7 +3,7 @@ package hotciv.standard.HotCivVariantsTests;
 import hotciv.framework.Player;
 import hotciv.framework.Position;
 import hotciv.standard.GameImpl;
-import hotciv.standard.TestStubs.TestEpsilonCivBattleStrategy;
+import hotciv.standard.HotCivFactory.ZetaCivFactory;
 import hotciv.standard.UnitImpl;
 import hotciv.standard.strategies.*;
 import hotciv.utility.Utility;
@@ -19,14 +19,13 @@ import static org.junit.Assert.assertThat;
 public class TestZetaCiv {
   private GameImpl game;
   private HashMap<Position, UnitImpl> units;
-  private TestEpsilonCivBattleStrategy battleStrategy = new TestEpsilonCivBattleStrategy();
 
   /**
    * Fixture for alphaciv testing.
    */
   @Before
   public void setUp() {
-    game = new GameImpl(new AlphaCivAgingStrategy(), new ZetaCivWInningStrategy(), new AlphaCivUnitActionStrategy(), new AlphaCivWorldLayoutStrategy(), battleStrategy);
+    game = new GameImpl(new ZetaCivFactory());
     assertThat(game, is(notNullValue()));
     units = game.getUnits();
   }

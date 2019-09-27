@@ -10,7 +10,7 @@ public class EpsilonCivFactory implements HotCivFactory {
 
   @Override
   public BattleStrategy createBattleStrategy() {
-    return new EpsilonCivBattleStrategy();
+    return new EpsilonCivBattleStrategy(new DieStrategyImpl());
   }
 
   @Override

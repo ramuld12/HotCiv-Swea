@@ -2,8 +2,10 @@ package hotciv.standard.HotCivVariantsTests;
 
 import hotciv.framework.*;
 
+import hotciv.standard.FixedTests.FixedDieStrategyImpl;
 import hotciv.standard.GameImpl;
-import hotciv.standard.TestStubs.TestEpsilonCivBattleStrategy;
+import hotciv.standard.HotCivFactory.EpsilonCivFactory;
+import hotciv.standard.TestStubs.FixedEpsilonCivFactory;
 import hotciv.standard.TileImpl;
 import hotciv.standard.UnitImpl;
 import hotciv.standard.strategies.*;
@@ -29,14 +31,14 @@ import java.util.*;
 public class TestEpsilonCiv {
   private GameImpl game;
   private HashMap<Position, UnitImpl> units;
-  private TestEpsilonCivBattleStrategy battleStrategy = new TestEpsilonCivBattleStrategy();
+  private EpsilonCivBattleStrategy battleStrategy = new EpsilonCivBattleStrategy(new FixedDieStrategyImpl());
 
   /**
    * Fixture for alphaciv testing.
    */
   @Before
   public void setUp() {
-    game = new GameImpl(new AlphaCivAgingStrategy(), new EpsilonCivWinningStrategy(), new AlphaCivUnitActionStrategy(), new AlphaCivWorldLayoutStrategy(), battleStrategy);
+    game = new GameImpl(new FixedEpsilonCivFactory());
     assertThat(game, is(notNullValue()));
     units = game.getUnits();
   }

@@ -3,6 +3,7 @@ package hotciv.standard.HotCivVariantsTests;
 import hotciv.framework.*;
 
 import hotciv.standard.GameImpl;
+import hotciv.standard.HotCivFactory.DeltaCivFactory;
 import hotciv.standard.strategies.*;
 import org.junit.*;
 import static org.junit.Assert.*;
@@ -44,7 +45,7 @@ public class TestDeltaCiv {
   /** Fixture for Deltaciv testing. */
   @Before
   public void setUp() {
-    game = new GameImpl(new AlphaCivAgingStrategy(), new AlphaCivWinningStrategy(), new AlphaCivUnitActionStrategy(), new DeltaCivWorldLayoutStrategy(), new AlphaCivBattleStrategy());
+    game = new GameImpl(new DeltaCivFactory());
     assertThat(game, is(notNullValue()));
   }
 
