@@ -49,8 +49,8 @@ public class EpsilonCivBattleStrategy implements BattleStrategy {
   @Override
   public boolean battle(GameImpl game, Position attackingPosition, Position defendingPosition) {
     battleTest(game, attackingPosition, defendingPosition); // Calculating values from the battle
-    //attackingUnitStrength *= rollDie();
-    //defenseUnitStrength *= rollDie();
+    attackingUnitStrength *= rollDie();
+    defenseUnitStrength *= rollDie();
     boolean didAttackWin = attackingUnitStrength > defenseUnitStrength;
     if (didAttackWin) {
       incrementNumberOfSuccesfullAttacks(game);
