@@ -11,11 +11,12 @@ public class EpsilonCivBattleStrategy implements BattleStrategy {
   private int attackingUnitStrength;
   private int defenseUnitStrength;
   private HashMap<Position, UnitImpl> units;
+  private HashMap<Position, CityImpl> cities;
+  private HashMap<Position, TileImpl> world;
+
 
   public void battleTest(GameImpl game, Position attackingPosition, Position defendingPosition) {
     units = game.getUnits();
-    HashMap<Position, CityImpl> cities = game.getCities();
-    HashMap<Position, TileImpl> world = game.getWorld();
     UnitImpl attackingUnit = units.get(attackingPosition);
     UnitImpl defendingUnit = units.get(defendingPosition);
     int numberOfFriendlySorroundingAttackUnits = game.findNumberOfFriendlyNeighbourUnits(attackingPosition);
@@ -23,27 +24,26 @@ public class EpsilonCivBattleStrategy implements BattleStrategy {
     attackingUnitStrength = attackingUnit.getAttackingStrength();
     defenseUnitStrength = defendingUnit.getDefensiveStrength();
 
+    defenseUnitStrength = findBattleStrength(defendingPosition, defenseUnitStrength,numberOfFriendlySorroundingDefenseUnits);
+    attackingUnitStrength = findBattleStrength(attackingPosition, attackingUnitStrength, numberOfFriendlySorroundingAttackUnits);
+  }
 
-    boolean isAttackingUnitInACity = cities.containsKey(attackingPosition);
-    boolean isDefendingUnitInACity = cities.containsKey(defendingPosition);
-    boolean isAttackingUnitOnHill = world.get(attackingPosition).getTypeString().equals(GameConstants.HILLS);
-    boolean isDefendingUnitOnHill = world.get(defendingPosition).getTypeString().equals(GameConstants.HILLS);
+  private int findBattleStrength(Position unitPosition, int initialUnitStrength,int numberOfFriendlySorroundingUnit) {
+    int strength = initialUnitStrength;
+    boolean isUnitInACity = cities.containsKey(unitPosition);
+    boolean isUnitOnHill = world.get(unitPosition).getTypeString().equals(GameConstants.HILLS);
 
-    defenseUnitStrength += numberOfFriendlySorroundingDefenseUnits;
+    defenseUnitStrength += numberOfFriendlySorroundingUnit;
 
-    attackingUnitStrength += numberOfFriendlySorroundingAttackUnits;
+    attackingUnitStrength += numberOfFriendlySorroundingUnit;
 
-    if (isAttackingUnitInACity) {
-      attackingUnitStrength *= 3;
+    if (isUnitInACity){
+      strength *= 3;
     }
-    if (isDefendingUnitInACity){
-      defenseUnitStrength *= 3;
-    }
-    if (isAttackingUnitOnHill) {
-      attackingUnitStrength *= 2;
-    }
-    if (isDefendingUnitOnHill) {
-      defenseUnitStrength *= 2;    }
+    if (isUnitOnHill) {
+      strength *= 2;    }
+
+    return strength;
   }
 
   @Override
