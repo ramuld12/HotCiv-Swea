@@ -1,7 +1,10 @@
-package hotciv.standard;
+package hotciv.standard.HotCivVariantsTests;
 
 import hotciv.framework.Player;
 import hotciv.framework.Position;
+import hotciv.standard.GameImpl;
+import hotciv.standard.TestStubs.TestEpsilonCivBattleStrategy;
+import hotciv.standard.UnitImpl;
 import hotciv.standard.strategies.*;
 import hotciv.utility.Utility;
 import org.junit.Before;
@@ -62,6 +65,11 @@ public class TestZetaCiv {
     endOfRound();
     endOfRound();
     assertThat(game.getRoundNumber(), is(2));
+  }
+
+  @Test
+  public void redShouldWinAfter3SuccessfulAttacksAfter20Rounds() {
+
   }
 
 }

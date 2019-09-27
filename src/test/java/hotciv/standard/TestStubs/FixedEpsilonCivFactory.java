@@ -1,11 +1,9 @@
-package hotciv.standard.HotCivFactory;
+package hotciv.standard.TestStubs;
 
-import hotciv.standard.GameImpl;
+import hotciv.standard.HotCivFactory.HotCivFactory;
 import hotciv.standard.strategies.*;
 
-public class AlphaCivFactory implements HotCivFactory {
-
-
+public class FixedEpsilonCivFactory implements HotCivFactory {
   @Override
   public AgingStrategy createAgingStrategy() {
     return new AlphaCivAgingStrategy();
@@ -13,7 +11,7 @@ public class AlphaCivFactory implements HotCivFactory {
 
   @Override
   public BattleStrategy createBattleStrategy() {
-    return new AlphaCivBattleStrategy();
+    return new EpsilonCivBattleStrategy();
   }
 
   @Override
@@ -29,5 +27,5 @@ public class AlphaCivFactory implements HotCivFactory {
   @Override
   public WorldLayoutStrategy createWorldLayoutStrategy() {
     return new AlphaCivWorldLayoutStrategy();
-    }
-  }
+  };
+}

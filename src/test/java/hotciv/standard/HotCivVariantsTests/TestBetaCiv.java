@@ -1,7 +1,8 @@
-package hotciv.standard;
+package hotciv.standard.HotCivVariantsTests;
 
 import hotciv.framework.*;
 
+import hotciv.standard.GameImpl;
 import hotciv.standard.strategies.*;
 import org.junit.*;
 import static org.junit.Assert.*;

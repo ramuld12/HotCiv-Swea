@@ -1,11 +1,8 @@
 package hotciv.standard.HotCivFactory;
 
-import hotciv.standard.GameImpl;
 import hotciv.standard.strategies.*;
 
-public class AlphaCivFactory implements HotCivFactory {
-
-
+public class ZetaCivFactory implements HotCivFactory {
   @Override
   public AgingStrategy createAgingStrategy() {
     return new AlphaCivAgingStrategy();
@@ -23,11 +20,11 @@ public class AlphaCivFactory implements HotCivFactory {
 
   @Override
   public WinningStrategy createWinningStrategy() {
-    return new AlphaCivWinningStrategy();
+    return new ZetaCivWInningStrategy();
   }
 
   @Override
   public WorldLayoutStrategy createWorldLayoutStrategy() {
     return new AlphaCivWorldLayoutStrategy();
-    }
   }
+}
