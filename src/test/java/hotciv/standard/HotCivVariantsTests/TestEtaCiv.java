@@ -31,18 +31,28 @@ public class TestEtaCiv {
     game.endOfTurn();
   }
 
-  /*
-  @Test
-  public void redCitySizedShouldIncrease1(){
-    Position redCity = new Position(1,1);
-    endOfRound();
-    assertThat(game.getCityAt(redCity).getFoodAmount(), is(2));
-  }*/
 
   @Test
-  public void citySize1ShouldProduce1FoodPrRound(){
+  public void redCitySize1ShouldProduce1FoodPrRound(){
     Position redCity = new Position(1,1);
     endOfRound();
-    assertTrue(game.getCityAt(redCity).getFoodAmount() == 1);
+    endOfRound();
+    assertTrue(game.getCityAt(redCity).getFoodAmount() == 2);
   }
+
+  @Test
+  public void blueCitySize1ShouldProduce1FoodPrRound(){
+    Position blueCity = new Position(4,1);
+    endOfRound();
+    endOfRound();
+    assertTrue(game.getCityAt(blueCity).getFoodAmount() == 2);
+  }
+
+  @Test
+  public void redCitySizedShouldIncreaseFrom1To2WhenFoodAmountReach8(){
+    Position redCity = new Position(1,1);
+    game.getCityAt(redCity).setFoodAmount(8);
+    assertThat(game.getCityAt(redCity).getSize(), is(8));
+  }
+
 }

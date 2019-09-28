@@ -29,4 +29,9 @@ public class BetaCivFactory implements HotCivFactory {
   public WorldLayoutStrategy createWorldLayoutStrategy() {
     return new AlphaCivWorldLayoutStrategy();
   }
+
+  @Override
+  public WorkForceFocusStrategy createWorkForceFocuesStrategy() {
+    return null;
+  }
 }

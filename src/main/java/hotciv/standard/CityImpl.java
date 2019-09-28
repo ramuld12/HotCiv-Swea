@@ -45,8 +45,8 @@ public class CityImpl implements City {
   public void increaseTreas() {
     treas += 6;
   }
-  public void changeFoodAmount() {
-    foodAmount += 1;
+  public void changeFoodAmount(int value) {
+    foodAmount += value;
   }
 
 
@@ -82,11 +82,14 @@ public class CityImpl implements City {
   }
 
   public void setFoodAmount(int value){
-    foodAmount = foodAmount + value;
+    foodAmount = value;
   }
 
   public void incrementCitySize(){
     citySize++;
   }
 
+  public void incrementFood() {
+    foodAmount++;
+  }
 }

@@ -14,5 +14,9 @@ public interface HotCivFactory {
 
   public WorldLayoutStrategy createWorldLayoutStrategy();
 
+  public WorkForceFocusStrategy createWorkForceFocuesStrategy();
+
+  public PopulationGrowthStrategy createPopulationGrowthStrategy();
+
 
 }

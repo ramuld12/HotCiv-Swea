@@ -221,6 +221,16 @@ public class GameImpl implements Game {
     }
   }
 
+  public void increaseCitySize() {
+    for (CityImpl city : cities.values()) {
+      if (5 + city.getSize() * 3 > city.getFoodAmount()) {
+        return;
+      } else {
+        city.incrementCitySize();
+      }
+    }
+  }
+
   public void endOfTurn() {
     boolean isPlayerInTurnRed = playerInTurn.equals(Player.RED);
     if (isPlayerInTurnRed) {
@@ -229,14 +239,15 @@ public class GameImpl implements Game {
       playerInTurn = Player.RED;
       gameAge += agingStrategy.getAgeStep(this);
       cities.values().forEach(CityImpl::increaseTreas);
-      cities.values().forEach(CityImpl::changeFoodAmount);
+      cities.values().forEach(CityImpl::incrementFood);
       units.values().forEach(UnitImpl::resetMoveCounter);
       cities.keySet().forEach(p -> produceUnitInCityAt(p, cities.get(p)));
-
-
+      increaseCitySize();
       roundNumber ++;
     }
   }
+
+
 
   /**
    * Produces unit in a city. If the city already has a unit

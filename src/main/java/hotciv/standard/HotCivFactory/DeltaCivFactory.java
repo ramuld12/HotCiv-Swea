@@ -29,4 +29,9 @@ public class DeltaCivFactory implements HotCivFactory {
   public WorldLayoutStrategy createWorldLayoutStrategy() {
     return new DeltaCivWorldLayoutStrategy();
   }
+
+  @Override
+  public WorkForceFocusStrategy createWorkForceFocuesStrategy() {
+    return null;
+  }
 }
