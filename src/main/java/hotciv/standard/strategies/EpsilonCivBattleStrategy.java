@@ -19,31 +19,19 @@ public class EpsilonCivBattleStrategy implements BattleStrategy {
     this.dieStrategy = dieStrategy;
   }
 
-  public void battleTest(GameImpl game, Position attackingPosition, Position defendingPosition) {
+  @Override
+  public boolean battle(GameImpl game, Position attackingPosition, Position defendingPosition) {
     units = game.getUnits();
     cities = game.getCities();
     world = game.getWorld();
     playerWins = game.getPlayers();
     this.game = game;
-    UnitImpl attackingUnit = units.get(attackingPosition);
-    UnitImpl defendingUnit = units.get(defendingPosition);
-    attackingUnitStrength = attackingUnit.getAttackingStrength();
-    defenseUnitStrength = defendingUnit.getDefensiveStrength();
-
-    attackingUnitStrength = findBattleStrength(attackingPosition, attackingUnitStrength);
-    defenseUnitStrength = findBattleStrength(defendingPosition, defenseUnitStrength);
-  }
 
 
-
-  @Override
-  public boolean battle(GameImpl game, Position attackingPosition, Position defendingPosition) {
-    battleTest(game, attackingPosition, defendingPosition); // Calculating values from the battle
-    attackingUnitStrength *= dieStrategy.die();
-    defenseUnitStrength *= dieStrategy.die();
+    findBattlingUnitsStrengths(attackingPosition, defendingPosition);
     boolean didAttackWin = attackingUnitStrength > defenseUnitStrength;
     if (didAttackWin) {
-      incrementNumberOfSuccesfulAttacks(game);
+      incrementNumberOfSuccesfulAttacks();
     }
     else {
       units.remove(attackingPosition);
@@ -51,16 +39,26 @@ public class EpsilonCivBattleStrategy implements BattleStrategy {
     return didAttackWin;
   }
 
-  private void incrementNumberOfSuccesfulAttacks(GameImpl game){
+  /**
+   * Finds the battleStrengths of the battling units
+   * @param attackingPosition position of attacking unit
+   * @param defendingPosition position of defending unit
+   */
+  private void findBattlingUnitsStrengths(Position attackingPosition, Position defendingPosition) {
+    attackingUnitStrength = findBattleStrength(attackingPosition, units.get(attackingPosition).getAttackingStrength());
+    defenseUnitStrength = findBattleStrength(defendingPosition, units.get(defendingPosition).getDefensiveStrength());
+  }
+
+  private void incrementNumberOfSuccesfulAttacks(){
     Player playerInTurn = game.getPlayerInTurn();
     playerWins.put(playerInTurn, playerWins.get(playerInTurn) + 1 );
   }
 
   /**
-   * Finds the battle strength of a unit at a given position
+   * Finds the battle strength of a single unit at a given position
    * @param unitPosition The position of the unit
    * @param initialUnitStrength The initial strength of the unit
-   * @return The battleStrength of the unit before diceroll
+   * @return The battleStrength of the unit
    */
   private int findBattleStrength(Position unitPosition, int initialUnitStrength) {
     int strength = initialUnitStrength;
@@ -69,13 +67,10 @@ public class EpsilonCivBattleStrategy implements BattleStrategy {
     boolean isUnitOnHill = world.get(unitPosition).getTypeString().equals(GameConstants.HILLS);
 
     strength += numberOfFriendlySorroundingUnits;
-    if (isUnitInACity){
-      strength *= 3;
-    }
-    if (isUnitOnHill) {
-      strength *= 2;    }
+    if (isUnitInACity){ strength *= 3; }
+    if (isUnitOnHill) { strength *= 2; }
 
-    return strength;
+    return strength * dieStrategy.die();
   }
 
   public int getAttackingUnitStrength() {return attackingUnitStrength;}

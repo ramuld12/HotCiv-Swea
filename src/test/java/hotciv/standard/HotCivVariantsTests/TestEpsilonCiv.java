@@ -31,7 +31,9 @@ import java.util.*;
 public class TestEpsilonCiv {
   private GameImpl game;
   private HashMap<Position, UnitImpl> units;
-  private EpsilonCivBattleStrategy battleStrategy = new EpsilonCivBattleStrategy(new FixedDieStrategyImpl());
+  private FixedDieStrategyImpl fixedDieStrategy = new FixedDieStrategyImpl();
+  private EpsilonCivBattleStrategy battleStrategy = new EpsilonCivBattleStrategy(fixedDieStrategy);
+
 
   /**
    * Fixture for alphaciv testing.
@@ -125,15 +127,15 @@ public class TestEpsilonCiv {
   }
 
   @Test
-  public void redArcherInCityShouldHave6AttackStrength(){
+  public void redArcherInCityShouldHave6AttackStrengthTimesDie(){
     Position attackingUnitInCity = new Position(1,1);
     Position defendingUnit = new Position(2,1);
     removeNeighbours(attackingUnitInCity);
     units.put(defendingUnit, new UnitImpl(GameConstants.LEGION,Player.BLUE));
     endOfRound();
     endOfRound();
-    battleStrategy.battleTest(game,attackingUnitInCity,defendingUnit);
-    assertThat(battleStrategy.getAttackingUnitStrength(), is(6));
+    battleStrategy.battle(game,attackingUnitInCity,defendingUnit);
+    assertThat(battleStrategy.getAttackingUnitStrength(), is(6*fixedDieStrategy.die()));
   }
 
   @Test
@@ -144,12 +146,12 @@ public class TestEpsilonCiv {
     units.put(attackingUnit, new UnitImpl(GameConstants.LEGION,Player.BLUE));
     endOfRound();
     endOfRound();
-    battleStrategy.battleTest(game,attackingUnit,defendingUnitInCity);
-    assertThat(battleStrategy.getDefenseUnitStrength(), is(9));
+    battleStrategy.battle(game,attackingUnit,defendingUnitInCity);
+    assertThat(battleStrategy.getDefenseUnitStrength(), is(9*fixedDieStrategy.die()));
   }
 
   @Test
-  public void redLegionInCityShouldHave12AttackStrength(){
+  public void redLegionInCityShouldHave12AttackStrengthTimesDie(){
     Position attackingUnitInCity = new Position(1,1);
     Position defendingUnit = new Position(2,1);
     removeNeighbours(attackingUnitInCity);
@@ -158,12 +160,12 @@ public class TestEpsilonCiv {
     endOfRound();
     endOfRound();
     endOfRound();
-    battleStrategy.battleTest(game,attackingUnitInCity,defendingUnit);
-    assertThat(battleStrategy.getAttackingUnitStrength(), is(12));
+    battleStrategy.battle(game,attackingUnitInCity,defendingUnit);
+    assertThat(battleStrategy.getAttackingUnitStrength(), is(12*fixedDieStrategy.die()));
   }
 
   @Test
-  public void redLegionInCityShouldHave6DefenseStrength(){
+  public void redLegionInCityShouldHave6DefenseStrengthTimesDie(){
     Position defendingUnitInCity  = new Position(1,1);
     Position attackingUnit = new Position(2,1);
     removeNeighbours(defendingUnitInCity);
@@ -172,32 +174,32 @@ public class TestEpsilonCiv {
     endOfRound();
     endOfRound();
     endOfRound();
-    battleStrategy.battleTest(game,attackingUnit,defendingUnitInCity);
-    assertThat(battleStrategy.getDefenseUnitStrength(), is(6));
+    battleStrategy.battle(game,attackingUnit,defendingUnitInCity);
+    assertThat(battleStrategy.getDefenseUnitStrength(), is(6*fixedDieStrategy.die()));
   }
 
   @Test
-  public void redArcherOnHillShouldHave4Attack(){
+  public void redArcherOnHillShouldHave4AttackTimesDie(){
     Position attackingUnitOnHill = new Position(0,1);
     Position defendingUnit = new Position(0,2);
     units.put(attackingUnitOnHill, new UnitImpl(GameConstants.ARCHER,Player.RED));
     units.put(defendingUnit, new UnitImpl(GameConstants.LEGION,Player.BLUE));
-    battleStrategy.battleTest(game, attackingUnitOnHill, defendingUnit);
-    assertThat(battleStrategy.getAttackingUnitStrength(), is(4));
+    battleStrategy.battle(game, attackingUnitOnHill, defendingUnit);
+    assertThat(battleStrategy.getAttackingUnitStrength(), is(4*fixedDieStrategy.die()));
   }
 
   @Test
-  public void redArcherOnHillShouldHave6Defense(){
+  public void redArcherOnHillShouldHave6DefenseTimesDie(){
     Position defendingUnitOnHill = new Position(0,1);
     Position attackingUnit = new Position(0,2);
     units.put(defendingUnitOnHill, new UnitImpl(GameConstants.ARCHER,Player.RED));
     units.put(attackingUnit, new UnitImpl(GameConstants.LEGION,Player.BLUE));
-    battleStrategy.battleTest(game, attackingUnit, defendingUnitOnHill);
-    assertThat(battleStrategy.getDefenseUnitStrength(), is(6));
+    battleStrategy.battle(game, attackingUnit, defendingUnitOnHill);
+    assertThat(battleStrategy.getDefenseUnitStrength(), is(6*fixedDieStrategy.die()));
   }
 
   @Test
-  public void redArcherSorroundedBy2FriendlyUnitsShouldHave4Attack() {
+  public void redArcherSorroundedBy2FriendlyUnitsShouldHave4AttackTimesDie() {
     Position archerPositionMain = new Position(8,8);
     Position archerPosition2 = new Position(8,7);
     Position archerPosition3 = new Position(7,8);
@@ -206,12 +208,12 @@ public class TestEpsilonCiv {
     units.put(archerPosition2, new UnitImpl(GameConstants.ARCHER,Player.RED));
     units.put(archerPosition3, new UnitImpl(GameConstants.ARCHER,Player.RED));
     units.put(defendingPosition, new UnitImpl(GameConstants.ARCHER,Player.BLUE));
-    battleStrategy.battleTest(game, archerPositionMain, defendingPosition);
-    assertThat(battleStrategy.getAttackingUnitStrength(), is(4));
+    battleStrategy.battle(game, archerPositionMain, defendingPosition);
+    assertThat(battleStrategy.getAttackingUnitStrength(), is(4*fixedDieStrategy.die()));
   }
 
   @Test
-  public void redArcherSorroundedBy2FriendlyUnitsShouldHave5Defense() {
+  public void redArcherSorroundedBy2FriendlyUnitsShouldHave5DefenseTimesDie() {
     Position archerPositionMain = new Position(8,8);
     Position archerPosition2 = new Position(8,7);
     Position archerPosition3 = new Position(7,8);
@@ -220,12 +222,12 @@ public class TestEpsilonCiv {
     units.put(archerPosition2, new UnitImpl(GameConstants.ARCHER,Player.RED));
     units.put(archerPosition3, new UnitImpl(GameConstants.ARCHER,Player.RED));
     units.put(attackingPosition, new UnitImpl(GameConstants.ARCHER,Player.BLUE));
-    battleStrategy.battleTest(game, attackingPosition, archerPositionMain);
-    assertThat(battleStrategy.getDefenseUnitStrength(), is(5));
+    battleStrategy.battle(game, attackingPosition, archerPositionMain);
+    assertThat(battleStrategy.getDefenseUnitStrength(), is(5*fixedDieStrategy.die()));
   }
 
   @Test
-  public void redArcherInCityWith2FriendsShouldHave12Attack(){
+  public void redArcherInCityWith2FriendsShouldHave12AttackTimesDie(){
     Position archerPositionMain = new Position(8,8);
     Position archerPosition2 = new Position(8,7);
     Position archerPosition3 = new Position(7,8);
@@ -236,12 +238,12 @@ public class TestEpsilonCiv {
     units.put(archerPosition2, new UnitImpl(GameConstants.ARCHER,Player.RED));
     units.put(archerPosition3, new UnitImpl(GameConstants.ARCHER,Player.RED));
     units.put(defendingPosition, new UnitImpl(GameConstants.ARCHER,Player.BLUE));
-    battleStrategy.battleTest(game, archerPositionMain, defendingPosition);
-    assertThat(battleStrategy.getAttackingUnitStrength(), is(12));
+    battleStrategy.battle(game, archerPositionMain, defendingPosition);
+    assertThat(battleStrategy.getAttackingUnitStrength(), is(12*fixedDieStrategy.die()));
   }
 
   @Test
-  public void redArcherOnHillWith2FriendsShouldHave8Attack(){
+  public void redArcherOnHillWith2FriendsShouldHave8AttackTimesDie(){
     Position archerPositionMain = new Position(8,8);
     Position archerPosition2 = new Position(8,7);
     Position archerPosition3 = new Position(7,8);
@@ -252,13 +254,13 @@ public class TestEpsilonCiv {
     units.put(archerPosition2, new UnitImpl(GameConstants.ARCHER,Player.RED));
     units.put(archerPosition3, new UnitImpl(GameConstants.ARCHER,Player.RED));
     units.put(defendingPosition, new UnitImpl(GameConstants.ARCHER,Player.BLUE));
-    battleStrategy.battleTest(game, archerPositionMain, defendingPosition);
-    assertThat(battleStrategy.getAttackingUnitStrength(), is(8));
+    battleStrategy.battle(game, archerPositionMain, defendingPosition);
+    assertThat(battleStrategy.getAttackingUnitStrength(), is(8*fixedDieStrategy.die()));
   }
 
 
   @Test
-  public void redArcherOnHillInCityWith2FriendsShouldHave24Attack(){
+  public void redArcherOnHillInCityWith2FriendsShouldHave24AttackTimesDie(){
     Position archerPositionMain = new Position(8,8);
     Position archerPosition2 = new Position(8,7);
     Position archerPosition3 = new Position(7,8);
@@ -270,8 +272,8 @@ public class TestEpsilonCiv {
     units.put(archerPosition2, new UnitImpl(GameConstants.ARCHER,Player.RED));
     units.put(archerPosition3, new UnitImpl(GameConstants.ARCHER,Player.RED));
     units.put(defendingPosition, new UnitImpl(GameConstants.ARCHER,Player.BLUE));
-    battleStrategy.battleTest(game, archerPositionMain, defendingPosition);
-    assertThat(battleStrategy.getAttackingUnitStrength(), is(24));
+    battleStrategy.battle(game, archerPositionMain, defendingPosition);
+    assertThat(battleStrategy.getAttackingUnitStrength(), is(24*fixedDieStrategy.die()));
   }
 
   @Test
