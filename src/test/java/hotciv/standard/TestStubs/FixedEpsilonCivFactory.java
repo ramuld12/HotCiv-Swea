@@ -1,6 +1,6 @@
 package hotciv.standard.TestStubs;
 
-import hotciv.standard.FixedTests.FixedDieStrategyImpl;
+import hotciv.standard.FixedStrategies.FixedDieStrategyImpl;
 import hotciv.standard.HotCivFactory.HotCivFactory;
 import hotciv.standard.strategies.*;
 

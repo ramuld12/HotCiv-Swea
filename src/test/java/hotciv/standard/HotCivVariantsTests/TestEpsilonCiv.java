@@ -2,7 +2,7 @@ package hotciv.standard.HotCivVariantsTests;
 
 import hotciv.framework.*;
 
-import hotciv.standard.FixedTests.FixedDieStrategyImpl;
+import hotciv.standard.FixedStrategies.FixedDieStrategyImpl;
 import hotciv.standard.GameImpl;
 import hotciv.standard.HotCivFactory.EpsilonCivFactory;
 import hotciv.standard.TestStubs.FixedEpsilonCivFactory;
