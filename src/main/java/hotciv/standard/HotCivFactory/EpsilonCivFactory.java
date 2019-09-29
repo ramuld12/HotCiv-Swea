@@ -26,5 +26,16 @@ public class EpsilonCivFactory implements HotCivFactory {
   @Override
   public WorldLayoutStrategy createWorldLayoutStrategy() {
     return new AlphaCivWorldLayoutStrategy();
-  };
+  }
+
+  @Override
+  public WorkForceFocusStrategy createWorkForceFocuesStrategy() {
+    return new AlphaCivWorkForceFocusStrategy();
+  }
+
+  @Override
+  public PopulationGrowthStrategy createPopulationGrowthStrategy() { return new AlphaCivPopulationGrowthStrategy(); }
+
+
+  ;
 }

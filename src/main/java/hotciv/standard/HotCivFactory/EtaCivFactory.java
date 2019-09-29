@@ -28,4 +28,11 @@ public class EtaCivFactory implements HotCivFactory {
   public WorldLayoutStrategy createWorldLayoutStrategy() {
     return new AlphaCivWorldLayoutStrategy();
   }
+
+  @Override
+  public WorkForceFocusStrategy createWorkForceFocuesStrategy() { return new EtaCivWorkForceFocusStrategy(); }
+
+  @Override
+  public PopulationGrowthStrategy createPopulationGrowthStrategy() { return new EtaCivPopulationGrowthStrategy(); }
+
 }

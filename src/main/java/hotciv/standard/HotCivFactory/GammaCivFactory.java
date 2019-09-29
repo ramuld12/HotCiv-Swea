@@ -28,4 +28,13 @@ public class GammaCivFactory implements HotCivFactory {
     return new AlphaCivWorldLayoutStrategy();
   }
 
+  @Override
+  public WorkForceFocusStrategy createWorkForceFocuesStrategy() {
+    return new AlphaCivWorkForceFocusStrategy();
+  }
+
+  @Override
+  public PopulationGrowthStrategy createPopulationGrowthStrategy() { return new AlphaCivPopulationGrowthStrategy(); }
+
+
 }

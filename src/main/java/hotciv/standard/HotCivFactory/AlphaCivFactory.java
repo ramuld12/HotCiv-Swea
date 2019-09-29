@@ -33,6 +33,9 @@ public class AlphaCivFactory implements HotCivFactory {
 
   @Override
   public WorkForceFocusStrategy createWorkForceFocuesStrategy() {
-    return null;
+    return new AlphaCivWorkForceFocusStrategy();
   }
+
+  @Override
+  public PopulationGrowthStrategy createPopulationGrowthStrategy() { return new AlphaCivPopulationGrowthStrategy(); }
 }
