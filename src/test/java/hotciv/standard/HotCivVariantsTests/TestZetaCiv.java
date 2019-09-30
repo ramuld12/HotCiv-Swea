@@ -5,7 +5,9 @@ import hotciv.framework.Position;
 import hotciv.standard.GameImpl;
 import hotciv.standard.HotCivFactory.ZetaCivFactory;
 import hotciv.standard.UnitImpl;
-import hotciv.standard.strategies.*;
+import hotciv.standard.strategies.WinningStrategies.BetaCivWinningStrategy;
+import hotciv.standard.strategies.WinningStrategies.EpsilonCivWinningStrategy;
+import hotciv.standard.strategies.WinningStrategies.ZetaCivWinningStrategy;
 import hotciv.utility.Utility;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,11 +16,10 @@ import java.util.HashMap;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
 
 public class TestZetaCiv {
   private GameImpl game;
-  private HashMap<Position, UnitImpl> units;
 
   /**
    * Fixture for alphaciv testing.
@@ -27,7 +28,6 @@ public class TestZetaCiv {
   public void setUp() {
     game = new GameImpl(new ZetaCivFactory());
     assertThat(game, is(notNullValue()));
-    units = game.getUnits();
   }
 
   /**
@@ -36,15 +36,6 @@ public class TestZetaCiv {
   private void endOfRound() {
     game.endOfTurn();
     game.endOfTurn();
-  }
-
-  private void removeNeighbours(Position p){
-    for (Position neighbourPosition : Utility.get8neighborhoodOf(p)) {
-      boolean isUnitPresent = game.getUnitAt(neighbourPosition) != null;
-      if(isUnitPresent){
-        units.remove(neighbourPosition);
-      }
-    }
   }
 
   @Test
@@ -67,8 +58,16 @@ public class TestZetaCiv {
   }
 
   @Test
-  public void redShouldWinAfter3SuccessfulAttacksAfter20Rounds() {
+  public void shouldBeBetaCivWinningStrategyBefore20() {
+    game.setRoundNumber(10);
+    assertEquals(game.getWinningStrategy().getCurrentState().getClass(), BetaCivWinningStrategy.class);
+  }
 
+  @Test
+  public void shouldBeEpsilonCivWinningStrategyAfter20() {
+    game.setRoundNumber(25);
+    game.getWinner();
+    assertEquals(game.getWinningStrategy().getCurrentState().getClass(), EpsilonCivWinningStrategy.class);
   }
 
 }

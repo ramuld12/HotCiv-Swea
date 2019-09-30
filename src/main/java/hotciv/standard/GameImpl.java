@@ -125,6 +125,8 @@ public class GameImpl implements Game {
     return winningStrategy.getWinner(this);
   }
 
+  public WinningStrategy getWinningStrategy() { return winningStrategy; }
+
   // === Setter methods ======================================
 
   /**
@@ -135,6 +137,8 @@ public class GameImpl implements Game {
   public void setGameAge(int newGameAge) {
     gameAge = newGameAge;
   }
+
+  public void setRoundNumber (int newRoundNumber) {roundNumber = newRoundNumber;}
 
   public void changeProductionInCityAt(Position p, String unitType) {
     cities.get(p).changeProduction(unitType);

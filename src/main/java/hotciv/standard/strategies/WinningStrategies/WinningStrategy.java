@@ -16,4 +16,6 @@ public interface WinningStrategy {
   public Player getWinner(GameImpl game);
 
   public void initializePlayerVictories(GameImpl game);
+
+  public WinningStrategy getCurrentState();
 }
