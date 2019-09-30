@@ -1,9 +1,12 @@
 package hotciv.standard;
 
 import hotciv.framework.*;
-import hotciv.standard.*;
 import hotciv.standard.HotCivFactory.*;
-import hotciv.standard.strategies.*;
+import hotciv.standard.strategies.AgingStrategies.AgingStrategy;
+import hotciv.standard.strategies.BattleStrategies.BattleStrategy;
+import hotciv.standard.strategies.UnitActionStrategies.UnitActionStrategy;
+import hotciv.standard.strategies.WinningStrategies.WinningStrategy;
+import hotciv.standard.strategies.WorldLayoutStrategies.WorldLayoutStrategy;
 import hotciv.utility.*;
 
 import java.util.HashMap;

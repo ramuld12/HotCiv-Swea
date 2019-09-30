@@ -1,4 +1,4 @@
-package hotciv.standard.strategies;
+package hotciv.standard.strategies.WorldLayoutStrategies;
 
 import hotciv.standard.GameImpl;
 

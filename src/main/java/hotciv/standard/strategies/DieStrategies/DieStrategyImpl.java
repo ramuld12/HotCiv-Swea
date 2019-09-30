@@ -1,4 +1,6 @@
-package hotciv.standard.strategies;
+package hotciv.standard.strategies.DieStrategies;
+
+import hotciv.standard.strategies.DieStrategies.DieStrategy;
 
 import java.util.Random;
 

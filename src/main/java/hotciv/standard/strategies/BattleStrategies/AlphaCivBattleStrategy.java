@@ -1,7 +1,8 @@
-package hotciv.standard.strategies;
+package hotciv.standard.strategies.BattleStrategies;
 
 import hotciv.framework.Position;
 import hotciv.standard.GameImpl;
+import hotciv.standard.strategies.BattleStrategies.BattleStrategy;
 
 public class AlphaCivBattleStrategy implements BattleStrategy {
 

@@ -1,7 +1,8 @@
-package hotciv.standard.strategies;
+package hotciv.standard.strategies.BattleStrategies;
 
 import hotciv.framework.*;
 import hotciv.standard.*;
+import hotciv.standard.strategies.DieStrategies.DieStrategy;
 
 import java.util.HashMap;
 

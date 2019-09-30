@@ -4,11 +4,10 @@ import hotciv.framework.*;
 
 import hotciv.standard.FixedStrategies.FixedDieStrategyImpl;
 import hotciv.standard.GameImpl;
-import hotciv.standard.HotCivFactory.EpsilonCivFactory;
 import hotciv.standard.TestStubs.FixedEpsilonCivFactory;
 import hotciv.standard.TileImpl;
 import hotciv.standard.UnitImpl;
-import hotciv.standard.strategies.*;
+import hotciv.standard.strategies.BattleStrategies.EpsilonCivBattleStrategy;
 import hotciv.utility.Utility;
 import org.junit.*;
 import static org.junit.Assert.*;

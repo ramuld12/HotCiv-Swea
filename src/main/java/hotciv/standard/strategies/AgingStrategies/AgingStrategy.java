@@ -1,4 +1,4 @@
-package hotciv.standard.strategies;
+package hotciv.standard.strategies.AgingStrategies;
 
 import hotciv.standard.GameImpl;
 

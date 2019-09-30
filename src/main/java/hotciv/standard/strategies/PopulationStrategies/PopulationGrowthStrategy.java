@@ -1,4 +1,4 @@
-package hotciv.standard.strategies;
+package hotciv.standard.strategies.PopulationStrategies;
 
 public interface PopulationGrowthStrategy {
 

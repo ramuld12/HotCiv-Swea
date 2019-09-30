@@ -1,19 +1,20 @@
-package hotciv.standard.strategies;
+package hotciv.standard.strategies.WinningStrategies;
 
 import hotciv.framework.Player;
 import hotciv.standard.GameImpl;
 
-import java.util.HashMap;
-
-public class AlphaCivWinningStrategy implements WinningStrategy {
+public class BetaCivWinningStrategy implements WinningStrategy {
   @Override
   public Player getWinner(GameImpl game) {
-    if (game.getAge() >= -3000) {return Player.RED;}
+    if (game.doesPlayerInTurnOwnAllCities()) {
+      return game.getPlayerInTurn();
+    }
     return null;
   }
 
   @Override
   public void initializePlayerVictories(GameImpl game) {
-
   }
 }
+
+

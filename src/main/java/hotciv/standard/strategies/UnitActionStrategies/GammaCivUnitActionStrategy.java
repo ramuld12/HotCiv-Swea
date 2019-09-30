@@ -1,7 +1,8 @@
-package hotciv.standard.strategies;
+package hotciv.standard.strategies.UnitActionStrategies;
 
 import hotciv.framework.*;
 import hotciv.standard.*;
+import hotciv.standard.strategies.UnitActionStrategies.UnitActionStrategy;
 
 public class GammaCivUnitActionStrategy implements UnitActionStrategy {
 
