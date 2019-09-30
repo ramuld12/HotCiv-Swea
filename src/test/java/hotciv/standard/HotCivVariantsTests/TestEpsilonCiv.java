@@ -81,7 +81,7 @@ public class TestEpsilonCiv {
   }
 
   @Test
-  public void blueVictoyCountShouldIncrementWhenWinning() {
+  public void blueVictoryCountShouldIncrementWhenWinning() {
     game.endOfTurn(); // So blue is in turn
     Position redArcherPos = new Position(2, 0);
     Position blueLegionPos = new Position(3,2);
