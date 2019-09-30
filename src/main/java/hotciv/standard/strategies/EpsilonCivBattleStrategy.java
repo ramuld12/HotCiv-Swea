@@ -26,8 +26,10 @@ public class EpsilonCivBattleStrategy implements BattleStrategy {
     world = game.getWorld();
     playerWins = game.getPlayers();
     this.game = game;
+    return didAttackWin(attackingPosition, defendingPosition);
+  }
 
-
+  private boolean didAttackWin (Position attackingPosition, Position defendingPosition) {
     findBattlingUnitsStrengths(attackingPosition, defendingPosition);
     boolean didAttackWin = attackingUnitStrength > defenseUnitStrength;
     if (didAttackWin) {
