@@ -8,8 +8,10 @@ import hotciv.standard.strategies.PopulationStrategies.AlphaCivPopulationGrowthS
 import hotciv.standard.strategies.PopulationStrategies.PopulationGrowthStrategy;
 import hotciv.standard.strategies.UnitActionStrategies.AlphaCivUnitActionStrategy;
 import hotciv.standard.strategies.UnitActionStrategies.UnitActionStrategy;
+import hotciv.standard.strategies.WinningStrategies.BetaCivWinningStrategy;
+import hotciv.standard.strategies.WinningStrategies.EpsilonCivWinningStrategy;
 import hotciv.standard.strategies.WinningStrategies.WinningStrategy;
-import hotciv.standard.strategies.WinningStrategies.ZetaCivWInningStrategy;
+import hotciv.standard.strategies.WinningStrategies.ZetaCivWinningStrategy;
 import hotciv.standard.strategies.WorkFocusStrategies.AlphaCivWorkForceFocusStrategy;
 import hotciv.standard.strategies.WorkFocusStrategies.WorkForceFocusStrategy;
 import hotciv.standard.strategies.WorldLayoutStrategies.AlphaCivWorldLayoutStrategy;
@@ -33,7 +35,7 @@ public class ZetaCivFactory implements HotCivFactory {
 
   @Override
   public WinningStrategy createWinningStrategy() {
-    return new ZetaCivWInningStrategy();
+    return new ZetaCivWinningStrategy(new BetaCivWinningStrategy(), new EpsilonCivWinningStrategy());
   }
 
   @Override
