@@ -4,7 +4,6 @@ import hotciv.framework.*;
 
 import hotciv.standard.GameImpl;
 import hotciv.standard.HotCivFactory.DeltaCivFactory;
-import hotciv.standard.strategies.*;
 import org.junit.*;
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
@@ -49,15 +48,6 @@ public class TestDeltaCiv {
     assertThat(game, is(notNullValue()));
   }
 
-  /**
-   * Method for testing end of round triggers
-   */
-  public void endOfRound() {
-    game.endOfTurn();
-    game.endOfTurn();
-  }
-
-  // FRS p. 455 states that 'Red is the first player to take a turn'.
   @Test
   public void shouldBeRedAsStartingPlayer() {
     assertThat(game.getPlayerInTurn(), is(Player.RED));

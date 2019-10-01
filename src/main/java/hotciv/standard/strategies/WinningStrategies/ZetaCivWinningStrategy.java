@@ -34,5 +34,6 @@ public class ZetaCivWinningStrategy implements WinningStrategy {
   public void initializePlayerVictories(GameImpl game) {
   }
 
+  @Override
   public WinningStrategy getCurrentState() {return currentState;}
 }

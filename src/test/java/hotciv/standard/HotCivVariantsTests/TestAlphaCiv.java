@@ -5,58 +5,26 @@ import hotciv.framework.*;
 
 import hotciv.standard.GameImpl;
 import hotciv.standard.HotCivFactory.AlphaCivFactory;
+import hotciv.standard.TestUtility;
 import hotciv.standard.UnitImpl;
-import hotciv.standard.strategies.*;
 import org.junit.*;
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
 
 import java.util.*;
 
-/** Skeleton class for AlphaCiv test cases
+// Skeleton class for AlphaCiv test cases
 
-    Updated Oct 2015 for using Hamcrest matchers
-
-   This source code is from the book 
-     "Flexible, Reliable Software:
-       Using Patterns and Agile Development"
-     published 2010 by CRC Press.
-   Author: 
-     Henrik B Christensen 
-     Department of Computer Science
-     Aarhus University
-   
-   Please visit http://www.baerbak.com/ for further information.
-
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
- 
-       http://www.apache.org/licenses/LICENSE-2.0
- 
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
-
-*/
 public class TestAlphaCiv {
   private GameImpl game;
+  private TestUtility util;
 
   /** Fixture for alphaciv testing. */
   @Before
   public void setUp() {
     game = new GameImpl(new AlphaCivFactory());
     assertThat(game, is(notNullValue()));
-  }
-
-  /**
-   * Method for testing end of round triggers
-   */
-  public void endOfRound() {
-    game.endOfTurn();
-    game.endOfTurn();
+    util = new TestUtility(game);
   }
 
   @Test
@@ -86,7 +54,7 @@ public class TestAlphaCiv {
 
   @Test
   public void redShouldBeginEachRound(){
-    endOfRound();
+    util.endOfRound();
     assertThat(game.getPlayerInTurn(), is(Player.RED));
   }
 
@@ -97,21 +65,21 @@ public class TestAlphaCiv {
 
   @Test
   public void gameShouldAdvances100YearsPrRound() {
-    endOfRound();
-    endOfRound();
+    util.endOfRound();
+    util.endOfRound();
     assertThat(game.getAge(), is(-3800));
   }
 
   @Test
   public void redShouldWinInYear3000BC() {
-    for (int i = 0; i<10; i++) { endOfRound(); }
+    for (int i = 0; i<10; i++) { util.endOfRound(); }
     assertThat(game.getWinner(), is(Player.RED));
   }
 
   @Test
   public void winnerShouldBeNullBetween4000BCAnd3100BC() {
     for (int i = 0; i<9; i++) {
-      endOfRound();
+      util.endOfRound();
       assertNull(game.getWinner());
     }
   }
@@ -145,7 +113,7 @@ public class TestAlphaCiv {
 
   @Test
   public void shouldAdd6ProductionEachRound() {
-    endOfRound();
+    util.endOfRound();
     assertThat(game.getCityAt(new Position(1,1)).getTreasury(), is(6));
   }
 
@@ -292,16 +260,16 @@ public class TestAlphaCiv {
   public void shouldCreateUnitInVacantRedCity() {
     Position p = new Position(1,1);
     assertNull(game.getUnitAt(p));
-    endOfRound();
-    endOfRound();
+    util.endOfRound();
+    util.endOfRound();
     assertThat(game.getUnitAt(p).getTypeString(), is(GameConstants.ARCHER));
   }
 
   @Test
   public void shouldReduceTreasuryWhenProducingUnit() {
     Position p = new Position(1,1);
-    endOfRound();
-    endOfRound();
+    util.endOfRound();
+    util.endOfRound();
     assertThat(game.getCityAt(p).getTreasury(), is(2));
   }
 
@@ -310,9 +278,9 @@ public class TestAlphaCiv {
     Position p = new Position(4,1);
     game.changeProductionInCityAt(p,GameConstants.LEGION);
     assertNull(game.getUnitAt(p));
-    endOfRound();
-    endOfRound();
-    endOfRound();
+    util.endOfRound();
+    util.endOfRound();
+    util.endOfRound();
     assertThat(game.getUnitAt(p).getTypeString(), is(GameConstants.LEGION));
   }
 
@@ -320,12 +288,12 @@ public class TestAlphaCiv {
   public void shouldCreateUnitNorthOfBlueCity() {
     Position p = new Position(3,1);
     assertNull(game.getUnitAt(p));
-    endOfRound();
-    endOfRound();
+    util.endOfRound();
+    util.endOfRound();
     //Unit created in blue city at (4,1)
 
-    endOfRound();
-    endOfRound();
+    util.endOfRound();
+    util.endOfRound();
     assertThat(game.getUnitAt(p).getTypeString(), is(GameConstants.ARCHER));
   }
 
@@ -349,9 +317,9 @@ public class TestAlphaCiv {
     Position p2 = new Position(3,2);
 
     game.changeProductionInCityAt(p1,GameConstants.LEGION);
-    endOfRound();
-    endOfRound();
-    endOfRound();
+    util.endOfRound();
+    util.endOfRound();
+    util.endOfRound();
     assertFalse(game.moveUnit(p1, p2));
   }
 
@@ -374,7 +342,7 @@ public class TestAlphaCiv {
     Position blueCity = new Position(4,1);
     Position unitPosition = new Position(4,3);
     game.moveUnit(unitPosition, new Position(4,2));
-    endOfRound();
+    util.endOfRound();
     game.moveUnit(new Position(4,2),blueCity);
     assertTrue(game.doesPlayerInTurnOwnAllCities());
 

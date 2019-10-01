@@ -15,14 +15,10 @@ public class EpsilonCivWinningStrategy implements WinningStrategy {
   }
 
   @Override
-  public WinningStrategy getCurrentState() {
-    return this;
-  }
+  public WinningStrategy getCurrentState() { return this; }
 
   @Override
-  public void changeStateIfNeeded(GameImpl game) {
-
-  }
+  public void changeStateIfNeeded(GameImpl game) { }
 
   @Override
   public Player getWinner(GameImpl game) {

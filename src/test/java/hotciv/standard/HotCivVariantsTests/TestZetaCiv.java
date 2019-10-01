@@ -2,6 +2,7 @@ package hotciv.standard.HotCivVariantsTests;
 
 import hotciv.standard.GameImpl;
 import hotciv.standard.HotCivFactory.ZetaCivFactory;
+import hotciv.standard.TestUtility;
 import hotciv.standard.strategies.WinningStrategies.BetaCivWinningStrategy;
 import hotciv.standard.strategies.WinningStrategies.EpsilonCivWinningStrategy;
 import org.junit.Before;
@@ -13,6 +14,7 @@ import static org.junit.Assert.*;
 
 public class TestZetaCiv {
   private GameImpl game;
+  private TestUtility util;
 
   /**
    * Fixture for alphaciv testing.
@@ -21,24 +23,17 @@ public class TestZetaCiv {
   public void setUp() {
     game = new GameImpl(new ZetaCivFactory());
     assertThat(game, is(notNullValue()));
-  }
-
-  /**
-   * Method for testing end of round triggers
-   */
-  private void endOfRound() {
-    game.endOfTurn();
-    game.endOfTurn();
+    util = new TestUtility(game);
   }
 
   @Test
   public void numberOfRoundsShouldIncrementEachRound() {
-    endOfRound();
-    endOfRound();
+    util.endOfRound();
+    util.endOfRound();
     assertThat(game.getRoundNumber(), is(2));
-    endOfRound();
-    endOfRound();
-    endOfRound();
+    util.endOfRound();
+    util.endOfRound();
+    util.endOfRound();
     assertThat(game.getRoundNumber(), is(5));
   }
 
@@ -51,7 +46,7 @@ public class TestZetaCiv {
   @Test
   public void shouldBeEpsilonCivWinningStrategyAfter20() {
     game.setRoundNumber(25);
-    endOfRound();
+    util.endOfRound();
     assertEquals(game.getWinningStrategy().getCurrentState().getClass(), EpsilonCivWinningStrategy.class);
   }
 
@@ -59,7 +54,7 @@ public class TestZetaCiv {
   public void shouldChangeWinningStrategyAt20Rounds() {
     game.setRoundNumber(19);
     assertEquals(game.getWinningStrategy().getCurrentState().getClass(), BetaCivWinningStrategy.class);
-    endOfRound();
+    util.endOfRound();
     assertEquals(game.getWinningStrategy().getCurrentState().getClass(), EpsilonCivWinningStrategy.class);
   }
 

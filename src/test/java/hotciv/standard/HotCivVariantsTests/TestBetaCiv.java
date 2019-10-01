@@ -4,7 +4,7 @@ import hotciv.framework.*;
 
 import hotciv.standard.GameImpl;
 import hotciv.standard.HotCivFactory.BetaCivFactory;
-import hotciv.standard.strategies.*;
+import hotciv.standard.TestUtility;
 import org.junit.*;
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
@@ -41,76 +41,70 @@ import java.util.*;
  */
 public class TestBetaCiv {
   private GameImpl game;
+  private TestUtility util;
 
   /** Fixture for betaciv testing. */
   @Before
   public void setUp() {
     game = new GameImpl(new BetaCivFactory());
     assertThat(game, is(notNullValue()));
-  }
-
-  /**
-   * Method for testing end of round triggers
-   */
-  public void endOfRound() {
-    game.endOfTurn();
-    game.endOfTurn();
+    util = new TestUtility(game);
   }
 
   @Test
   public void gameShouldAdvance100YearsPrRoundBetween4000BCAnd100BC() {
-    endOfRound();
-    endOfRound();
+    util.endOfRound();
+    util.endOfRound();
     assertThat(game.getAge(), is(-3800));
   }
 
   @Test
   public void gameShouldAdvanceTo1BCAtYear100BC() {
     game.setGameAge(-100);
-    endOfRound();
+    util.endOfRound();
     assertThat(game.getAge(), is(-1));
   }
 
   @Test
   public void gameShouldAdvanceTo1ADAtYear1BC() {
     game.setGameAge(-1);
-    endOfRound();
+    util.endOfRound();
     assertThat(game.getAge(), is(1));
   }
 
   @Test
   public void gameShouldAdvanceTo50AtYear1() {
     game.setGameAge(1);
-    endOfRound();
+    util.endOfRound();
     assertThat(game.getAge(), is(50));
   }
 
   @Test
   public void gameShouldAdvance50PrRoundAtYear50ToYear1750() {
     game.setGameAge(50);
-    endOfRound();
+    util.endOfRound();
     assertThat(game.getAge(), is(100));
   }
 
   @Test
   public void gameShouldAdvance25PrRoundAtYear1750ToYear1900() {
     game.setGameAge(1750);
-    endOfRound();
+    util.endOfRound();
     assertThat(game.getAge(), is(1775));
   }
 
   @Test
   public void gameShouldAdvance5PrRoundAtYear1900ToYear1970() {
     game.setGameAge(1905);
-    endOfRound();
+    util.endOfRound();
     assertThat(game.getAge(), is(1910));
   }
 
   @Test
   public void gameShouldAdvance1PrRoundAtYear1970AndOn() {
     game.setGameAge(1970);
-    endOfRound();
-    endOfRound();
+    util.endOfRound();
+    util.endOfRound();
     assertThat(game.getAge(), is(1972));
   }
 
@@ -121,7 +115,7 @@ public class TestBetaCiv {
     Position p3 = new Position(4,1);
 
     game.moveUnit(p1,p2);
-    endOfRound();
+    util.endOfRound();
     assertNull(game.getUnitAt(p3));
     game.moveUnit(p2,p3);
     assertThat(game.getCityAt(p3).getOwner(), is(Player.RED));
@@ -134,8 +128,8 @@ public class TestBetaCiv {
     Position p3 = new Position(4,1);
 
     game.moveUnit(p1,p2);
-    endOfRound();
-    endOfRound();
+    util.endOfRound();
+    util.endOfRound();
     //Unit has been produced in city
     assertNotNull(game.getUnitAt(p3));
     game.moveUnit(p2,p3);
@@ -149,7 +143,7 @@ public class TestBetaCiv {
     Position p3 = new Position(4,1);
 
     game.moveUnit(p1,p2);
-    endOfRound();
+    util.endOfRound();
     game.moveUnit(p2,p3);
     assertThat(game.getWinner(), is(Player.RED));
   }
@@ -161,7 +155,7 @@ public class TestBetaCiv {
     Position p3 = new Position(1,1);
     game.endOfTurn();
     game.moveUnit(p1,p2);
-    endOfRound();
+    util.endOfRound();
     game.moveUnit(p2,p3);
     assertThat(game.getWinner(), is(Player.BLUE));
   }

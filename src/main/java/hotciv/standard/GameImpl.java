@@ -166,7 +166,7 @@ public class GameImpl implements Game {
   /**
    * Creates a unit of a given type at position.
    * @param position position for the unit
-   * @param unitType
+   * @param unitType type of the new unit
    * @param owner the owner of the new unit
    */
   public void createUnitAtPosition(Position position, String unitType, Player owner) {
@@ -188,7 +188,7 @@ public class GameImpl implements Game {
     boolean isThereAFriendlyUnitAtTo = isThereAUnitAtFrom && isThereAUnitAtTo && units.get(from).getOwner() == units.get(to).getOwner();
     boolean isUnitMoveable = isThereAUnitAtFrom && units.get(from).isMoveable();
     boolean hasMovesLeft = isThereAUnitAtFrom && units.get(from).getMoveCount() > 0;
-    boolean didDefenceWin = isThereAnEnemyUnitAtTo && !battleStrategy.battle(this, from, to);
+    boolean didDefenceWin = isThereAnEnemyUnitAtTo && !battleStrategy.handlingOfAttack(this, from, to);
     boolean isThereACityAtPositionTo = cities.containsKey(to);
     boolean isTheCityForeign = isThereACityAtPositionTo && cities.get(to).getOwner() != playerInTurn;
 
