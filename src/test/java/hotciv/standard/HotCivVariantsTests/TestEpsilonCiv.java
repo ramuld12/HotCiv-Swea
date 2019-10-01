@@ -9,23 +9,13 @@ import hotciv.standard.TestUtility;
 import hotciv.standard.TileImpl;
 import hotciv.standard.UnitImpl;
 import hotciv.standard.strategies.BattleStrategies.EpsilonCivBattleStrategy;
-import hotciv.utility.Utility;
 import org.junit.*;
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
 
 import java.util.*;
 
-/** Skeleton class for EpsilonCiv test cases
- *
- */
-
-/* Backlog
-- Clean Battle (rename methods)
-- Setup abstract factory
-- Implement zeta- og etaCiv
-
- */
+// Skeleton class for EpsilonCiv test cases
 
 
 public class TestEpsilonCiv {
@@ -35,10 +25,6 @@ public class TestEpsilonCiv {
   private EpsilonCivBattleStrategy battleStrategy = new EpsilonCivBattleStrategy(fixedDieStrategy);
   private TestUtility util;
 
-
-  /**
-   * Fixture for alphaciv testing.
-   */
   @Before
   public void setUp() {
     game = new GameImpl(new FixedEpsilonCivFactory());
@@ -47,14 +33,11 @@ public class TestEpsilonCiv {
     units = game.getUnits();
   }
 
-
-
   @Test
   public void redAndBlueShouldStartWith0Victories() {
     assertThat(game.getVictoriesForPlayer(Player.RED), is(0));
     assertThat(game.getVictoriesForPlayer(Player.BLUE), is(0));
   }
-
 
   @Test
   public void redVictoyCountShouldIncrementWhenWinning() {
@@ -245,7 +228,6 @@ public class TestEpsilonCiv {
     assertThat(battleStrategy.getAttackingUnitStrength(), is(8*fixedDieStrategy.die()));
   }
 
-
   @Test
   public void redArcherOnHillInCityWith2FriendsShouldHave24AttackTimesDie(){
     Position archerPositionMain = new Position(8,8);
@@ -327,6 +309,5 @@ public class TestEpsilonCiv {
     game.moveUnit(blueArcher, redArcher);
     assertNull(game.getUnitAt(blueArcher));
   }
-
 }
 

@@ -50,5 +50,4 @@ public class ZetaCivFactory implements HotCivFactory {
 
   @Override
   public PopulationGrowthStrategy createPopulationGrowthStrategy() { return new AlphaCivPopulationGrowthStrategy(); }
-
 }

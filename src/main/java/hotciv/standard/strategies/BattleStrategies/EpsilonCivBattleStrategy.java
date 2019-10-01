@@ -31,12 +31,8 @@ public class EpsilonCivBattleStrategy implements BattleStrategy {
   private boolean didAttackWin (Position attackingPosition, Position defendingPosition) {
     findBattlingUnitsStrengths(attackingPosition, defendingPosition);
     boolean didAttackWin = attackingUnitStrength > defenseUnitStrength;
-    if (didAttackWin) {
-      incrementNumberOfSuccesfulAttacks();
-    }
-    else {
-      units.remove(attackingPosition);
-    }
+    if (didAttackWin) { incrementNumberOfSuccesfulAttacks(); }
+    else { units.remove(attackingPosition); }
     return didAttackWin;
   }
 
