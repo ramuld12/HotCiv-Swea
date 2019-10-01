@@ -3,6 +3,8 @@ package hotciv.standard.strategies.WinningStrategies;
 import hotciv.framework.Player;
 import hotciv.standard.GameImpl;
 
+import java.util.HashMap;
+
 public class ZetaCivWinningStrategy implements WinningStrategy {
   private WinningStrategy
     before20RoundsStrategy, after20RoundsStrategy, currentState;
@@ -15,23 +17,21 @@ public class ZetaCivWinningStrategy implements WinningStrategy {
 
   @Override
   public Player getWinner(GameImpl game) {
-    changeStateIfNeeded(game);
     return currentState.getWinner(game);
   }
 
-  private void changeStateIfNeeded(GameImpl game) {
+  @Override
+  public void changeStateIfNeeded(GameImpl game) {
     boolean isBefore20Rounds = game.getRoundNumber() < 20;
-    if (isBefore20Rounds) {
-      currentState = before20RoundsStrategy;
-    }
+    if (isBefore20Rounds) { currentState = before20RoundsStrategy; }
     else {
       currentState = after20RoundsStrategy;
+      after20RoundsStrategy.initializePlayerVictories(game);
     }
   }
 
   @Override
   public void initializePlayerVictories(GameImpl game) {
-    after20RoundsStrategy.initializePlayerVictories(game);
   }
 
   public WinningStrategy getCurrentState() {return currentState;}

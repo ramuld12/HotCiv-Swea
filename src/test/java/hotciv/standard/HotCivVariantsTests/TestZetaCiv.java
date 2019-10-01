@@ -1,18 +1,11 @@
 package hotciv.standard.HotCivVariantsTests;
 
-import hotciv.framework.Player;
-import hotciv.framework.Position;
 import hotciv.standard.GameImpl;
 import hotciv.standard.HotCivFactory.ZetaCivFactory;
-import hotciv.standard.UnitImpl;
 import hotciv.standard.strategies.WinningStrategies.BetaCivWinningStrategy;
 import hotciv.standard.strategies.WinningStrategies.EpsilonCivWinningStrategy;
-import hotciv.standard.strategies.WinningStrategies.ZetaCivWinningStrategy;
-import hotciv.utility.Utility;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.util.HashMap;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
@@ -39,22 +32,14 @@ public class TestZetaCiv {
   }
 
   @Test
-  public void redShouldwinWhenConqueringAllCititsBefore20Rounds() {
-    Position p1 = new Position(4,3);
-    Position p2 = new Position(4,2);
-    Position p3 = new Position(4,1);
-
-    game.moveUnit(p1,p2);
-    endOfRound();
-    game.moveUnit(p2,p3);
-    assertThat(game.getWinner(), is(Player.RED));
-  }
-
-  @Test
   public void numberOfRoundsShouldIncrementEachRound() {
     endOfRound();
     endOfRound();
     assertThat(game.getRoundNumber(), is(2));
+    endOfRound();
+    endOfRound();
+    endOfRound();
+    assertThat(game.getRoundNumber(), is(5));
   }
 
   @Test
@@ -66,8 +51,20 @@ public class TestZetaCiv {
   @Test
   public void shouldBeEpsilonCivWinningStrategyAfter20() {
     game.setRoundNumber(25);
-    game.getWinner();
+    endOfRound();
     assertEquals(game.getWinningStrategy().getCurrentState().getClass(), EpsilonCivWinningStrategy.class);
   }
 
+  @Test
+  public void shouldChangeWinningStrategyAt20Rounds() {
+    game.setRoundNumber(19);
+    assertEquals(game.getWinningStrategy().getCurrentState().getClass(), BetaCivWinningStrategy.class);
+    endOfRound();
+    assertEquals(game.getWinningStrategy().getCurrentState().getClass(), EpsilonCivWinningStrategy.class);
+  }
+
+  @Test
+  public void shouldResetnumberOfVictoriesWhenRound20Starts(){
+
+  }
 }

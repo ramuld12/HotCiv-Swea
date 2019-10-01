@@ -251,10 +251,9 @@ public class GameImpl implements Game {
       cities.keySet().forEach(p -> produceUnitInCityAt(p, cities.get(p)));
       increaseCitySize();
       roundNumber ++;
+      winningStrategy.changeStateIfNeeded(this);
     }
   }
-
-
 
   /**
    * Produces unit in a city. If the city already has a unit

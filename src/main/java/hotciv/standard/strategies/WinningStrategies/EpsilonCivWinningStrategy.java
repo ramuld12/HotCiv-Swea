@@ -20,6 +20,11 @@ public class EpsilonCivWinningStrategy implements WinningStrategy {
   }
 
   @Override
+  public void changeStateIfNeeded(GameImpl game) {
+
+  }
+
+  @Override
   public Player getWinner(GameImpl game) {
     boolean isRedTheWinner = game.getVictoriesForPlayer(Player.RED) >= 3;
     boolean isBlueTheWinner = game.getVictoriesForPlayer(Player.BLUE) >= 3;
