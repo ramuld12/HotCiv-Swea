@@ -1,24 +1,20 @@
 package hotciv.standard.HotCivVariantsTests;
 
-import hotciv.framework.Player;
-import hotciv.framework.Position;
 import hotciv.standard.GameImpl;
 import hotciv.standard.HotCivFactory.ZetaCivFactory;
-import hotciv.standard.UnitImpl;
-import hotciv.standard.strategies.*;
-import hotciv.utility.Utility;
+import hotciv.standard.TestUtility;
+import hotciv.standard.strategies.WinningStrategies.BetaCivWinningStrategy;
+import hotciv.standard.strategies.WinningStrategies.EpsilonCivWinningStrategy;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.HashMap;
-
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
 
 public class TestZetaCiv {
   private GameImpl game;
-  private HashMap<Position, UnitImpl> units;
+  private TestUtility util;
 
   /**
    * Fixture for alphaciv testing.
@@ -27,48 +23,43 @@ public class TestZetaCiv {
   public void setUp() {
     game = new GameImpl(new ZetaCivFactory());
     assertThat(game, is(notNullValue()));
-    units = game.getUnits();
-  }
-
-  /**
-   * Method for testing end of round triggers
-   */
-  private void endOfRound() {
-    game.endOfTurn();
-    game.endOfTurn();
-  }
-
-  private void removeNeighbours(Position p){
-    for (Position neighbourPosition : Utility.get8neighborhoodOf(p)) {
-      boolean isUnitPresent = game.getUnitAt(neighbourPosition) != null;
-      if(isUnitPresent){
-        units.remove(neighbourPosition);
-      }
-    }
-  }
-
-  @Test
-  public void redShouldwinWhenConqueringAllCititsBefore20Rounds() {
-    Position p1 = new Position(4,3);
-    Position p2 = new Position(4,2);
-    Position p3 = new Position(4,1);
-
-    game.moveUnit(p1,p2);
-    endOfRound();
-    game.moveUnit(p2,p3);
-    assertThat(game.getWinner(), is(Player.RED));
+    util = new TestUtility(game);
   }
 
   @Test
   public void numberOfRoundsShouldIncrementEachRound() {
-    endOfRound();
-    endOfRound();
+    util.endOfRound();
+    util.endOfRound();
     assertThat(game.getRoundNumber(), is(2));
+    util.endOfRound();
+    util.endOfRound();
+    util.endOfRound();
+    assertThat(game.getRoundNumber(), is(5));
   }
 
   @Test
-  public void redShouldWinAfter3SuccessfulAttacksAfter20Rounds() {
-
+  public void shouldBeBetaCivWinningStrategyBefore20() {
+    game.setRoundNumber(10);
+    assertEquals(game.getWinningStrategy().getCurrentState().getClass(), BetaCivWinningStrategy.class);
   }
 
+  @Test
+  public void shouldBeEpsilonCivWinningStrategyAfter20() {
+    game.setRoundNumber(25);
+    util.endOfRound();
+    assertEquals(game.getWinningStrategy().getCurrentState().getClass(), EpsilonCivWinningStrategy.class);
+  }
+
+  @Test
+  public void shouldChangeWinningStrategyAt20Rounds() {
+    game.setRoundNumber(19);
+    assertEquals(game.getWinningStrategy().getCurrentState().getClass(), BetaCivWinningStrategy.class);
+    util.endOfRound();
+    assertEquals(game.getWinningStrategy().getCurrentState().getClass(), EpsilonCivWinningStrategy.class);
+  }
+
+  @Test
+  public void shouldResetnumberOfVictoriesWhenRound20Starts(){
+
+  }
 }

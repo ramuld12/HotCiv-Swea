@@ -16,12 +16,10 @@ public class EpsilonCivBattleStrategy implements BattleStrategy {
   private HashMap<Player, Integer> playerWins;
   private GameImpl game;
 
-  public EpsilonCivBattleStrategy(DieStrategy dieStrategy) {
-    this.dieStrategy = dieStrategy;
-  }
+  public EpsilonCivBattleStrategy(DieStrategy dieStrategy) { this.dieStrategy = dieStrategy; }
 
   @Override
-  public boolean battle(GameImpl game, Position attackingPosition, Position defendingPosition) {
+  public boolean handlingOfAttack(GameImpl game, Position attackingPosition, Position defendingPosition) {
     units = game.getUnits();
     cities = game.getCities();
     world = game.getWorld();
@@ -33,12 +31,8 @@ public class EpsilonCivBattleStrategy implements BattleStrategy {
   private boolean didAttackWin (Position attackingPosition, Position defendingPosition) {
     findBattlingUnitsStrengths(attackingPosition, defendingPosition);
     boolean didAttackWin = attackingUnitStrength > defenseUnitStrength;
-    if (didAttackWin) {
-      incrementNumberOfSuccesfulAttacks();
-    }
-    else {
-      units.remove(attackingPosition);
-    }
+    if (didAttackWin) { incrementNumberOfSuccesfulAttacks(); }
+    else { units.remove(attackingPosition); }
     return didAttackWin;
   }
 

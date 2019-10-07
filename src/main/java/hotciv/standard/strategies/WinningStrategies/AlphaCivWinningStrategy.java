@@ -14,4 +14,14 @@ public class AlphaCivWinningStrategy implements WinningStrategy {
   public void initializePlayerVictories(GameImpl game) {
 
   }
+
+  @Override
+  public WinningStrategy getCurrentState() {
+    return this;
+  }
+
+  @Override
+  public void changeStateIfNeeded(GameImpl game) {
+
+  }
 }

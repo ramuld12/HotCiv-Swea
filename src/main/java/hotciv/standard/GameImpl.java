@@ -125,6 +125,8 @@ public class GameImpl implements Game {
     return winningStrategy.getWinner(this);
   }
 
+  public WinningStrategy getWinningStrategy() { return winningStrategy; }
+
   // === Setter methods ======================================
 
   /**
@@ -135,6 +137,8 @@ public class GameImpl implements Game {
   public void setGameAge(int newGameAge) {
     gameAge = newGameAge;
   }
+
+  public void setRoundNumber (int newRoundNumber) {roundNumber = newRoundNumber;}
 
   public void changeProductionInCityAt(Position p, String unitType) {
     cities.get(p).changeProduction(unitType);
@@ -162,7 +166,7 @@ public class GameImpl implements Game {
   /**
    * Creates a unit of a given type at position.
    * @param position position for the unit
-   * @param unitType
+   * @param unitType type of the new unit
    * @param owner the owner of the new unit
    */
   public void createUnitAtPosition(Position position, String unitType, Player owner) {
@@ -184,7 +188,7 @@ public class GameImpl implements Game {
     boolean isThereAFriendlyUnitAtTo = isThereAUnitAtFrom && isThereAUnitAtTo && units.get(from).getOwner() == units.get(to).getOwner();
     boolean isUnitMoveable = isThereAUnitAtFrom && units.get(from).isMoveable();
     boolean hasMovesLeft = isThereAUnitAtFrom && units.get(from).getMoveCount() > 0;
-    boolean didDefenceWin = isThereAnEnemyUnitAtTo && !battleStrategy.battle(this, from, to);
+    boolean didDefenceWin = isThereAnEnemyUnitAtTo && !battleStrategy.handlingOfAttack(this, from, to);
     boolean isThereACityAtPositionTo = cities.containsKey(to);
     boolean isTheCityForeign = isThereACityAtPositionTo && cities.get(to).getOwner() != playerInTurn;
 
@@ -247,10 +251,9 @@ public class GameImpl implements Game {
       cities.keySet().forEach(p -> produceUnitInCityAt(p, cities.get(p)));
       increaseCitySize();
       roundNumber ++;
+      winningStrategy.changeStateIfNeeded(this);
     }
   }
-
-
 
   /**
    * Produces unit in a city. If the city already has a unit
@@ -263,10 +266,7 @@ public class GameImpl implements Game {
   private void produceUnitInCityAt(Position cityPosition, CityImpl city) {
     boolean isCityPositionVacantForUnit = units.get(cityPosition) == null;
     boolean doesCityHaveEnoughTreasure = city.hasEnoughTreasure();
-    if (!doesCityHaveEnoughTreasure) {
-      return;
-    }
-
+    if (!doesCityHaveEnoughTreasure) {return;}
     city.reduceTreasury(city.getProdCost());
     if (isCityPositionVacantForUnit) {
       createUnitAtPosition(cityPosition, city.getProduction(), city.getOwner());

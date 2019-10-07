@@ -12,5 +12,5 @@ public interface BattleStrategy {
    * @param defendingPosition Position of the defending unit
    * @return true if attacking unit won the battle
    */
-  public boolean battle(GameImpl game, Position attackingPosition, Position defendingPosition);
+  public boolean handlingOfAttack(GameImpl game, Position attackingPosition, Position defendingPosition);
 }
