@@ -53,6 +53,23 @@ public class TestThetaCiv {
     assertThat(game.getUnitAt(cityPosition).getTypeString(), is(GameConstants.B52));
   }
 
+  @Test
+  public void B52ShouldTravelDistance(){
+      Position p1 = new Position(2,0); Position p2 = new Position(3,0); Position p3 = new Position(4,0);
+      game.createUnitAtPosition(p1,GameConstants.B52,Player.RED);
+      game.movingTheUnit(p1, p2);
+      game.movingTheUnit(p2,p3);
+      assertThat(game.getUnitAt(p3).getTypeString(), is(GameConstants.B52));
+  }
 
+  @Test
+  public void B52ShouldTravelOverAllTileTypes(){
+    Position p1 = new Position(2,1); Position p2 = new Position(3,2);
+    Position mountainPosition = new Position(2,2);
+    game.createUnitAtPosition(p1,GameConstants.B52,Player.RED);
+    assertThat(game.getTileAt(mountainPosition).getTypeString(), is(GameConstants.MOUNTAINS));
+    game.moveUnit(p1, mountainPosition);
+    assertThat(game.getUnitAt(mountainPosition).getTypeString(),  is(GameConstants.B52));
+  }
 }
 

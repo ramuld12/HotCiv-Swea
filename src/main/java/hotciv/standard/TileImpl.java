@@ -14,8 +14,9 @@ public class TileImpl implements Tile {
     return gc;
   }
 
-  public Boolean isValidMovementTileType () {
-    if (gc.equals(GameConstants.OCEANS) || gc.equals(GameConstants.MOUNTAINS)) {return false;}
-    return true;
+  public Boolean isValidMovementTileType (UnitImpl unit) {
+    if (unit.getTypeString().equals(GameConstants.B52))
+      return true;
+    return !gc.equals(GameConstants.OCEANS) && !gc.equals(GameConstants.MOUNTAINS);
   }
 }
