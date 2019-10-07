@@ -10,14 +10,14 @@ public class UnitImpl implements Unit {
   private String type;
   private Player owner;
   private int moveCounter;
-  private boolean isMoveable;
+  private boolean isMovable;
   private boolean isFortified;
 
   public UnitImpl(String type, Player owner) {
     this.type = type;
     this.owner = owner;
     this.moveCounter = 1;
-    this.isMoveable = true;
+    this.isMovable = true;
     if (type.equals(GameConstants.ARCHER)) {
       this.defenseStrength = 3;
       this.attackStrength = 2;
@@ -30,6 +30,10 @@ public class UnitImpl implements Unit {
     if (type.equals(GameConstants.SETTLER)) {
       this.defenseStrength = 3;
       this.attackStrength = 0;
+    }
+    if (type.equals(GameConstants.B52)) {
+      this.defenseStrength = 8;
+      this.attackStrength = 1;
     }
   }
 
@@ -49,18 +53,19 @@ public class UnitImpl implements Unit {
   }
 
   @Override
-  public int getDefensiveStrength() { return defenseStrength;}
+  public int getDefensiveStrength() {
+    return defenseStrength;
+  }
 
-  public void fortifyArcher(){
+  public void fortifyArcher() {
     boolean isArcherAlreadyFortified = isFortified;
 
     if (isArcherAlreadyFortified) {
-      isMoveable = true;
+      isMovable = true;
       defenseStrength /= 2;
-    }
-    else {
+    } else {
       isFortified = true;
-      isMoveable = false;
+      isMovable = false;
       defenseStrength *= 2;
     }
   }
@@ -73,11 +78,11 @@ public class UnitImpl implements Unit {
 
   @Override
   public boolean isMoveable() {
-    return isMoveable;
+    return isMovable;
   }
 
   public void decreaseMoveCount() {
-    moveCounter --;
+    moveCounter--;
   }
 
   public void resetMoveCounter() {
@@ -88,7 +93,5 @@ public class UnitImpl implements Unit {
     attackStrength = newAttackStrength;
   }
 
-  public void changeDefenseStrength(int newDefenseStrength) {
-  defenseStrength = newDefenseStrength;
-  }
 }
+

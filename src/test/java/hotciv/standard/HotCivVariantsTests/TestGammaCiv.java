@@ -12,7 +12,7 @@ import static org.hamcrest.CoreMatchers.*;
 public class TestGammaCiv {
   private GameImpl game;
 
-  /** Fixture for GammeCiv testing. */
+  /** Fixture for GammaCiv testing. */
   @Before
   public void setUp() {
     game = new GameImpl(new GammaCivFactory());
