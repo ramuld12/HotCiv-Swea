@@ -228,7 +228,7 @@ public class GameImpl implements Game {
       if (5 + city.getSize() * 3 > city.getFoodAmount()) {
         return;
       } else {
-        city.incrementCitySize();
+        city.incrementPopulationSize();
       }
     }
   }

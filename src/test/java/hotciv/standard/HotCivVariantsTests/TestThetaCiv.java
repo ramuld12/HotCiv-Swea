@@ -4,6 +4,7 @@ import hotciv.framework.*;
 import hotciv.standard.GameImpl;
 import hotciv.standard.HotCivFactory.GammaCivFactory;
 import hotciv.standard.HotCivFactory.ThetaCivFactory;
+import hotciv.standard.TileImpl;
 import hotciv.standard.UnitImpl;
 import org.junit.*;
 
@@ -82,7 +83,22 @@ public class TestThetaCiv {
 
   @Test
   public void shouldDecreasePopulationOfCityAfterAttack(){
-    
+    Position cityPosition = new Position(1,1);
+    game.createUnitAtPosition(cityPosition,GameConstants.B52,Player.BLUE);
+    game.getCityAt(cityPosition).incrementPopulationSize();
+    assertThat(game.getCityAt(cityPosition).getPopulationSize(), is(2));
+    game.performUnitActionAt(cityPosition);
+    assertThat(game.getCityAt(cityPosition).getPopulationSize(), is(1));
+  }
+
+  @Test
+  public void shouldChangeFromForestToPlainsAfterAttack(){
+    Position forrestPosition = new Position(8,8);
+    TileImpl forrest = new TileImpl(GameConstants.FOREST);
+    game.createTileAtPosition(forrestPosition, forrest);
+    game.createUnitAtPosition(forrestPosition,GameConstants.B52,Player.BLUE);
+    game.performUnitActionAt(forrestPosition);
+    assertThat(game.getTileAt(forrestPosition).getTypeString(), is(GameConstants.PLAINS));
   }
 }
 

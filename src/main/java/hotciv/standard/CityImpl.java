@@ -88,10 +88,6 @@ public class CityImpl implements City {
     return foodAmount;
   }
 
-  public void incrementCitySize(){
-    citySize++;
-  }
-
   public void incrementFood() {
     foodAmount++;
   }
@@ -102,5 +98,9 @@ public class CityImpl implements City {
 
   public int getPopulationSize() {
     return populationSize;
+  }
+
+  public void incrementPopulationSize(){
+    populationSize++;
   }
 }

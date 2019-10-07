@@ -22,18 +22,18 @@ public class ThetaCivUnitActionStrategy implements UnitActionStrategy {
     }
   }
 
-  private void performB52ActionAt(GameImpl game, Position actionPoistion) {
-    boolean isThereACity = game.getCityAt(actionPoistion) != null;
-    boolean isThereForrest = game.getTileAt(actionPoistion).equals(GameConstants.FOREST);
+  private void performB52ActionAt(GameImpl game, Position actionPosition) {
+    boolean isThereACity = game.getCityAt(actionPosition) != null;
+    boolean isThereForrest = game.getTileAt(actionPosition).getTypeString().equals(GameConstants.FOREST);
     if (isThereACity) {
-      game.getCityAt(actionPoistion).decreasePopulationSize();
-      if (game.getCityAt(actionPoistion).getPopulationSize() == 0){
-        game.removeCityFromCitiesMapAtPosition(actionPoistion);
+      game.getCityAt(actionPosition).decreasePopulationSize();
+      if (game.getCityAt(actionPosition).getPopulationSize() == 0){
+        game.removeCityFromCitiesMapAtPosition(actionPosition);
       }
     }
     if (isThereForrest) {
-      game.removeTileFromWorldMapAtPosition(actionPoistion);
-      game.createTileAtPosition(actionPoistion,new TileImpl(GameConstants.PLAINS));
+      game.removeTileFromWorldMapAtPosition(actionPosition);
+      game.createTileAtPosition(actionPosition,new TileImpl(GameConstants.PLAINS));
     }
   }
 
