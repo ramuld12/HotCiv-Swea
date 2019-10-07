@@ -71,5 +71,18 @@ public class TestThetaCiv {
     game.moveUnit(p1, mountainPosition);
     assertThat(game.getUnitAt(mountainPosition).getTypeString(),  is(GameConstants.B52));
   }
+
+  @Test
+  public void shouldRemoveCityWhenActionPerformed(){
+    Position cityPosition = new Position(1,1);
+    game.createUnitAtPosition(cityPosition,GameConstants.B52,Player.BLUE);
+    game.performUnitActionAt(cityPosition);
+    assertNull(game.getCityAt(cityPosition));
+  }
+
+  @Test
+  public void shouldDecreasePopulationOfCityAfterAttack(){
+    
+  }
 }
 

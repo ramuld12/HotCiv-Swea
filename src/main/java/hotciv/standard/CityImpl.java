@@ -11,6 +11,7 @@ public class CityImpl implements City {
   private String prod;
   private int foodAmount = 0;
   private int citySize = 0;
+  private  int populationSize = 1;
 
   public CityImpl(Player p) {
     this.p = p;
@@ -93,5 +94,13 @@ public class CityImpl implements City {
 
   public void incrementFood() {
     foodAmount++;
+  }
+
+  public void decreasePopulationSize() {
+    populationSize--;
+  }
+
+  public int getPopulationSize() {
+    return populationSize;
   }
 }

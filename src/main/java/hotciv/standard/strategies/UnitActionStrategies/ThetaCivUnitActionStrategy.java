@@ -2,8 +2,13 @@ package hotciv.standard.strategies.UnitActionStrategies;
 
 import hotciv.framework.GameConstants;
 import hotciv.framework.Position;
+import hotciv.framework.Tile;
 import hotciv.framework.Unit;
+import hotciv.standard.CityImpl;
 import hotciv.standard.GameImpl;
+import hotciv.standard.TileImpl;
+
+import java.util.HashMap;
 
 public class ThetaCivUnitActionStrategy implements UnitActionStrategy {
   @Override
@@ -17,7 +22,19 @@ public class ThetaCivUnitActionStrategy implements UnitActionStrategy {
     }
   }
 
-  private void performB52ActionAt(GameImpl game, Position p) {
+  private void performB52ActionAt(GameImpl game, Position actionPoistion) {
+    boolean isThereACity = game.getCityAt(actionPoistion) != null;
+    boolean isThereForrest = game.getTileAt(actionPoistion).equals(GameConstants.FOREST);
+    if (isThereACity) {
+      game.getCityAt(actionPoistion).decreasePopulationSize();
+      if (game.getCityAt(actionPoistion).getPopulationSize() == 0){
+        game.removeCityFromCitiesMapAtPosition(actionPoistion);
+      }
+    }
+    if (isThereForrest) {
+      game.removeTileFromWorldMapAtPosition(actionPoistion);
+      game.createTileAtPosition(actionPoistion,new TileImpl(GameConstants.PLAINS));
+    }
   }
 
   private void performArcherActionAt(GameImpl game, Position p) {

@@ -336,6 +336,17 @@ public class GameImpl implements Game {
       }
     }
 
+  public void removeCityFromCitiesMapAtPosition(Position cityPosition) {
+      boolean isThereACityAtPosition = cities.get(cityPosition) != null;
+      if (isThereACityAtPosition){
+        cities.remove(cityPosition);
+      }
+  }
+
+  public void removeTileFromWorldMapAtPosition(Position actionPosition) {
+    world.remove(actionPosition);
+  }
+
     // === Boolean methods ======================================
 
     /**
