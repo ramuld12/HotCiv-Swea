@@ -45,6 +45,11 @@ public class CityImpl implements City {
   public void increaseTreas() {
     treas += 6;
   }
+
+  public void setTreas(int value){
+    treas = value;
+  }
+
   public void changeFoodAmount(int value) {
     foodAmount += value;
   }
@@ -63,6 +68,7 @@ public class CityImpl implements City {
     if (prod.equals(GameConstants.ARCHER)) {return 10;}
     else if (prod.equals(GameConstants.LEGION)) {return 15;}
     else if (prod.equals(GameConstants.SETTLER)) {return 30;}
+    else if (prod.equals(GameConstants.B52)) {return 60;}
     return 0;
   }
 
@@ -79,10 +85,6 @@ public class CityImpl implements City {
 
   public int getFoodAmount() {
     return foodAmount;
-  }
-
-  public void setFoodAmount(int value){
-    foodAmount = value;
   }
 
   public void incrementCitySize(){

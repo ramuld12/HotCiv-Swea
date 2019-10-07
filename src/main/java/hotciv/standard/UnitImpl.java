@@ -34,6 +34,7 @@ public class UnitImpl implements Unit {
     if (type.equals(GameConstants.B52)) {
       this.defenseStrength = 8;
       this.attackStrength = 1;
+      this.moveCounter = 2;
     }
   }
 

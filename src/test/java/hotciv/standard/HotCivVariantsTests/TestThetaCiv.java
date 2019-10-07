@@ -34,6 +34,24 @@ public class TestThetaCiv {
     assertThat(game.getUnitAt(B52Position).getAttackingStrength(), is(1));
   }
 
+  @Test
+  public void cityWithProductionB52ShouldAB52(){
+    Position cityPosition = new Position(1,1);
+    game.changeProductionInCityAt(cityPosition, GameConstants.B52);
+    game.getCityAt(cityPosition).setTreas(61);
+    game.produceUnitInCityAt(cityPosition,game.getCityAt(cityPosition));
+    assertThat(game.getUnitAt(cityPosition).getTypeString(), is(GameConstants.B52));
+  }
+
+  @Test
+  public void shouldCost60ToProduceB52Unit(){
+    Position cityPosition = new Position(1,1);
+    game.changeProductionInCityAt(cityPosition, GameConstants.B52);
+    game.getCityAt(cityPosition).setTreas(61);
+    game.produceUnitInCityAt(cityPosition,game.getCityAt(cityPosition));
+    assertTrue(game.getCityAt(cityPosition).getTreasury()==1);
+    assertThat(game.getUnitAt(cityPosition).getTypeString(), is(GameConstants.B52));
+  }
 
 
 }

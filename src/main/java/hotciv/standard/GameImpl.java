@@ -144,11 +144,6 @@ public class GameImpl implements Game {
     cities.get(p).changeProduction(unitType);
   }
 
-  public void changeWorkForceFocusInCityAt(Position p, String balance) {
-  }//Not implemented
-
-  // === Mutator methods ======================================
-
   /**
    * Creates a city at a given position. The owner of
    * the new city is set to the player in turn.
@@ -255,6 +250,11 @@ public class GameImpl implements Game {
     }
   }
 
+  @Override
+  public void changeWorkForceFocusInCityAt(Position p, String balance) {
+ // not implemented yet
+  }
+
   /**
    * Produces unit in a city. If the city already has a unit
    * in the city, it will produce a unit at a neighbour position
@@ -263,7 +263,7 @@ public class GameImpl implements Game {
    * @param cityPosition position of the city to produce unit
    * @param city         the city at cityPosition
    */
-  private void produceUnitInCityAt(Position cityPosition, CityImpl city) {
+  public void produceUnitInCityAt(Position cityPosition, CityImpl city) {
     boolean isCityPositionVacantForUnit = units.get(cityPosition) == null;
     boolean doesCityHaveEnoughTreasure = city.hasEnoughTreasure();
     if (!doesCityHaveEnoughTreasure) {return;}
