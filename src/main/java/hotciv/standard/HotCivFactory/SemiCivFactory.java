@@ -5,6 +5,7 @@ import hotciv.standard.strategies.AgingStrategies.AlphaCivAgingStrategy;
 import hotciv.standard.strategies.BattleStrategies.BattleStrategy;
 import hotciv.standard.strategies.BattleStrategies.EpsilonCivBattleStrategy;
 import hotciv.standard.strategies.DieStrategies.DieStrategy;
+import hotciv.standard.strategies.DieStrategies.DieStrategyImpl;
 import hotciv.standard.strategies.PopulationStrategies.PopulationGrowthStrategy;
 import hotciv.standard.strategies.UnitActionStrategies.AlphaCivUnitActionStrategy;
 import hotciv.standard.strategies.UnitActionStrategies.UnitActionStrategy;
@@ -20,11 +21,7 @@ public class SemiCivFactory implements HotCivFactory {
 
   @Override
   public BattleStrategy createBattleStrategy() {
-    return new EpsilonCivBattleStrategy(new DieStrategy() {
-      @Override
-      public int die() {
-        return 1; // for testing returning this result temporarily (to be changed to random)
-      }
+    return new EpsilonCivBattleStrategy(new DieStrategyImpl() {
     });
   }
 
