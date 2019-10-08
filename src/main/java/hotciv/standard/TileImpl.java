@@ -15,8 +15,9 @@ public class TileImpl implements Tile {
   }
 
   public Boolean isValidMovementTileType (UnitImpl unit) {
-    if (unit.getTypeString().equals(GameConstants.B52))
-      return true;
+    boolean isThereAUnit = unit != null;
+    boolean isUnitB52 = isThereAUnit && unit.getTypeString().equals(GameConstants.B52);
+    if (isUnitB52){ return true;}
     return !gc.equals(GameConstants.OCEANS) && !gc.equals(GameConstants.MOUNTAINS);
   }
 }
