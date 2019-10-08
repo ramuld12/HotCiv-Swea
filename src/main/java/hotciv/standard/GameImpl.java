@@ -175,7 +175,7 @@ public class GameImpl implements Game {
   public boolean moveUnit(Position from, Position to) {
     boolean isFromInTheWorld = world.containsKey(from);
     boolean isToInTheWorld = world.containsKey(to);
-    boolean isTileTypeAtToValidForMovement = world.get(to).isValidMovementTileType(units.get(from));
+    boolean isTileTypeAtToValidForMovement = isFromInTheWorld && isToInTheWorld && world.get(to).isValidMovementTileType(units.get(from));
     boolean isThereAUnitAtFrom = units.get(from) != null;
     boolean isThereAUnitAtTo = units.get(to) != null;
     boolean isUnitOwnedByPlayerInTurn = isThereAUnitAtFrom && units.get(from).getOwner() == playerInTurn;
