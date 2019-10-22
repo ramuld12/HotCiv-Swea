@@ -21,7 +21,7 @@ public class AlphaCivWorldLayoutStrategy implements WorldLayoutStrategy {
     world.put(new Position(0, 1), new TileImpl(GameConstants.HILLS));
     world.put(new Position(2, 2), new TileImpl(GameConstants.MOUNTAINS));
 
-    //Initialize the citites map
+    //Initialize the cities map
     HashMap<Position, CityImpl> cities = game.getCities();
     cities.put(new Position(1, 1), new CityImpl(Player.RED));
     cities.put(new Position(4, 1), new CityImpl(Player.BLUE));

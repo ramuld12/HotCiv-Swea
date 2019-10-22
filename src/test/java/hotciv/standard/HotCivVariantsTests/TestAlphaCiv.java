@@ -6,6 +6,7 @@ import hotciv.framework.*;
 import hotciv.standard.GameImpl;
 import hotciv.standard.HotCivFactory.AlphaCivFactory;
 import hotciv.standard.TestUtility;
+import hotciv.standard.TileImpl;
 import hotciv.standard.UnitImpl;
 import org.junit.*;
 import static org.junit.Assert.*;
@@ -142,7 +143,14 @@ public class TestAlphaCiv {
   }
 
   @Test
-  public void itShouldNotBeAllowedToMoveToMountainsOrOcean() {
+  public void itShouldNotBeAllowedToMoveToOcean() {
+    Position p1 = new Position(2,0); Position p2 = new Position(2,1);
+    game.getWorld().put(p2, new TileImpl(GameConstants.MOUNTAINS));
+    assertThat(game.moveUnit(p1, p2), is(false));
+  }
+
+  @Test
+  public void itShouldNotBeAllowedToMoveToMountain() {
     Position p1 = new Position(2,0); Position p2 = new Position(1,0);
     assertThat(game.moveUnit(p1, p2), is(false));
   }
