@@ -11,12 +11,7 @@ public class SemiCivUnitActionStrategy implements UnitActionStrategy {
     boolean isThereAUnitAtPosition = game.getUnitAt(p) != null;
     String UnitForAction = game.getUnitAt(p).getTypeString();
     if (isThereAUnitAtPosition) {
-      if (UnitForAction.equals(GameConstants.SETTLER)) {performSettlerActionAt(game,p);}
+      if (UnitForAction.equals(GameConstants.SETTLER)) {new SettlerGammaCivUnitActionStrategy().performUnitActionAt(game,p);}
     }
-  }
-
-  private void performSettlerActionAt(GameImpl game, Position settlerPosition) {
-    game.removeUnitFromUnitsMapAtPosition(settlerPosition);
-    game.createCityAtPosition(settlerPosition);
   }
 }

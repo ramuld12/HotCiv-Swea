@@ -11,17 +11,8 @@ public class GammaCivUnitActionStrategy implements UnitActionStrategy {
     boolean isThereAUnitAtPosition = game.getUnitAt(p) != null;
     String UnitForAction = game.getUnitAt(p).getTypeString();
     if (isThereAUnitAtPosition) {
-      if (UnitForAction.equals(GameConstants.ARCHER)) {performArcherActionAt(game,p);}
-      else if (UnitForAction.equals(GameConstants.SETTLER)) {performSettlerActionAt(game,p);}
+      if (UnitForAction.equals(GameConstants.ARCHER)) {new ArcherGammaCivUnitActionStrategy().performUnitActionAt(game,p);}
+      else if (UnitForAction.equals(GameConstants.SETTLER)) {new SettlerGammaCivUnitActionStrategy().performUnitActionAt(game,p);}
     }
-  }
-
-  private void performArcherActionAt(GameImpl game, Position p) {
-    game.getUnitAt(p).fortifyArcher();
-  }
-
-  private void performSettlerActionAt(GameImpl game, Position settlerPosition) {
-    game.removeUnitFromUnitsMapAtPosition(settlerPosition);
-    game.createCityAtPosition(settlerPosition);
   }
 }
