@@ -9,5 +9,4 @@ public class SettlerGammaCivUnitActionStrategy implements UnitActionStrategy {
     game.removeUnitFromUnitsMapAtPosition(settlerPosition);
     game.createCityAtPosition(settlerPosition);
   }
-
-  }
+}
