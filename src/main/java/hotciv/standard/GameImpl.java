@@ -324,7 +324,8 @@ public class GameImpl implements Game {
       unitActionStrategy.performUnitActionAt(this, p);
     }
 
-    /**
+
+  /**
      * Removes a unit at a certain position from the units map
      * Precondition: There has to be a unit at the given position
      * @param unitPosition the position of the unit to be removed

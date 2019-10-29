@@ -1,16 +1,12 @@
 package hotciv.standard.decorators;
 
 import hotciv.framework.*;
-import hotciv.standard.GameImpl;
-import hotciv.standard.HotCivFactory.AlphaCivFactory;
-import hotciv.standard.HotCivFactory.HotCivFactory;
 
 public class transcriptDecorator implements Game {
   private Game game;
   private Game decorateeGame;
   public transcriptDecorator (Game game) {
     this.game = game;
-    decorateeGame = game;
   }
 
   public void changeLoggingState () {
@@ -22,6 +18,9 @@ public class transcriptDecorator implements Game {
     }
   }
 
+  public Game getGame() {
+    return game;
+  }
   @Override
   public boolean moveUnit(Position from, Position to) {
     System.out.println(game.getPlayerInTurn() + " moves " + game.getUnitAt(from) + " at position " + from +
@@ -46,7 +45,8 @@ public class transcriptDecorator implements Game {
 
   @Override
   public void endOfTurn() {
-
+    System.out.println(game.getPlayerInTurn() + " ends turn");
+    game.endOfTurn();
   }
 
   @Override
