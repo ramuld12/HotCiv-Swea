@@ -60,5 +60,15 @@ public class Utility {
     return iterable;
   }
 
+  public String getTileTypeFromChar (char tileChar) {
+    String type = "error";
+    if ( tileChar == '.' ) { type = GameConstants.OCEANS; }
+    if ( tileChar == 'o' ) { type = GameConstants.PLAINS; }
+    if ( tileChar == 'M' ) { type = GameConstants.MOUNTAINS; }
+    if ( tileChar == 'f' ) { type = GameConstants.FOREST; }
+    if ( tileChar == 'h' ) { type = GameConstants.HILLS; }
+    return type;
+  }
+
 
 }

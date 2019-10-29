@@ -93,7 +93,7 @@ public class GameImpl implements Game {
     return playerVictories;
   }
 
-  public TileImpl getTileAt(Position p) {
+  public Tile getTileAt(Position p) {
     return world.get(p);
   }
 
@@ -297,7 +297,7 @@ public class GameImpl implements Game {
   public Position findFirstVacantNeighbourPosition(Position centerPosition) {
     for (Position neighbourPosition : Utility.get8neighborhoodOf(centerPosition)) {
       boolean isNeighbourPositionVacantForUnit = units.get(neighbourPosition) == null;
-      boolean isValidTileInWorld = world.get(neighbourPosition).isValidMovementTileType(units.get(neighbourPosition));
+      boolean isValidTileInWorld = (boolean) world.get(neighbourPosition).isValidMovementTileType(units.get(neighbourPosition));
 
       if (!(isNeighbourPositionVacantForUnit &&
               isValidTileInWorld)) {

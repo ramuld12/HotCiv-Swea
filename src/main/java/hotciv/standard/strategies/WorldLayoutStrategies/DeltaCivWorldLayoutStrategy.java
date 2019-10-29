@@ -2,10 +2,13 @@ package hotciv.standard.strategies.WorldLayoutStrategies;
 
 import hotciv.framework.*;
 import hotciv.standard.*;
+import hotciv.utility.Utility;
 
 import java.util.HashMap;
 
 public class DeltaCivWorldLayoutStrategy implements WorldLayoutStrategy {
+  private Utility util = new Utility();
+
   @Override
   public void createTheWorld(GameImpl game) {
     // Basically we use a 'data driven' approach - code the
@@ -37,12 +40,7 @@ public class DeltaCivWorldLayoutStrategy implements WorldLayoutStrategy {
       line = layout[r];
       for ( int c = 0; c < GameConstants.WORLDSIZE; c++ ) {
         char tileChar = line.charAt(c);
-        String type = "error";
-        if ( tileChar == '.' ) { type = GameConstants.OCEANS; }
-        if ( tileChar == 'o' ) { type = GameConstants.PLAINS; }
-        if ( tileChar == 'M' ) { type = GameConstants.MOUNTAINS; }
-        if ( tileChar == 'f' ) { type = GameConstants.FOREST; }
-        if ( tileChar == 'h' ) { type = GameConstants.HILLS; }
+        String type = util.getTileTypeFromChar(tileChar);
         Position p = new Position(r,c);
         world.put( p, new TileImpl(type));
       }

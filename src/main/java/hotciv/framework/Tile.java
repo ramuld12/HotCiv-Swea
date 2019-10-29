@@ -1,5 +1,7 @@
 package hotciv.framework;
 
+import hotciv.standard.UnitImpl;
+
 /** Tile represents a single territory tile of a given type.
 
     Responsibilities:
@@ -37,5 +39,7 @@ public interface Tile {
    * engine, as they correspond to named image files.
    * @return the type type as string
    */
-  public String getTypeString(); 
+  public String getTypeString();
+
+  Object isValidMovementTileType(UnitImpl unit);
 }
