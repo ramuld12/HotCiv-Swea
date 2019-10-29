@@ -28,13 +28,13 @@ public class TestFractalMaps {
       tileTypes.add(game.getTileAt(new Position(1,1)).getTypeString());
     }
 
-    boolean testSameType = false;
+    boolean areTypesDifferent = false;
     for(String tileType : tileTypes) {
       if(!tileType.equals(tileTypes.get(0))) {
-        testSameType = true;
+        areTypesDifferent = true;
         break;
       }
     }
-    assertThat(testSameType, is(true));
+    assertThat(areTypesDifferent, is(true));
   }
 }
