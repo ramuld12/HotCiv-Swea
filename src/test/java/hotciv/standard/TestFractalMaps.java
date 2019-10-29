@@ -2,13 +2,9 @@ package hotciv.standard;
 
 import hotciv.framework.Game;
 import hotciv.framework.Position;
-import hotciv.framework.Tile;
-import hotciv.standard.HotCivFactory.AlphaCivFactory;
-import hotciv.standard.TestStubs.ThirdPartyWorldLayoutFactory;
-import org.junit.Before;
+import hotciv.standard.HotCivFactory.ThirdPartyWorldLayoutFactory;
 import org.junit.Test;
 
-import java.awt.*;
 import java.util.ArrayList;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -26,18 +22,19 @@ public class TestFractalMaps {
 
   @Test
   public void shouldHaveDifferentTilesAt1_1For25Games() {
-    ArrayList<TileImpl> tiles = new ArrayList<>();
+    ArrayList<String> tileTypes = new ArrayList<>();
     for (int i = 0; i<25; i++) {
       Game game = new GameImpl(new ThirdPartyWorldLayoutFactory());
-      tiles.add((TileImpl)game.getTileAt(new Position(1,1)));
+      tileTypes.add(game.getTileAt(new Position(1,1)).getTypeString());
     }
 
-    boolean testSameType = true;
-    for(TileImpl tile : tiles) {
-      if(!tile.equals(tiles.get(0))) {
-        testSameType = false;
+    boolean testSameType = false;
+    for(String tileType : tileTypes) {
+      if(!tileType.equals(tileTypes.get(0))) {
+        testSameType = true;
+        break;
       }
     }
-    assertThat(testSameType, is(false));
+    assertThat(testSameType, is(true));
   }
 }

@@ -1,12 +1,12 @@
-package hotciv.standard.TestStubs;
+package hotciv.standard.HotCivFactory;
 
-import hotciv.standard.FixedStrategies.FixedDieStrategyImpl;
 import hotciv.standard.HotCivFactory.HotCivFactory;
 import hotciv.standard.adapters.WorldGeneratorAdapter;
 import hotciv.standard.strategies.AgingStrategies.AgingStrategy;
 import hotciv.standard.strategies.AgingStrategies.AlphaCivAgingStrategy;
 import hotciv.standard.strategies.BattleStrategies.BattleStrategy;
 import hotciv.standard.strategies.BattleStrategies.EpsilonCivBattleStrategy;
+import hotciv.standard.strategies.DieStrategies.DieStrategyImpl;
 import hotciv.standard.strategies.PopulationStrategies.AlphaCivPopulationGrowthStrategy;
 import hotciv.standard.strategies.PopulationStrategies.PopulationGrowthStrategy;
 import hotciv.standard.strategies.UnitActionStrategies.AlphaCivUnitActionStrategy;
@@ -26,7 +26,7 @@ public class ThirdPartyWorldLayoutFactory implements HotCivFactory {
 
   @Override
   public BattleStrategy createBattleStrategy() {
-    return new EpsilonCivBattleStrategy(new FixedDieStrategyImpl());
+    return new EpsilonCivBattleStrategy(new DieStrategyImpl());
   }
 
   @Override
