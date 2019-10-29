@@ -31,13 +31,6 @@ public class transcriptDecorator implements Game {
 
   //Game game2 = new transcriptDecorator(new GameImpl(new AlphaCivFactory()));
 
-
-
-  @Override
-  public void changeWorkForceFocusInCityAt(Position p, String balance) {
-    //not implmented
-  }
-
   @Override
   public void changeProductionInCityAt(Position p, String unitType) {
     System.out.println(game.getPlayerInTurn() + " changes production in city at " + p + " to " + unitType);
@@ -52,37 +45,45 @@ public class transcriptDecorator implements Game {
   }
 
   @Override
+  public void endOfTurn() {
+
+  }
+
+  @Override
+  public void changeWorkForceFocusInCityAt(Position p, String balance) {
+    //not implmented
+  }
+
+  // === Accessor methods ======================================
+  // We have not decorated theese methods, since they are only
+  // used by other methods and are not direct actions made by a player
+  @Override
   public Tile getTileAt(Position p) {
-    return null;
+    return game.getTileAt(p);
   }
 
   @Override
   public Unit getUnitAt(Position p) {
-    return null;
+    return game.getUnitAt(p);
   }
 
   @Override
   public City getCityAt(Position p) {
-    return null;
+    return game.getCityAt(p);
   }
 
   @Override
   public Player getPlayerInTurn() {
-    return null;
+    return game.getPlayerInTurn();
   }
 
   @Override
   public Player getWinner() {
-    return null;
+    return game.getWinner();
   }
 
   @Override
   public int getAge() {
-    return 0;
-  }
-
-  @Override
-  public void endOfTurn() {
-
+    return game.getAge();
   }
 }
