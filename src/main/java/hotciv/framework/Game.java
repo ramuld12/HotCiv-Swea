@@ -137,6 +137,10 @@ public interface Game {
    */
   public void performUnitActionAt( Position p );
 
+  public void addObserver(GameObserver observer);
+
+  public void setTileFocus(Position position);
+
 
   //“This is the hotfix for release 2.1”
 

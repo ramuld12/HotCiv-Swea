@@ -35,7 +35,7 @@ repositories {
     
 dependencies {
     compile 'com.baerbak.maven:minidraw:1.13'
-
+    compile 'com.baerbak.maven:hotciv-fractal:1.0'
     testCompile 'junit:junit:4.12'
     testCompile 'org.hamcrest:hamcrest-library:1.3'
 }

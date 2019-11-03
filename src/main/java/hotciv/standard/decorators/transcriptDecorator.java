@@ -44,6 +44,16 @@ public class transcriptDecorator implements Game {
   }
 
   @Override
+  public void addObserver(GameObserver observer) {
+
+  }
+
+  @Override
+  public void setTileFocus(Position position) {
+
+  }
+
+  @Override
   public void endOfTurn() {
     System.out.println(game.getPlayerInTurn() + " ends turn");
     game.endOfTurn();
