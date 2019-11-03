@@ -4,6 +4,7 @@ import hotciv.framework.*;
 
 import hotciv.standard.GameImpl;
 import hotciv.standard.HotCivFactory.DeltaCivFactory;
+import hotciv.standard.TestStubs.GameObserverImplTest;
 import org.junit.*;
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
@@ -18,7 +19,7 @@ public class TestDeltaCiv {
   /** Fixture for Deltaciv testing. */
   @Before
   public void setUp() {
-    game = new GameImpl(new DeltaCivFactory());
+    game = new GameImpl(new DeltaCivFactory(), new GameObserverImplTest());
     assertThat(game, is(notNullValue()));
   }
 

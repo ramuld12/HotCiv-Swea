@@ -4,6 +4,7 @@ import hotciv.framework.*;
 
 import hotciv.standard.GameImpl;
 import hotciv.standard.HotCivFactory.BetaCivFactory;
+import hotciv.standard.TestStubs.GameObserverImplTest;
 import hotciv.standard.TestUtility;
 import org.junit.*;
 import static org.junit.Assert.*;
@@ -18,7 +19,7 @@ public class TestBetaCiv {
   /** Fixture for betaciv testing. */
   @Before
   public void setUp() {
-    game = new GameImpl(new BetaCivFactory());
+    game = new GameImpl(new BetaCivFactory(), new GameObserverImplTest());
     assertThat(game, is(notNullValue()));
     util = new TestUtility(game);
   }

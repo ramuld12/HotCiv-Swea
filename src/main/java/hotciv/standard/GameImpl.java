@@ -40,6 +40,7 @@ import java.util.*;
  */
 
 public class GameImpl implements Game {
+  private GameObserver concreteObserver;
   private WinningStrategy winningStrategy;
   private AgingStrategy agingStrategy;
   private UnitActionStrategy unitActionStrategy;
@@ -61,7 +62,7 @@ public class GameImpl implements Game {
    * Initializes the private variables with tiletypes, city initial positions for the cities
    * and initial unit placements in the world.
    */
-  public GameImpl(HotCivFactory concreteFactory) {
+  public GameImpl(HotCivFactory concreteFactory, GameObserver concreteObserver) {
     this.agingStrategy = concreteFactory.createAgingStrategy();
     this.winningStrategy = concreteFactory.createWinningStrategy();
     this.unitActionStrategy = concreteFactory.createUnitActionStrategy();
@@ -73,6 +74,7 @@ public class GameImpl implements Game {
     playerVictories = new HashMap<>();
     worldLayoutStrategy.createTheWorld(this);
     winningStrategy.initializePlayerVictories(this);
+    this.concreteObserver = concreteObserver;
   }
 
   // === Accessor methods ======================================

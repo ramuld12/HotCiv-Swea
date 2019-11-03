@@ -2,6 +2,7 @@ package hotciv.standard.HotCivVariantsTests;
 
 import hotciv.standard.GameImpl;
 import hotciv.standard.HotCivFactory.ZetaCivFactory;
+import hotciv.standard.TestStubs.GameObserverImplTest;
 import hotciv.standard.TestUtility;
 import hotciv.standard.strategies.WinningStrategies.BetaCivWinningStrategy;
 import hotciv.standard.strategies.WinningStrategies.EpsilonCivWinningStrategy;
@@ -21,7 +22,7 @@ public class TestZetaCiv {
    */
   @Before
   public void setUp() {
-    game = new GameImpl(new ZetaCivFactory());
+    game = new GameImpl(new ZetaCivFactory(), new GameObserverImplTest());
     assertThat(game, is(notNullValue()));
     util = new TestUtility(game);
   }

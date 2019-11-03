@@ -3,6 +3,7 @@ package hotciv.standard.HotCivVariantsTests;
 import hotciv.framework.*;
 import hotciv.standard.GameImpl;
 import hotciv.standard.HotCivFactory.GammaCivFactory;
+import hotciv.standard.TestStubs.GameObserverImplTest;
 import org.junit.*;
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
@@ -15,7 +16,7 @@ public class TestGammaCiv {
   /** Fixture for GammaCiv testing. */
   @Before
   public void setUp() {
-    game = new GameImpl(new GammaCivFactory());
+    game = new GameImpl(new GammaCivFactory(), new GameObserverImplTest());
     assertThat(game, is(notNullValue()));
   }
 
