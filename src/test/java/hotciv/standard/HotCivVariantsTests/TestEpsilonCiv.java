@@ -5,6 +5,7 @@ import hotciv.framework.*;
 import hotciv.standard.FixedStrategies.FixedDieStrategyImpl;
 import hotciv.standard.GameImpl;
 import hotciv.standard.TestStubs.FixedEpsilonCivFactory;
+import hotciv.standard.TestStubs.GameObserverImplTest;
 import hotciv.standard.TestUtility;
 import hotciv.standard.TileImpl;
 import hotciv.standard.UnitImpl;
@@ -27,7 +28,7 @@ public class TestEpsilonCiv {
 
   @Before
   public void setUp() {
-    game = new GameImpl(new FixedEpsilonCivFactory());
+    game = new GameImpl(new FixedEpsilonCivFactory(), new GameObserverImplTest());
     assertThat(game, is(notNullValue()));
     util = new TestUtility(game);
     units = game.getUnits();

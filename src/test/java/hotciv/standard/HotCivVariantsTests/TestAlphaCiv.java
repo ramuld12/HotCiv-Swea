@@ -5,6 +5,7 @@ import hotciv.framework.*;
 
 import hotciv.standard.GameImpl;
 import hotciv.standard.HotCivFactory.AlphaCivFactory;
+import hotciv.standard.TestStubs.GameObserverImplTest;
 import hotciv.standard.TestUtility;
 import hotciv.standard.TileImpl;
 import hotciv.standard.UnitImpl;
@@ -24,7 +25,7 @@ public class TestAlphaCiv {
   /** Fixture for alphaciv testing. */
   @Before
   public void setUp() {
-    game = new GameImpl(new AlphaCivFactory());
+    game = new GameImpl(new AlphaCivFactory(), new GameObserverImplTest());
     assertThat(game, is(notNullValue()));
     util = new TestUtility(game);
   }

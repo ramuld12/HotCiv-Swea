@@ -4,6 +4,7 @@ import hotciv.framework.*;
 import hotciv.standard.GameImpl;
 import hotciv.standard.HotCivFactory.GammaCivFactory;
 import hotciv.standard.HotCivFactory.ThetaCivFactory;
+import hotciv.standard.TestStubs.GameObserverImplTest;
 import hotciv.standard.TileImpl;
 import hotciv.standard.UnitImpl;
 import org.junit.*;
@@ -21,7 +22,7 @@ public class TestThetaCiv {
    */
   @Before
   public void setUp() {
-    game = new GameImpl(new ThetaCivFactory());
+    game = new GameImpl(new ThetaCivFactory(), new GameObserverImplTest());
     assertThat(game, is(notNullValue()));
   }
 

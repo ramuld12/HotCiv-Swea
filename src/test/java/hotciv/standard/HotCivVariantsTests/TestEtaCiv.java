@@ -5,6 +5,7 @@ import hotciv.framework.*;
 
 import hotciv.standard.GameImpl;
 import hotciv.standard.HotCivFactory.EtaCivFactory;
+import hotciv.standard.TestStubs.GameObserverImplTest;
 import org.junit.*;
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
@@ -18,7 +19,7 @@ public class TestEtaCiv {
    */
   @Before
   public void setUp() {
-    game = new GameImpl(new EtaCivFactory());
+    game = new GameImpl(new EtaCivFactory(), new GameObserverImplTest());
     assertThat(game, is(notNullValue()));
   }
 
