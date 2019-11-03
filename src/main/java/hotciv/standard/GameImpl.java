@@ -324,6 +324,16 @@ public class GameImpl implements Game {
       unitActionStrategy.performUnitActionAt(this, p);
     }
 
+  @Override
+  public void addObserver(GameObserver observer) {
+
+  }
+
+  @Override
+  public void setTileFocus(Position position) {
+
+  }
+
 
   /**
      * Removes a unit at a certain position from the units map
