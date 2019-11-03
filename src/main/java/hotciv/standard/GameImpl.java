@@ -236,6 +236,7 @@ public class GameImpl implements Game {
   }
 
   public void endOfTurn() {
+    concreteObserver.turnEnds(playerInTurn, gameAge);
     boolean isPlayerInTurnRed = playerInTurn.equals(Player.RED);
     if (isPlayerInTurnRed) {
       playerInTurn = Player.BLUE;
