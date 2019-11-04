@@ -207,8 +207,12 @@ public class GameImpl implements Game {
 
     //Handling of movement for the unit
     movingTheUnit(from, to);
-    boolean didMovingSucced = units.get(to) != null;
-    return didMovingSucced;
+    boolean didMovingSucceed = units.get(to) != null;
+    if (didMovingSucceed) {
+      concreteObserver.worldChangedAt(from);
+      concreteObserver.worldChangedAt(to);
+    }
+    return didMovingSucceed;
   }
   
   public void movingTheUnit(Position from, Position to) {

@@ -1,6 +1,7 @@
 package hotciv.standard;
 
 import hotciv.framework.Player;
+import hotciv.framework.Position;
 import hotciv.standard.HotCivFactory.AlphaCivFactory;
 import hotciv.standard.TestStubs.GameObserverImplTest;
 import org.junit.Before;
@@ -26,6 +27,20 @@ public class TestGameObserver {
   @Test
   public void shouldCallEndOfTurnWithRedPlayerInTurn() {
     game.endOfTurn();
-    assertThat(observer.getEndOfTurns., is(Player.RED));
+    assertThat(observer.getEndOfTurnPlayers().get(0), is(Player.RED));
+  }
+
+  @Test
+  public void shouldCallEndOfTurnWithGameAgeMinus4000() {
+    game.endOfTurn();
+    assertThat(observer.getEndOfTurnAges().get(0), is(-4000));
+  }
+
+  @Test
+  public void shouldCallMoveUnitAt2_1(){
+    Position from = new Position(2,1);
+    Position to = new Position(2,2);
+    game.moveUnit(from,to);
+    assertThat(observer.getWorldChanges().get(0),is(from));
   }
 }
