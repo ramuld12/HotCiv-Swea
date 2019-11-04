@@ -1,6 +1,7 @@
 package hotciv.stub;
 
 import hotciv.framework.*;
+import hotciv.standard.CityImpl;
 
 import java.util.*;
 
@@ -90,7 +91,15 @@ public class StubGame2 implements Game {
   // observer list is only a single one...
   public void addObserver(GameObserver observer) {
     gameObserver = observer;
-  } 
+  }
+
+
+  // === City position in alphaCiv Config ===
+  private CityImpl red_city;
+  private CityImpl blue_city;
+  private Position pos_red_city;
+  private Position pos_blue_city;
+
 
   public StubGame2() { 
     defineWorld(1); 
@@ -99,6 +108,8 @@ public class StubGame2 implements Game {
     pos_legion_blue = new Position( 3, 2);
     pos_settler_red = new Position( 4, 3);
     pos_bomb_red = new Position( 6, 4);
+    pos_red_city = new Position(1,1);
+    pos_blue_city = new Position(4,1);
 
     // the only one I need to store for this stub
     red_archer = new StubUnit( GameConstants.ARCHER, Player.RED );   
@@ -126,28 +137,43 @@ public class StubGame2 implements Game {
   }
 
   // TODO: Add more stub behaviour to test MiniDraw updating
-  public City getCityAt( Position p ) { return null; }
+  public City getCityAt( Position p ) {
+    if (p.equals(pos_red_city)) {
+      return red_city;
+    } else if (p.equals(pos_blue_city)) {
+      return blue_city;
+    }
+    return null; }
+
   public Player getWinner() { return null; }
   public int getAge() { return 0; }  
-  public void changeWorkForceFocusInCityAt( Position p, String balance ) {}
-  public void changeProductionInCityAt( Position p, String unitType ) {}
+  public void changeWorkForceFocusInCityAt( Position p, String balance ) {
+    // we dont have a workforce focus implemented, it is in the back log.
+  }
+
+  public void changeProductionInCityAt( Position p, String unitType ) {
+    blue_city.changeProduction(unitType);
+    gameObserver.worldChangedAt(p);
+  }
   public void performUnitActionAt( Position p ) {}  
 
   public void setTileFocus(Position position) {
     // TODO: setTileFocus implementation pending.
     System.out.println("-- StubGame2 / setTileFocus called.");
-    System.out.println(" *** IMPLEMENTATION PENDING ***");
+    gameObserver.tileFocusChangedAt(position);
+
   }
 
 }
 
-class StubUnit implements  Unit {
+class StubUnit implements Unit {
   private String type;
   private Player owner;
   public StubUnit(String type, Player owner) {
     this.type = type;
     this.owner = owner;
   }
+
   public String getTypeString() { return type; }
   public Player getOwner() { return owner; }
   public int getMoveCount() { return 1; }
