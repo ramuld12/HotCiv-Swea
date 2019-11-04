@@ -6,6 +6,7 @@ import java.awt.*;
 import java.util.*;
 import java.util.List;
 
+import hotciv.standard.UnitImpl;
 import minidraw.framework.*;
 import minidraw.standard.*;
 
@@ -137,14 +138,40 @@ public class CivDrawing
   protected ImageFigure turnShieldIcon;
   protected void defineIcons() {
     // TODO: Further development to include rest of figures needed
-    turnShieldIcon = 
-      new ImageFigure( "redshield",
-                       new Point( GfxConstants.TURN_SHIELD_X,
-                                  GfxConstants.TURN_SHIELD_Y ) ); 
-    // insert in delegate figure list to ensure graphical
-    // rendering.
+
+    // Finding the correct shield for the player in turn.
+    Player playerInTurn = game.getPlayerInTurn();
+    if (playerInTurn.equals(Player.RED)) {
+      turnShieldIcon =
+              new ImageFigure( GfxConstants.RED_SHIELD,
+                      new Point( GfxConstants.TURN_SHIELD_X,
+                              GfxConstants.TURN_SHIELD_Y ) );
+      // insert in delegate figure list to ensure graphical
+      // rendering.
+    }
+    else if (playerInTurn.equals(Player.BLUE)){
+      turnShieldIcon =
+              new ImageFigure( GfxConstants.BLUE_SHIELD,
+                      new Point( GfxConstants.TURN_SHIELD_X,
+                              GfxConstants.TURN_SHIELD_Y ) );
+    }
+    else {
+      turnShieldIcon =
+              new ImageFigure(GfxConstants.NOTHING,
+                  new Point(GfxConstants.TURN_SHIELD_X,
+                      GfxConstants.TURN_SHIELD_Y));
+    }
+
+    // Finding correct icon for Units
+
+
+
+
     delegate.add(turnShieldIcon);
   }
+
+
+
  
   // === Observer Methods ===
 

@@ -71,6 +71,7 @@ public class StubGame2 implements Game {
     return true; 
   }
 
+
   // === Turn handling ===
   private Player inTurn;
   public void endOfTurn() {
