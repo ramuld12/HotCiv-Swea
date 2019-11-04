@@ -238,6 +238,10 @@ public class CivDrawing
     System.out.println("CivDrawing: world changes at " + pos);
     // this is a really brute-force algorithm: destroy
     // all known units and build up the entire set again
+
+    clearSelection(); // destroys everything in delegate
+    defineIcons();
+    defineCityMap();
     defineUnitMap();
 
     // TODO: Cities may change on position as well
@@ -259,6 +263,7 @@ public class CivDrawing
 
   public void tileFocusChangedAt(Position position) {
     // TODO: Implementation pending
+    worldChangedAt(position);
     System.out.println("Fake it: tileFocusChangedAt " + position);
   }
 
