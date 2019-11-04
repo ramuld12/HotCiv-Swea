@@ -147,6 +147,7 @@ public class CivDrawing
   protected ImageFigure unitShieldIcon;
   protected ImageFigure cityShieldIcon;
   protected ImageFigure refreshIcon;
+  protected TextFigure unitMoveCount;
 
   protected void defineIcons() {
     // TODO: Further development to include rest of figures needed
@@ -195,6 +196,14 @@ public class CivDrawing
             new Point(GfxConstants.REFRESH_BUTTON_X,
                     GfxConstants.REFRESH_BUTTON_Y));
     delegate.add(refreshIcon);
+
+    //Unit Move Counter
+    unitMoveCount =
+            new TextFigure("",
+                    new Point(GfxConstants.UNIT_COUNT_X,
+                            GfxConstants.UNIT_COUNT_Y));
+
+
   }
 
 
