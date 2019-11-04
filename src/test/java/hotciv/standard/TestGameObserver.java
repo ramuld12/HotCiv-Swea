@@ -1,6 +1,7 @@
 package hotciv.standard;
 
 import hotciv.framework.GameConstants;
+import hotciv.framework.GameObserver;
 import hotciv.framework.Player;
 import hotciv.framework.Position;
 import hotciv.standard.HotCivFactory.AlphaCivFactory;
@@ -23,11 +24,12 @@ public class TestGameObserver {
 
   @Before
   public void setUp() {
-    observer = new GameObserverImplTest();
-    game = new GameImpl(new AlphaCivFactory(), observer);
+    game = new GameImpl(new AlphaCivFactory());
     assertThat(game, is(notNullValue()));
     util = new TestUtility(game);
     cities = game.getCities();
+    game.addObserver(new GameObserverImplTest());
+    observer = (GameObserverImplTest)game.getConcreteObserver();
   }
 
   @Test

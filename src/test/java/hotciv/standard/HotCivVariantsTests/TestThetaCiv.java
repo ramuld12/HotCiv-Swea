@@ -22,7 +22,7 @@ public class TestThetaCiv {
    */
   @Before
   public void setUp() {
-    game = new GameImpl(new ThetaCivFactory(), new GameObserverImplTest());
+    game = new GameImpl(new ThetaCivFactory());
     assertThat(game, is(notNullValue()));
   }
 

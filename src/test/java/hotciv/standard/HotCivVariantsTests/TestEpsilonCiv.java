@@ -28,7 +28,7 @@ public class TestEpsilonCiv {
 
   @Before
   public void setUp() {
-    game = new GameImpl(new FixedEpsilonCivFactory(), new GameObserverImplTest());
+    game = new GameImpl(new FixedEpsilonCivFactory());
     assertThat(game, is(notNullValue()));
     util = new TestUtility(game);
     units = game.getUnits();

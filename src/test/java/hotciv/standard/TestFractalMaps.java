@@ -17,7 +17,7 @@ public class TestFractalMaps {
 
   @Test
   public void shouldHaveTileAt1_1() {
-    Game game = new GameImpl(new ThirdPartyWorldLayoutFactory(), new GameObserverImplTest());
+    Game game = new GameImpl(new ThirdPartyWorldLayoutFactory());
     assertNotNull(game.getTileAt(new Position(1,1)));
   }
 
@@ -25,7 +25,7 @@ public class TestFractalMaps {
   public void shouldHaveDifferentTilesAt1_1For25Games() {
     ArrayList<String> tileTypes = new ArrayList<>();
     for (int i = 0; i<25; i++) {
-      Game game = new GameImpl(new ThirdPartyWorldLayoutFactory(), new GameObserverImplTest());
+      Game game = new GameImpl(new ThirdPartyWorldLayoutFactory());
       tileTypes.add(game.getTileAt(new Position(1,1)).getTypeString());
     }
 

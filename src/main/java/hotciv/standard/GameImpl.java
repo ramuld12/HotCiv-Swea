@@ -62,7 +62,7 @@ public class GameImpl implements Game {
    * Initializes the private variables with tiletypes, city initial positions for the cities
    * and initial unit placements in the world.
    */
-  public GameImpl(HotCivFactory concreteFactory, GameObserver concreteObserver) {
+  public GameImpl(HotCivFactory concreteFactory) {
     this.agingStrategy = concreteFactory.createAgingStrategy();
     this.winningStrategy = concreteFactory.createWinningStrategy();
     this.unitActionStrategy = concreteFactory.createUnitActionStrategy();
@@ -74,7 +74,7 @@ public class GameImpl implements Game {
     playerVictories = new HashMap<>();
     worldLayoutStrategy.createTheWorld(this);
     winningStrategy.initializePlayerVictories(this);
-    this.concreteObserver = concreteObserver;
+    addObserver(new GameObserverImpl());
   }
 
   // === Accessor methods ======================================
@@ -335,12 +335,16 @@ public class GameImpl implements Game {
 
   @Override
   public void addObserver(GameObserver observer) {
-
+    concreteObserver = observer;
   }
 
   @Override
   public void setTileFocus(Position position) {
 
+  }
+
+  public GameObserver getConcreteObserver() {
+    return concreteObserver;
   }
 
 
