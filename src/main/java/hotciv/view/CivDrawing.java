@@ -52,6 +52,7 @@ public class CivDrawing
    * store all moveable figures visible in this drawing = units
    */
   protected Map<Unit, UnitFigure> unitFigureMap;
+  protected  Map<City, CityFigure> cityFigureMap;
 
   /**
    * the Game instance that this CivDrawing is going to render units
@@ -123,6 +124,27 @@ public class CivDrawing
           // this list that is iterated by the
           // graphics rendering algorithms
           delegate.add(unitFigure);
+        }
+      }
+    }
+  }
+
+  /*
+  Go through map and create cities
+   */
+  protected void defineCityMap(){
+    Position p;
+    for (int r = 0; r < GameConstants.WORLDSIZE; r++) {
+      for (int c = 0; c < GameConstants.WORLDSIZE; c++) {
+        p = new Position(r,c);
+        City city = game.getCityAt(p);
+        if (city != null) {
+          Point point = new Point(GfxConstants.getXFromColumn(p.getColumn()),
+                  GfxConstants.getYFromRow(p.getRow()));
+          CityFigure cityFigure =
+                  new CityFigure(city,point);
+          cityFigure.addFigureChangeListener(this);
+          cityFigureMap.put(city,cityFigure);
         }
       }
     }
@@ -247,7 +269,7 @@ public class CivDrawing
     // entire Drawing.
     defineUnitMap();
     defineIcons();
-    // TODO: Cities pending
+    defineCityMap();
   }
 
   @Override
