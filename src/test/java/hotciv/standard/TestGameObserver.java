@@ -107,6 +107,27 @@ public class TestGameObserver {
     game.createUnitAtNeighbourPosition(centerPos, GameConstants.LEGION, game.getPlayerInTurn());
     assertThat(observer.getWorldChanges().get(0), is(new Position(1,1)));
   }
+  @Test
+  public void worldChangeShouldCallWhenRemovingCity() {
+    Position cityPos = new Position(1,1);
+    game.removeCityFromCitiesMapAtPosition(cityPos);
+    assertThat(observer.getWorldChanges().get(0), is(cityPos));
+  }
+
+  @Test
+  public void worldChangeShouldCallWhenRemovingUnit() {
+    Position unitPos = new Position(2,0);
+    game.removeUnitFromUnitsMapAtPosition(unitPos);
+    assertThat(observer.getWorldChanges().get(0), is(unitPos));
+  }
+
+  @Test
+  public void worldChangeShouldCallWhenRemovingTile() {
+    Position tilePos = new Position(2,1);
+    game.removeTileFromWorldMapAtPosition(tilePos);
+    assertThat(observer.getWorldChanges().get(0), is(tilePos));
+  }
+
 
 
 }

@@ -353,6 +353,7 @@ public class GameImpl implements Game {
       boolean isThereAUnitAtPosition = units.get(unitPosition) != null;
       if (isThereAUnitAtPosition) {
         units.remove(unitPosition);
+        concreteObserver.worldChangedAt(unitPosition);
       }
     }
 
@@ -360,11 +361,13 @@ public class GameImpl implements Game {
       boolean isThereACityAtPosition = cities.get(cityPosition) != null;
       if (isThereACityAtPosition){
         cities.remove(cityPosition);
+        concreteObserver.worldChangedAt(cityPosition);
       }
   }
 
-  public void removeTileFromWorldMapAtPosition(Position actionPosition) {
-    world.remove(actionPosition);
+  public void removeTileFromWorldMapAtPosition(Position tilePosition) {
+    world.remove(tilePosition);
+    concreteObserver.worldChangedAt(tilePosition);
   }
 
     // === Boolean methods ======================================
