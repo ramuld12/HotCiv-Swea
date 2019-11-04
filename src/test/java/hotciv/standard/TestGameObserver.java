@@ -1,11 +1,15 @@
 package hotciv.standard;
 
+import hotciv.framework.GameConstants;
 import hotciv.framework.Player;
 import hotciv.framework.Position;
 import hotciv.standard.HotCivFactory.AlphaCivFactory;
 import hotciv.standard.TestStubs.GameObserverImplTest;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
@@ -15,6 +19,7 @@ public class TestGameObserver {
   private GameImpl game;
   private GameObserverImplTest observer;
   private TestUtility util;
+  private HashMap<Position, CityImpl> cities;
 
   @Before
   public void setUp() {
@@ -22,6 +27,7 @@ public class TestGameObserver {
     game = new GameImpl(new AlphaCivFactory(), observer);
     assertThat(game, is(notNullValue()));
     util = new TestUtility(game);
+    cities = game.getCities();
   }
 
   @Test
@@ -50,5 +56,27 @@ public class TestGameObserver {
     Position to = new Position(2,1);
     game.moveUnit(from,to);
     assertThat(observer.getWorldChanges().get(1),is(to));
+  }
+
+  @Test
+  public void shouldCallWhenChangingProduction() {
+    Position cityPos = new Position(1,1);
+    game.changeProductionInCityAt(cityPos, GameConstants.LEGION);
+    assertThat(observer.getWorldChanges().get(0), is(cityPos));
+  }
+
+  @Test
+  public void worldChangeShouldCallWhenCreatingCity() {
+    Position cityPos = new Position(2,1);
+    game.createCityAtPosition(cityPos);
+    assertThat(observer.getWorldChanges().get(0), is(cityPos));
+  }
+
+  @Test
+  public void shouldCallWhenProducingUnit() {
+    Position cityPos = new Position(1,1);
+    cities.get(cityPos).setTreas(20);
+    game.produceUnitInCityAt(cityPos, cities.get(cityPos));
+    assertThat(observer.getWorldChanges().get(0), is(cityPos));
   }
 }

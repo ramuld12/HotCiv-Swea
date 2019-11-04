@@ -143,6 +143,7 @@ public class GameImpl implements Game {
   public void setRoundNumber (int newRoundNumber) {roundNumber = newRoundNumber;}
 
   public void changeProductionInCityAt(Position p, String unitType) {
+    concreteObserver.worldChangedAt(p);
     cities.get(p).changeProduction(unitType);
   }
 
@@ -157,6 +158,7 @@ public class GameImpl implements Game {
     boolean isPositionVacantForCity = cities.get(position) == null;
     if (isPositionVacantForCity) {
       cities.put(position, new CityImpl(playerInTurn));
+      concreteObserver.worldChangedAt(position);
     }
   }
 
@@ -167,7 +169,9 @@ public class GameImpl implements Game {
    * @param owner the owner of the new unit
    */
   public void createUnitAtPosition(Position position, String unitType, Player owner) {
+    concreteObserver.worldChangedAt(position);
     units.put(position, new UnitImpl(unitType, owner));
+
   }
 
   public void createTileAtPosition(Position position, TileImpl tiletype) {
@@ -208,10 +212,6 @@ public class GameImpl implements Game {
     //Handling of movement for the unit
     movingTheUnit(from, to);
     boolean didMovingSucceed = units.get(to) != null;
-    if (didMovingSucceed) {
-      concreteObserver.worldChangedAt(from);
-      concreteObserver.worldChangedAt(to);
-    }
     return didMovingSucceed;
   }
   
@@ -223,6 +223,7 @@ public class GameImpl implements Game {
         // create a new unit with moveCounter 0 of the same type there and remove the old
         String unitType = units.get(from).getTypeString();
         units.remove(from);
+        concreteObserver.worldChangedAt(from);
         createUnitAtPosition(to, unitType, playerInTurn);
         units.get(to).decreaseMoveCount();
       }
