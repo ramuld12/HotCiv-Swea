@@ -10,51 +10,56 @@ import hotciv.standard.UnitImpl;
 import minidraw.framework.*;
 import minidraw.standard.*;
 
-/** CivDrawing is a specialized Drawing (model component) from
+/**
+ * CivDrawing is a specialized Drawing (model component) from
  * MiniDraw that dynamically builds the list of Figures for MiniDraw
  * to render the Unit and other information objects that are visible
  * in the Game instance.
- *
+ * <p>
  * TODO: This is a TEMPLATE for the SWEA Exercise! This means
  * that it is INCOMPLETE and that there are several options
  * for CLEANING UP THE CODE when you add features to it!
+ * <p>
+ * This source code is from the book
+ * "Flexible, Reliable Software:
+ * Using Patterns and Agile Development"
+ * published 2010 by CRC Press.
+ * Author:
+ * Henrik B Christensen
+ * Department of Computer Science
+ * Aarhus University
+ * <p>
+ * Please visit http://www.baerbak.com/ for further information.
+ * <p>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
-   This source code is from the book 
-     "Flexible, Reliable Software:
-       Using Patterns and Agile Development"
-     published 2010 by CRC Press.
-   Author: 
-     Henrik B Christensen 
-     Department of Computer Science
-     Aarhus University
-   
-   Please visit http://www.baerbak.com/ for further information.
+public class CivDrawing
+        implements Drawing, GameObserver {
 
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
- 
-       http://www.apache.org/licenses/LICENSE-2.0
- 
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
-*/
-
-public class CivDrawing 
-  implements Drawing, GameObserver {
-  
   protected Drawing delegate;
-  /** store all moveable figures visible in this drawing = units */
-  protected Map<Unit,UnitFigure> unitFigureMap;
+  /**
+   * store all moveable figures visible in this drawing = units
+   */
+  protected Map<Unit, UnitFigure> unitFigureMap;
 
-  /** the Game instance that this CivDrawing is going to render units
-   * from */
+  /**
+   * the Game instance that this CivDrawing is going to render units
+   * from
+   */
   protected Game game;
-  
-  public CivDrawing( DrawingEditor editor, Game game ) {
+
+  public CivDrawing(DrawingEditor editor, Game game) {
     super();
     this.delegate = new StandardDrawing();
     this.game = game;
@@ -69,8 +74,9 @@ public class CivDrawing
     // and the set of 'icons' in the status panel
     defineIcons();
   }
-  
-  /** The CivDrawing should not allow client side
+
+  /**
+   * The CivDrawing should not allow client side
    * units to add and manipulate figures; only figures
    * that renders game objects are relevant, and these
    * should be handled by observer events from the game
@@ -81,7 +87,8 @@ public class CivDrawing
   }
 
 
-  /** erase the old list of units, and build a completely new
+  /**
+   * erase the old list of units, and build a completely new
    * one from scratch by iterating over the game world and add
    * Figure instances for each unit in the world.
    */
@@ -98,17 +105,17 @@ public class CivDrawing
     // create an association between the unit and
     // the unitFigure in 'unitFigureMap'.
     Position p;
-    for ( int r = 0; r < GameConstants.WORLDSIZE; r++ ) {
-      for ( int c = 0; c < GameConstants.WORLDSIZE; c++ ) {
-        p = new Position(r,c);
+    for (int r = 0; r < GameConstants.WORLDSIZE; r++) {
+      for (int c = 0; c < GameConstants.WORLDSIZE; c++) {
+        p = new Position(r, c);
         Unit unit = game.getUnitAt(p);
-        if ( unit != null ) {
+        if (unit != null) {
           String type = unit.getTypeString();
           // convert the unit's Position to (x,y) coordinates
-          Point point = new Point( GfxConstants.getXFromColumn(p.getColumn()),
-                                   GfxConstants.getYFromRow(p.getRow()) );
+          Point point = new Point(GfxConstants.getXFromColumn(p.getColumn()),
+                  GfxConstants.getYFromRow(p.getRow()));
           UnitFigure unitFigure =
-            new UnitFigure( type, point, unit );
+                  new UnitFigure(type, point, unit);
           unitFigure.addFigureChangeListener(this);
           unitFigureMap.put(unit, unitFigure);
 
@@ -121,7 +128,8 @@ public class CivDrawing
     }
   }
 
-  /** remove all unit figures in this
+  /**
+   * remove all unit figures in this
    * drawing, and reset the map (unit->unitfigure).
    * It is important to actually remove the figures
    * as it forces a graphical redraw of the screen
@@ -136,48 +144,65 @@ public class CivDrawing
   }
 
   protected ImageFigure turnShieldIcon;
+  protected ImageFigure unitShieldIcon;
+  protected ImageFigure cityShieldIcon;
+  protected ImageFigure refreshIcon;
+
   protected void defineIcons() {
     // TODO: Further development to include rest of figures needed
-
-    // Finding the correct shield for the player in turn.
-    Player playerInTurn = game.getPlayerInTurn();
-    if (playerInTurn.equals(Player.RED)) {
-      turnShieldIcon =
-              new ImageFigure( GfxConstants.RED_SHIELD,
-                      new Point( GfxConstants.TURN_SHIELD_X,
-                              GfxConstants.TURN_SHIELD_Y ) );
-      // insert in delegate figure list to ensure graphical
-      // rendering.
-    }
-    else if (playerInTurn.equals(Player.BLUE)){
-      turnShieldIcon =
-              new ImageFigure( GfxConstants.BLUE_SHIELD,
-                      new Point( GfxConstants.TURN_SHIELD_X,
-                              GfxConstants.TURN_SHIELD_Y ) );
-    }
-    else {
-      turnShieldIcon =
-              new ImageFigure(GfxConstants.NOTHING,
-                  new Point(GfxConstants.TURN_SHIELD_X,
-                      GfxConstants.TURN_SHIELD_Y));
-    }
-
-    // Finding correct icon for Units
-
-
-
-
+    turnShieldIcon =
+            new ImageFigure(GfxConstants.RED_SHIELD,
+                    new Point(GfxConstants.TURN_SHIELD_X,
+                            GfxConstants.TURN_SHIELD_Y));
+    // insert in delegate figure list to ensure graphical
+    // rendering.
     delegate.add(turnShieldIcon);
+
+    turnShieldIcon =
+            new ImageFigure(GfxConstants.BLUE_SHIELD,
+                    new Point(GfxConstants.TURN_SHIELD_X,
+                            GfxConstants.TURN_SHIELD_Y));
+    // insert in delegate figure list to ensure graphical
+    // rendering.
+    delegate.add(turnShieldIcon);
+
+    //UnitShield
+    unitShieldIcon =
+            new ImageFigure(GfxConstants.RED_SHIELD,
+                    new Point(GfxConstants.UNIT_SHIELD_X,
+                            GfxConstants.UNIT_SHIELD_Y));
+    delegate.add(unitShieldIcon);
+
+    unitShieldIcon =
+            new ImageFigure(GfxConstants.BLUE_SHIELD,
+                    new Point(GfxConstants.UNIT_SHIELD_X,
+                            GfxConstants.UNIT_SHIELD_Y));
+    delegate.add(unitShieldIcon);
+
+    //CityShield
+    cityShieldIcon = new ImageFigure(GfxConstants.RED_SHIELD,
+            new Point(GfxConstants.CITY_SHIELD_X,
+                    GfxConstants.CITY_SHIELD_Y));
+    delegate.add(cityShieldIcon);
+
+    cityShieldIcon = new ImageFigure(GfxConstants.BLUE_SHIELD,
+            new Point(GfxConstants.CITY_SHIELD_X,
+                    GfxConstants.CITY_SHIELD_Y));
+    delegate.add(cityShieldIcon);
+
+    //Refresh button
+    refreshIcon = new ImageFigure(GfxConstants.REFRESH_BUTTON,
+            new Point(GfxConstants.REFRESH_BUTTON_X,
+                    GfxConstants.REFRESH_BUTTON_Y));
+    delegate.add(refreshIcon);
   }
 
 
-
- 
   // === Observer Methods ===
 
   public void worldChangedAt(Position pos) {
     // TODO: Remove system.out debugging output
-    System.out.println( "CivDrawing: world changes at "+pos);
+    System.out.println("CivDrawing: world changes at " + pos);
     // this is a really brute-force algorithm: destroy
     // all known units and build up the entire set again
     defineUnitMap();
@@ -187,19 +212,21 @@ public class CivDrawing
 
   public void turnEnds(Player nextPlayer, int age) {
     // TODO: Remove system.out debugging output
-    System.out.println( "CivDrawing: turnEnds for "+
-                        nextPlayer+" at "+age );
+    System.out.println("CivDrawing: turnEnds for " +
+            nextPlayer + " at " + age);
     String playername = "red";
-    if ( nextPlayer == Player.BLUE ) { playername = "blue"; }
-    turnShieldIcon.set( playername+"shield",
-                        new Point( GfxConstants.TURN_SHIELD_X,
-                                   GfxConstants.TURN_SHIELD_Y ) );
+    if (nextPlayer == Player.BLUE) {
+      playername = "blue";
+    }
+    turnShieldIcon.set(playername + "shield",
+            new Point(GfxConstants.TURN_SHIELD_X,
+                    GfxConstants.TURN_SHIELD_Y));
     // TODO: Age output pending
   }
 
   public void tileFocusChangedAt(Position position) {
     // TODO: Implementation pending
-    System.out.println( "Fake it: tileFocusChangedAt "+position );
+    System.out.println("Fake it: tileFocusChangedAt " + position);
   }
 
   @Override
@@ -264,7 +291,7 @@ public class CivDrawing
 
   @Override
   public void addDrawingChangeListener(DrawingChangeListener arg0) {
-    delegate.addDrawingChangeListener(arg0);   
+    delegate.addDrawingChangeListener(arg0);
   }
 
   @Override
