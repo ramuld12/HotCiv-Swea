@@ -19,7 +19,7 @@ public class TestEtaCiv {
    */
   @Before
   public void setUp() {
-    game = new GameImpl(new EtaCivFactory(), new GameObserverImplTest());
+    game = new GameImpl(new EtaCivFactory());
     assertThat(game, is(notNullValue()));
   }
 

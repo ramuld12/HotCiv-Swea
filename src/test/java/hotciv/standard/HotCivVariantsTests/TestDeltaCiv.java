@@ -19,7 +19,7 @@ public class TestDeltaCiv {
   /** Fixture for Deltaciv testing. */
   @Before
   public void setUp() {
-    game = new GameImpl(new DeltaCivFactory(), new GameObserverImplTest());
+    game = new GameImpl(new DeltaCivFactory());
     assertThat(game, is(notNullValue()));
   }
 

@@ -62,7 +62,7 @@ public class GameImpl implements Game {
    * Initializes the private variables with tiletypes, city initial positions for the cities
    * and initial unit placements in the world.
    */
-  public GameImpl(HotCivFactory concreteFactory, GameObserver concreteObserver) {
+  public GameImpl(HotCivFactory concreteFactory) {
     this.agingStrategy = concreteFactory.createAgingStrategy();
     this.winningStrategy = concreteFactory.createWinningStrategy();
     this.unitActionStrategy = concreteFactory.createUnitActionStrategy();
@@ -74,7 +74,7 @@ public class GameImpl implements Game {
     playerVictories = new HashMap<>();
     worldLayoutStrategy.createTheWorld(this);
     winningStrategy.initializePlayerVictories(this);
-    this.concreteObserver = concreteObserver;
+    addObserver(new GameObserverImpl());
   }
 
   // === Accessor methods ======================================
@@ -169,13 +169,13 @@ public class GameImpl implements Game {
    * @param owner the owner of the new unit
    */
   public void createUnitAtPosition(Position position, String unitType, Player owner) {
-    concreteObserver.worldChangedAt(position);
     units.put(position, new UnitImpl(unitType, owner));
-
+    concreteObserver.worldChangedAt(position);
   }
 
   public void createTileAtPosition(Position position, TileImpl tiletype) {
     world.put(position, tiletype);
+    concreteObserver.worldChangedAt(position);
   }
 
   public boolean moveUnit(Position from, Position to) {
@@ -289,7 +289,7 @@ public class GameImpl implements Game {
    * @param unitType type of the new unit
    * @param owner owner of new unit
    */
-  private void createUnitAtNeighbourPosition(Position centerPosition, String unitType, Player owner) {
+  public void createUnitAtNeighbourPosition(Position centerPosition, String unitType, Player owner) {
     Position vacantNeighbourPosition = findFirstVacantNeighbourPosition(centerPosition);
     createUnitAtPosition(vacantNeighbourPosition, unitType, owner);
   }
@@ -330,16 +330,21 @@ public class GameImpl implements Game {
 
     public void performUnitActionAt (Position p){
       unitActionStrategy.performUnitActionAt(this, p);
+      concreteObserver.worldChangedAt(p);
     }
 
   @Override
   public void addObserver(GameObserver observer) {
-
+    concreteObserver = observer;
   }
 
   @Override
   public void setTileFocus(Position position) {
 
+  }
+
+  public GameObserver getConcreteObserver() {
+    return concreteObserver;
   }
 
 
@@ -352,6 +357,7 @@ public class GameImpl implements Game {
       boolean isThereAUnitAtPosition = units.get(unitPosition) != null;
       if (isThereAUnitAtPosition) {
         units.remove(unitPosition);
+        concreteObserver.worldChangedAt(unitPosition);
       }
     }
 
@@ -359,11 +365,13 @@ public class GameImpl implements Game {
       boolean isThereACityAtPosition = cities.get(cityPosition) != null;
       if (isThereACityAtPosition){
         cities.remove(cityPosition);
+        concreteObserver.worldChangedAt(cityPosition);
       }
   }
 
-  public void removeTileFromWorldMapAtPosition(Position actionPosition) {
-    world.remove(actionPosition);
+  public void removeTileFromWorldMapAtPosition(Position tilePosition) {
+    world.remove(tilePosition);
+    concreteObserver.worldChangedAt(tilePosition);
   }
 
     // === Boolean methods ======================================

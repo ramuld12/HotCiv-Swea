@@ -25,7 +25,7 @@ public class TestAlphaCiv {
   /** Fixture for alphaciv testing. */
   @Before
   public void setUp() {
-    game = new GameImpl(new AlphaCivFactory(), new GameObserverImplTest());
+    game = new GameImpl(new AlphaCivFactory());
     assertThat(game, is(notNullValue()));
     util = new TestUtility(game);
   }

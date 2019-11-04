@@ -16,7 +16,7 @@ public class TestGammaCiv {
   /** Fixture for GammaCiv testing. */
   @Before
   public void setUp() {
-    game = new GameImpl(new GammaCivFactory(), new GameObserverImplTest());
+    game = new GameImpl(new GammaCivFactory());
     assertThat(game, is(notNullValue()));
   }
 

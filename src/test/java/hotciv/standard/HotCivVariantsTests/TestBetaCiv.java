@@ -19,7 +19,7 @@ public class TestBetaCiv {
   /** Fixture for betaciv testing. */
   @Before
   public void setUp() {
-    game = new GameImpl(new BetaCivFactory(), new GameObserverImplTest());
+    game = new GameImpl(new BetaCivFactory());
     assertThat(game, is(notNullValue()));
     util = new TestUtility(game);
   }

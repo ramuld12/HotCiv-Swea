@@ -22,7 +22,7 @@ public class TestZetaCiv {
    */
   @Before
   public void setUp() {
-    game = new GameImpl(new ZetaCivFactory(), new GameObserverImplTest());
+    game = new GameImpl(new ZetaCivFactory());
     assertThat(game, is(notNullValue()));
     util = new TestUtility(game);
   }
