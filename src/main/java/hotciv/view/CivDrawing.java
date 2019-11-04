@@ -240,6 +240,8 @@ public class CivDrawing
     // all known units and build up the entire set again
 
     clearSelection(); // destroys everything in delegate
+
+    //rebuilding buttum-up
     defineIcons();
     defineCityMap();
     defineUnitMap();
@@ -263,7 +265,7 @@ public class CivDrawing
 
   public void tileFocusChangedAt(Position position) {
     // TODO: Implementation pending
-    worldChangedAt(position);
+    worldChangedAt(position); // tror det er det der er meningen....
     System.out.println("Fake it: tileFocusChangedAt " + position);
   }
 
