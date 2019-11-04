@@ -169,13 +169,13 @@ public class GameImpl implements Game {
    * @param owner the owner of the new unit
    */
   public void createUnitAtPosition(Position position, String unitType, Player owner) {
-    concreteObserver.worldChangedAt(position);
     units.put(position, new UnitImpl(unitType, owner));
-
+    concreteObserver.worldChangedAt(position);
   }
 
   public void createTileAtPosition(Position position, TileImpl tiletype) {
     world.put(position, tiletype);
+    concreteObserver.worldChangedAt(position);
   }
 
   public boolean moveUnit(Position from, Position to) {
@@ -289,7 +289,7 @@ public class GameImpl implements Game {
    * @param unitType type of the new unit
    * @param owner owner of new unit
    */
-  private void createUnitAtNeighbourPosition(Position centerPosition, String unitType, Player owner) {
+  public void createUnitAtNeighbourPosition(Position centerPosition, String unitType, Player owner) {
     Position vacantNeighbourPosition = findFirstVacantNeighbourPosition(centerPosition);
     createUnitAtPosition(vacantNeighbourPosition, unitType, owner);
   }
@@ -330,6 +330,7 @@ public class GameImpl implements Game {
 
     public void performUnitActionAt (Position p){
       unitActionStrategy.performUnitActionAt(this, p);
+      concreteObserver.worldChangedAt(p);
     }
 
   @Override
