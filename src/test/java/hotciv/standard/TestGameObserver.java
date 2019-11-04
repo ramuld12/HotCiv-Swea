@@ -37,10 +37,18 @@ public class TestGameObserver {
   }
 
   @Test
-  public void shouldCallMoveUnitAt2_1(){
-    Position from = new Position(2,1);
-    Position to = new Position(2,2);
+  public void shouldCallMoveUnitAtFrom2_0(){
+    Position from = new Position(2,0);
+    Position to = new Position(2,1);
     game.moveUnit(from,to);
     assertThat(observer.getWorldChanges().get(0),is(from));
+  }
+
+  @Test
+  public void shouldCallMoveUnitAtTo2_1(){
+    Position from = new Position(2,0);
+    Position to = new Position(2,1);
+    game.moveUnit(from,to);
+    assertThat(observer.getWorldChanges().get(1),is(to));
   }
 }
