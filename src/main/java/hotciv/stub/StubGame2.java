@@ -158,7 +158,6 @@ public class StubGame2 implements Game {
   public void performUnitActionAt( Position p ) {}  
 
   public void setTileFocus(Position position) {
-    // TODO: setTileFocus implementation pending.
     System.out.println("-- StubGame2 / setTileFocus called at position " + position);
     gameObserver.tileFocusChangedAt(position);
 
