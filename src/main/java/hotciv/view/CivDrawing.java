@@ -276,7 +276,7 @@ public class CivDrawing
               new Point(GfxConstants.CITY_SHIELD_X, GfxConstants.CITY_SHIELD_Y));
       cityProductionIcon = new ImageFigure(city.getProduction(),
               new Point(GfxConstants.CITY_PRODUCTION_X, GfxConstants.CITY_PRODUCTION_Y));
-      workForceFocusIcon ) new ImageFigure(city.getWorkforceFocus(),
+      workForceFocusIcon = new ImageFigure(city.getWorkforceFocus(),
               new Point(GfxConstants.WORKFORCEFOCUS_X, GfxConstants.WORKFORCEFOCUS_Y));
     }
     if (unit != null) {
