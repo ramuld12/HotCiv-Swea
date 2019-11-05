@@ -59,13 +59,11 @@ class compositionTool extends NullTool {
     Point turnIcon = new Point(GfxConstants.TURN_SHIELD_X,GfxConstants.TURN_SHIELD_Y);
     Point cityProductionIcon = new Point(GfxConstants.CITY_PRODUCTION_X,GfxConstants.CITY_PRODUCTION_Y);
     Position positionPressed = (GfxConstants.getPositionFromXY(x,y));
+    alternatingTool = new setFocusTool(game,tool);
 
     Rectangle iconInFocus = new Rectangle(e.getPoint(),new Dimension(50,50));
     if (iconInFocus.contains(turnIcon)){
       alternatingTool = new EndOfTurnTool(game,tool);
-    }
-    else if (iconInFocus.contains(cityProductionIcon)){
-      alternatingTool = new setFocusTool(game,tool);
     }
     else if (game.getUnitAt(positionPressed) != null){
       if (e.isShiftDown()){
