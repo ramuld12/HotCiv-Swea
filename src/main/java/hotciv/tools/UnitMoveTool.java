@@ -8,9 +8,12 @@ import minidraw.standard.AbstractTool;
 import minidraw.standard.SelectionTool;
 import minidraw.standard.handlers.DragTracker;
 
-public class UnitMoveTool extends AbstractTool implements Tool {
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 
+public class UnitMoveTool implements Tool {
 
+  private DrawingEditor editor;
   private final Game game;
 
   /**
@@ -20,9 +23,33 @@ public class UnitMoveTool extends AbstractTool implements Tool {
   protected Figure draggedFigure;
 
   public UnitMoveTool(DrawingEditor editor, Game game) {
-    super(editor);
+    this.editor = editor;
     this.game = game;
   }
 
 
+  @Override
+  public void mouseDown(MouseEvent e, int x, int y) {
+
+  }
+
+  @Override
+  public void mouseDrag(MouseEvent e, int x, int y) {
+
+  }
+
+  @Override
+  public void mouseUp(MouseEvent e, int x, int y) {
+
+  }
+
+  @Override
+  public void mouseMove(MouseEvent e, int x, int y) {
+
+  }
+
+  @Override
+  public void keyDown(KeyEvent e, int key) {
+
+  }
 }
