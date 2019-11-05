@@ -57,7 +57,6 @@ class compositionTool extends NullTool {
   @Override
   public void mouseDown(MouseEvent e, int x, int y) {
     Point turnIcon = new Point(GfxConstants.TURN_SHIELD_X,GfxConstants.TURN_SHIELD_Y);
-    Point cityProductionIcon = new Point(GfxConstants.CITY_PRODUCTION_X,GfxConstants.CITY_PRODUCTION_Y);
     Position positionPressed = (GfxConstants.getPositionFromXY(x,y));
     alternatingTool = new setFocusTool(game,tool);
 
