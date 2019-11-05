@@ -52,14 +52,10 @@ public class ShowEndOfTurn {
     }
 
     public void mouseDown(MouseEvent e, int x, int y) {
-      Position positionPressed = (GfxConstants.getPositionFromXY(x,y));
-      System.out.println(GfxConstants.getPositionFromXY(x,y));
-
-      boolean isEndOfTurnShieldX = positionPressed == new Position(2,18);
-
-      if (x > 540 && x < 570 && y > 50 && y < 80) {
+      if (x > 559 && x < 590 && y > 64 && y < 110) {
         game.endOfTurn();
       }
+      tool.mouseDown(e,x,y);
     }
   }
 }
