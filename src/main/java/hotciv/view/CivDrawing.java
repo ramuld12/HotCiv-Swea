@@ -285,6 +285,7 @@ public class CivDrawing
     // A request has been issued to repaint
     // everything. We simply rebuild the
     // entire Drawing.
+    delegate.remove(gameAgeText);
     defineUnitMap();
     defineIcons();
     defineCityMap();

@@ -2,13 +2,10 @@ package hotciv.visual;
 
 import hotciv.standard.GameImpl;
 import hotciv.standard.HotCivFactory.SemiCivFactory;
-import hotciv.tools.UnitMoveTool;
 import minidraw.standard.*;
 import minidraw.framework.*;
 
-import java.awt.*;
 import java.awt.event.*;
-import javax.swing.*;
 
 import hotciv.framework.*;
 import hotciv.view.*;
@@ -41,20 +38,20 @@ public class ShowComposition {
                                new HotCivFactory4(game) );
     editor.open();
     editor.showStatus("Click and drag any item to see Game's proper response.");
-
-    // TODO: Replace the setting of the tool with your CompositionTool implementation.
-    editor.setTool( new compositionTool(game,new SelectionTool(editor)) );
+    editor.setTool( new CompositionTool(game,new SelectionTool(editor), editor) );
   }
 }
 
-class compositionTool extends NullTool {
+class CompositionTool extends NullTool {
   private Tool alternatingTool;
   private SelectionTool tool;
   private Game game;
+  private DrawingEditor editor;
 
-  public compositionTool(Game game, SelectionTool tool) {
+  public CompositionTool(Game game, SelectionTool tool, DrawingEditor editor) {
     this.game = game;
     this.tool = tool;
+    this.editor = editor;
   }
 
   @Override
@@ -69,7 +66,7 @@ class compositionTool extends NullTool {
       if (e.isShiftDown()){
         alternatingTool = new actionTool(game,tool);
       } else {
-        alternatingTool = new UnitMoveTool(game,tool);
+        alternatingTool = new UnitMoveTool(game,tool, editor);
       }
 
     }
