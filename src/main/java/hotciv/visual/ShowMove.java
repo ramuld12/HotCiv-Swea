@@ -1,5 +1,7 @@
 package hotciv.visual;
 
+import hotciv.standard.GameImpl;
+import hotciv.standard.HotCivFactory.SemiCivFactory;
 import hotciv.tools.UnitMoveTool;
 import minidraw.standard.*;
 import minidraw.framework.*;
@@ -32,6 +34,7 @@ public class ShowMove {
   
   public static void main(String[] args) {
     Game game = new StubGame2();
+    game = new GameImpl(new SemiCivFactory());
 
     DrawingEditor editor = 
       new MiniDrawApplication( "Move any unit using the mouse",  
