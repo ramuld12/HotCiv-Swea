@@ -1,5 +1,7 @@
 package hotciv.visual;
 
+import hotciv.standard.GameImpl;
+import hotciv.standard.HotCivFactory.SemiCivFactory;
 import hotciv.tools.UnitMoveTool;
 import minidraw.standard.*;
 import minidraw.framework.*;
@@ -32,6 +34,7 @@ public class ShowComposition {
   
   public static void main(String[] args) {
     Game game = new StubGame2();
+    game = new GameImpl(new SemiCivFactory());
 
     DrawingEditor editor = 
       new MiniDrawApplication( "Click and/or drag any item to see all game actions",  
@@ -40,7 +43,7 @@ public class ShowComposition {
     editor.showStatus("Click and drag any item to see Game's proper response.");
 
     // TODO: Replace the setting of the tool with your CompositionTool implementation.
-    editor.setTool( new NullTool() );
+    editor.setTool( new compositionTool(game,new SelectionTool(editor)) );
   }
 }
 
@@ -56,12 +59,10 @@ class compositionTool extends NullTool {
 
   @Override
   public void mouseDown(MouseEvent e, int x, int y) {
-    Point turnIcon = new Point(GfxConstants.TURN_SHIELD_X,GfxConstants.TURN_SHIELD_Y);
     Position positionPressed = (GfxConstants.getPositionFromXY(x,y));
     alternatingTool = new setFocusTool(game,tool);
 
-    Rectangle iconInFocus = new Rectangle(e.getPoint(),new Dimension(50,50));
-    if (iconInFocus.contains(turnIcon)){
+    if (x > 559 && x < 590 && y > 64 && y < 110){
       alternatingTool = new EndOfTurnTool(game,tool);
     }
     else if (game.getUnitAt(positionPressed) != null){
