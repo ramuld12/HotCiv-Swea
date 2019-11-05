@@ -248,7 +248,7 @@ public class CivDrawing
   public void worldChangedAt(Position pos) {
     clearSelection(); // destroys everything in delegate
 
-    //rebuilding buttum-up
+    //rebuilding buttoum-up
     defineIcons();
     defineCityMap();
     defineUnitMap();
