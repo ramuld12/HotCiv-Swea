@@ -190,55 +190,29 @@ public class CivDrawing
   protected TextFigure unitMoveCountText;
   protected ImageFigure cityProductionIcon;
   protected ImageFigure workForceFocusIcon;
-  private TextFigure gameAgeText;
+  protected TextFigure gameAgeText;
 
   protected void defineIcons() {
     turnShieldIcon = new ImageFigure(GfxConstants.RED_SHIELD,
                     new Point(GfxConstants.TURN_SHIELD_X, GfxConstants.TURN_SHIELD_Y));
 
-    //UnitShield
-    unitShieldIcon = new ImageFigure(GfxConstants.RED_SHIELD,
-                    new Point(GfxConstants.UNIT_SHIELD_X, GfxConstants.UNIT_SHIELD_Y));
-
-    //CityShield
-    cityShieldIcon = new ImageFigure(GfxConstants.RED_SHIELD,
-            new Point(GfxConstants.CITY_SHIELD_X, GfxConstants.CITY_SHIELD_Y));
-
     //Refresh button
     refreshIcon = new ImageFigure(GfxConstants.REFRESH_BUTTON,
             new Point(GfxConstants.REFRESH_BUTTON_X, GfxConstants.REFRESH_BUTTON_Y));
-
-    //Unit Move Counter
-    unitMoveCountText = new TextFigure("",
-                    new Point(GfxConstants.UNIT_COUNT_X, GfxConstants.UNIT_COUNT_Y));
-
-    //Production in the city
-    cityProductionIcon = new ImageFigure("archer",
-          new Point(GfxConstants.CITY_PRODUCTION_X, GfxConstants.CITY_PRODUCTION_Y));
-
-    //Workforce focus in the city
-
-    cityProductionIcon = new ImageFigure("apple",
-          new Point(GfxConstants.CITY_PRODUCTION_X, GfxConstants.CITY_PRODUCTION_Y));
-
-    //Workforce focus in the city
-    workForceFocusIcon = new ImageFigure("hammer",
-            new Point(GfxConstants.WORKFORCEFOCUS_X, GfxConstants.WORKFORCEFOCUS_Y));
 
     //Game age
     gameAgeText = new TextFigure(("" + game.getAge()),
             new Point (GfxConstants.AGE_TEXT_X, GfxConstants.AGE_TEXT_Y));
 
+    unitMoveCountText = new TextFigure("",
+            new Point(GfxConstants.UNIT_COUNT_X, GfxConstants.UNIT_COUNT_Y));
+
     // insert in delegate figure list to ensure graphical
     // rendering.
     delegate.add(turnShieldIcon);
-    delegate.add(unitShieldIcon);
-    delegate.add(cityShieldIcon);
     delegate.add(refreshIcon);
-    delegate.add(unitMoveCountText);
-    delegate.add(cityProductionIcon);
-    delegate.add(workForceFocusIcon);
     delegate.add(gameAgeText);
+    delegate.add(unitMoveCountText);
   }
 
 
@@ -255,8 +229,7 @@ public class CivDrawing
       playername = "blue";
     }
     turnShieldIcon.set(playername + "shield",
-            new Point(GfxConstants.TURN_SHIELD_X,
-                    GfxConstants.TURN_SHIELD_Y));
+            new Point(GfxConstants.TURN_SHIELD_X, GfxConstants.TURN_SHIELD_Y));
 
     gameAgeText.setText("" + game.getAge());
   }
@@ -267,19 +240,44 @@ public class CivDrawing
     clearSelection();
 
     if (city != null) {
-      cityShieldIcon = new ImageFigure(city.getOwner().toString() + "player",
+      String cityOwner = "red";
+      if (city.getOwner() == Player.BLUE) {
+        cityOwner = "blue";
+      }
+      cityShieldIcon = new ImageFigure(cityOwner + "shield",
               new Point(GfxConstants.CITY_SHIELD_X, GfxConstants.CITY_SHIELD_Y));
-      cityProductionIcon = new ImageFigure(city.getProduction(),
+      cityProductionIcon = new ImageFigure("" + city.getProduction(),
               new Point(GfxConstants.CITY_PRODUCTION_X, GfxConstants.CITY_PRODUCTION_Y));
-      workForceFocusIcon = new ImageFigure(city.getWorkforceFocus(),
+      workForceFocusIcon = new ImageFigure("hammer",
+              new Point(GfxConstants.WORKFORCEFOCUS_X, GfxConstants.WORKFORCEFOCUS_Y));
+    } else {
+      cityShieldIcon = new ImageFigure(GfxConstants.NOTHING,
+              new Point(GfxConstants.CITY_SHIELD_X, GfxConstants.CITY_SHIELD_Y));
+      cityProductionIcon = new ImageFigure(GfxConstants.NOTHING,
+              new Point(GfxConstants.CITY_PRODUCTION_X, GfxConstants.CITY_PRODUCTION_Y));
+      workForceFocusIcon = new ImageFigure(GfxConstants.NOTHING,
               new Point(GfxConstants.WORKFORCEFOCUS_X, GfxConstants.WORKFORCEFOCUS_Y));
     }
     if (unit != null) {
-      unitShieldIcon = new ImageFigure(unit.getOwner().toString() + "player",
-              new Point(GfxConstants.UNIT_SHIELD_X, GfxConstants.UNIT_SHIELD_X));
-      unitMoveCountText = new TextFigure("" + unit.getMoveCount(),
-              new Point(GfxConstants.UNIT_COUNT_X, GfxConstants.UNIT_COUNT_Y));
+      String unitOwner = "red";
+      if (unit.getOwner() == Player.BLUE) {
+        unitOwner = "blue";
+      }
+      unitShieldIcon = new ImageFigure(unitOwner + "shield",
+              new Point(GfxConstants.UNIT_SHIELD_X, GfxConstants.UNIT_SHIELD_Y));
+
+      unitMoveCountText.setText("" + unit.getMoveCount());
     }
+    else {
+      unitShieldIcon = new ImageFigure(GfxConstants.NOTHING,
+              new Point(GfxConstants.UNIT_SHIELD_X, GfxConstants.UNIT_SHIELD_Y));
+      unitMoveCountText.setText("");
+    }
+
+    delegate.add(cityShieldIcon);
+    delegate.add(cityProductionIcon);
+    delegate.add(workForceFocusIcon);
+    delegate.add(unitShieldIcon);
   }
 
   @Override

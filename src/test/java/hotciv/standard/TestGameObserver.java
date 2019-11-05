@@ -33,9 +33,16 @@ public class TestGameObserver {
   }
 
   @Test
-  public void shouldCallEndOfTurnWithRedPlayerInTurn() {
+  public void shouldHaveBlueInTurnAfterEndOfTurn() {
     game.endOfTurn();
-    assertThat(observer.getEndOfTurnPlayers().get(0), is(Player.RED));
+    assertThat(observer.getEndOfTurnPlayers().get(0), is(Player.BLUE));
+  }
+
+  @Test
+  public void shouldHaveRedInTurnAfterTwoEndOfTurn() {
+    game.endOfTurn();
+    game.endOfTurn();
+    assertThat(observer.getEndOfTurnPlayers().get(1), is(Player.RED));
   }
 
   @Test
