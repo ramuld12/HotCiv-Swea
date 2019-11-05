@@ -241,13 +241,15 @@ public class GameImpl implements Game {
   }
 
   public void endOfTurn() {
-    concreteObserver.turnEnds(playerInTurn, gameAge);
     boolean isPlayerInTurnRed = playerInTurn.equals(Player.RED);
     if (isPlayerInTurnRed) {
       playerInTurn = Player.BLUE;
+      System.out.println( "Current player is: " + playerInTurn);
     } else {
       playerInTurn = Player.RED;
+      System.out.println( "Current player is: " + playerInTurn);
       gameAge += agingStrategy.getAgeStep(this);
+      System.out.println( "GameAge = " + getAge());
       cities.values().forEach(CityImpl::increaseTreas);
       cities.values().forEach(CityImpl::incrementFood);
       units.values().forEach(UnitImpl::resetMoveCounter);
@@ -256,6 +258,7 @@ public class GameImpl implements Game {
       roundNumber ++;
       winningStrategy.changeStateIfNeeded(this);
     }
+    concreteObserver.turnEnds(playerInTurn, gameAge);
   }
 
   @Override

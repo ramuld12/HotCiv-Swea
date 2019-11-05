@@ -190,12 +190,9 @@ public class CivDrawing
   protected TextFigure unitMoveCountText;
   protected ImageFigure cityProductionIcon;
   protected ImageFigure workForceFocusIcon;
-  protected TextFigure gameAgeText;
+  private TextFigure gameAgeText;
 
   protected void defineIcons() {
-
-    removeAllIcons();
-
     turnShieldIcon = new ImageFigure(GfxConstants.RED_SHIELD,
                     new Point(GfxConstants.TURN_SHIELD_X, GfxConstants.TURN_SHIELD_Y));
 
@@ -216,12 +213,12 @@ public class CivDrawing
                     new Point(GfxConstants.UNIT_COUNT_X, GfxConstants.UNIT_COUNT_Y));
 
     //Production in the city
-    cityProductionIcon = new ImageFigure(GfxConstants.RED_SHIELD,
+    cityProductionIcon = new ImageFigure("archer",
           new Point(GfxConstants.CITY_PRODUCTION_X, GfxConstants.CITY_PRODUCTION_Y));
 
     //Workforce focus in the city
 
-    cityProductionIcon = new ImageFigure(GfxConstants.RED_SHIELD,
+    cityProductionIcon = new ImageFigure("apple",
           new Point(GfxConstants.CITY_PRODUCTION_X, GfxConstants.CITY_PRODUCTION_Y));
 
     //Workforce focus in the city
@@ -244,25 +241,10 @@ public class CivDrawing
     delegate.add(gameAgeText);
   }
 
-  public void removeAllIcons(){
-    delegate.remove(turnShieldIcon);
-    delegate.remove(unitShieldIcon);
-    delegate.remove(cityShieldIcon);
-    delegate.remove(refreshIcon);
-    delegate.remove(unitMoveCountText);
-    delegate.remove(cityProductionIcon);
-    delegate.remove(workForceFocusIcon);
-    delegate.remove(gameAgeText);
-  }
-
 
   // === Observer Methods ===
 
   public void worldChangedAt(Position pos) {
-    clearSelection(); // destroys everything in delegate
-
-    //rebuilding buttoum-up
-    defineIcons();
     defineCityMap();
     defineUnitMap();
   }
