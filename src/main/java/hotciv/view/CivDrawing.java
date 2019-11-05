@@ -179,7 +179,6 @@ public class CivDrawing
   protected void defineIcons() {
     // Tænker vi skal starte med at fjerne alle for god ordens skyld
     removeAllUnitFigures();
-    // TODO: Further development to include rest of figures needed
     turnShieldIcon = new ImageFigure(GfxConstants.RED_SHIELD,
                     new Point(GfxConstants.TURN_SHIELD_X, GfxConstants.TURN_SHIELD_Y));
 

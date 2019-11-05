@@ -41,31 +41,30 @@ public class ShowEndOfTurn {
     editor.showStatus("Click to shield to see Game's endOfTurn method being called.");
     editor.setTool( new EndOfTurnTool(game, new SelectionTool(editor)) );
   }
+}
+class EndOfTurnTool extends NullTool {
+  private SelectionTool tool;
+  private Game game;
+  private boolean pressedOnShield = false;
 
-  static class EndOfTurnTool extends NullTool {
-    private SelectionTool tool;
-    private Game game;
-    private boolean pressedOnShield = false;
+  public EndOfTurnTool(Game game, SelectionTool tool) {
+    this.game = game;
+    this.tool = tool;
+  }
 
-    public EndOfTurnTool(Game game, SelectionTool tool) {
-      this.game = game;
-      this.tool = tool;
+  public void mouseDown(MouseEvent e, int x, int y) {
+    if (x > 559 && x < 590 && y > 64 && y < 110) {
+      pressedOnShield = true;
     }
+    tool.mouseDown(e,x,y);
+  }
 
-    public void mouseDown(MouseEvent e, int x, int y) {
-      if (x > 559 && x < 590 && y > 64 && y < 110) {
-        pressedOnShield = true;
-      }
-      tool.mouseDown(e,x,y);
+  public void mouseUp(MouseEvent e, int x, int y) {
+    if (x > 559 && x < 590 && y > 64 && y < 110
+            && pressedOnShield) {
+      game.endOfTurn();
     }
-
-    public void mouseUp(MouseEvent e, int x, int y) {
-      if (x > 559 && x < 590 && y > 64 && y < 110
-        && pressedOnShield) {
-        game.endOfTurn();
-      }
-      pressedOnShield = false;
-      tool.mouseUp(e,x,y);
-    }
+    pressedOnShield = false;
+    tool.mouseUp(e,x,y);
   }
 }
