@@ -137,6 +137,8 @@ public class CivDrawing
   Go through map and create cities
    */
   protected void defineCityMap(){
+    clearSelection();
+    removeAllCityFigures();
     Position p;
     for (int r = 0; r < GameConstants.WORLDSIZE; r++) {
       for (int c = 0; c < GameConstants.WORLDSIZE; c++) {
@@ -149,10 +151,22 @@ public class CivDrawing
                   new CityFigure(city,point);
           cityFigure.addFigureChangeListener(this);
           cityFigureMap.put(city,cityFigure);
+
+
+          delegate.add(cityFigure);
         }
       }
     }
   }
+
+  private void removeAllCityFigures() {
+    for (City c : cityFigureMap.keySet()) {
+      CityFigure cf = cityFigureMap.get(c);
+      delegate.remove(cf);
+    }
+    cityFigureMap.clear();
+  }
+
 
   /**
    * remove all unit figures in this
@@ -179,8 +193,7 @@ public class CivDrawing
   protected TextFigure gameAgeText;
 
   protected void defineIcons() {
-    // Tænker vi skal starte med at fjerne alle for god ordens skyld
-    removeAllUnitFigures();
+
     // TODO: Further development to include rest of figures needed
     turnShieldIcon = new ImageFigure(GfxConstants.RED_SHIELD,
                     new Point(GfxConstants.TURN_SHIELD_X, GfxConstants.TURN_SHIELD_Y));

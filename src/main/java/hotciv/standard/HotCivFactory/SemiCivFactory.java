@@ -15,6 +15,7 @@ import hotciv.standard.strategies.UnitActionStrategies.UnitActionStrategy;
 import hotciv.standard.strategies.WinningStrategies.EpsilonCivWinningStrategy;
 import hotciv.standard.strategies.WinningStrategies.WinningStrategy;
 import hotciv.standard.strategies.WorkFocusStrategies.WorkForceFocusStrategy;
+import hotciv.standard.strategies.WorldLayoutStrategies.AlphaCivWorldLayoutStrategy;
 import hotciv.standard.strategies.WorldLayoutStrategies.DeltaCivWorldLayoutStrategy;
 import hotciv.standard.strategies.WorldLayoutStrategies.WorldLayoutStrategy;
 
@@ -40,7 +41,7 @@ public class SemiCivFactory implements HotCivFactory {
 
   @Override
   public WorldLayoutStrategy createWorldLayoutStrategy() {
-    return new DeltaCivWorldLayoutStrategy();
+    return new AlphaCivWorldLayoutStrategy();
   }
 
   @Override

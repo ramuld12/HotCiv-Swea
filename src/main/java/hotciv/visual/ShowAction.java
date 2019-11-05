@@ -1,5 +1,7 @@
 package hotciv.visual;
 
+import hotciv.standard.GameImpl;
+import hotciv.standard.HotCivFactory.SemiCivFactory;
 import minidraw.standard.*;
 import minidraw.framework.*;
 
@@ -31,6 +33,7 @@ public class ShowAction {
 
   public static void main(String[] args) {
     Game game = new StubGame2();
+    game = new GameImpl(new SemiCivFactory());
 
     DrawingEditor editor =
             new MiniDrawApplication("Shift-Click unit to invoke its action",
@@ -42,21 +45,25 @@ public class ShowAction {
     editor.setTool(new actionTool(game,new SelectionTool(editor)));
   }
 
-  static class actionTool extends NullTool {
-    private SelectionTool tool;
-    private Game game;
 
-    public actionTool(Game game, SelectionTool tool) {
-      this.game = game;
-      this.tool = tool;
-    }
+}
 
-    public void mouseDown(MouseEvent e, int x, int y) {
-      Position positionPressed = (GfxConstants.getPositionFromXY(x,y));
-      System.out.println(GfxConstants.getPositionFromXY(x,y));
+class actionTool extends NullTool {
+  private SelectionTool tool;
+  private Game game;
+
+  public actionTool(Game game, SelectionTool tool) {
+    this.game = game;
+    this.tool = tool;
+  }
+
+  public void mouseDown(MouseEvent e, int x, int y) {
+    Position positionPressed = (GfxConstants.getPositionFromXY(x,y));
+    System.out.println(GfxConstants.getPositionFromXY(x,y));
+    if (e.isShiftDown()){
       game.performUnitActionAt(positionPressed);
       tool.mouseDown(e,x,y);
-
     }
   }
 }
+
