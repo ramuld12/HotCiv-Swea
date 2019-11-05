@@ -41,7 +41,7 @@ public class SemiCivFactory implements HotCivFactory {
 
   @Override
   public WorldLayoutStrategy createWorldLayoutStrategy() {
-    return new AlphaCivWorldLayoutStrategy();
+    return new DeltaCivWorldLayoutStrategy();
   }
 
   @Override

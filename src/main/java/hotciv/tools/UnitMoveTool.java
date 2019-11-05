@@ -26,13 +26,7 @@ public class UnitMoveTool extends NullTool {
   public Unit selectedUnit;
   private Position from;
   private Position to;
-  private UnitFigure unitFigure;
 
-  /**
-   * the figure that is being dragged. If null then its operation is not that of
-   * dragging a figure (or a set of figures)
-   */
-  protected Figure draggedFigure;
 
   public UnitMoveTool(Game game, SelectionTool tool) {
     this.game = game;
@@ -55,11 +49,11 @@ public class UnitMoveTool extends NullTool {
 
   @Override
   public void mouseDrag(MouseEvent e, int x, int y) {
+    Position position = GfxConstants.getPositionFromXY(x,y);
     boolean isXWithinWorldBounds = GfxConstants.getPositionFromXY(x,y).getColumn() <= GameConstants.WORLDSIZE && 0 <= GfxConstants.getPositionFromXY(x,y).getColumn();
     boolean isYWithinWorldBounds = 0 <= GfxConstants.getPositionFromXY(x,y).getRow() && GfxConstants.getPositionFromXY(x,y).getRow() <= GameConstants.WORLDSIZE;
       if (selectedUnit != null && isXWithinWorldBounds && isYWithinWorldBounds) {
-        tool.mouseDrag(e,x,y);
-
+        tool.mouseDrag(e,GfxConstants.getXFromColumn(position.getColumn()),GfxConstants.getYFromRow(position.getRow()));
       }
   }
 

@@ -51,6 +51,12 @@ public class DeltaCivWorldLayoutStrategy implements WorldLayoutStrategy {
     cities.put(new Position(8, 12), new CityImpl(Player.RED));
     cities.put(new Position(4, 5), new CityImpl(Player.BLUE));
 
+    //Initialize the units map
+    HashMap<Position, UnitImpl> units = game.getUnits();
+    units.put(new Position(2, 2), new UnitImpl(GameConstants.ARCHER, Player.RED));
+    units.put(new Position(3, 2), new UnitImpl(GameConstants.LEGION, Player.BLUE));
+    units.put(new Position(4, 3), new UnitImpl(GameConstants.SETTLER, Player.RED));
+
     //No specifications are given for the unit map, in FRS ex. 36.3.3,
     //so we have not initialized it
 

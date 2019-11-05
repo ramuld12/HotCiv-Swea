@@ -1,5 +1,6 @@
 package hotciv.visual;
 
+import hotciv.tools.UnitMoveTool;
 import minidraw.standard.*;
 import minidraw.framework.*;
 
@@ -43,3 +44,48 @@ public class ShowComposition {
   }
 }
 
+class compositionTool extends NullTool {
+  private Tool alternatingTool;
+  private SelectionTool tool;
+  private Game game;
+
+  public compositionTool(Game game, SelectionTool tool) {
+    this.game = game;
+    this.tool = tool;
+  }
+
+  @Override
+  public void mouseDown(MouseEvent e, int x, int y) {
+    Point turnIcon = new Point(GfxConstants.TURN_SHIELD_X,GfxConstants.TURN_SHIELD_Y);
+    Point cityProductionIcon = new Point(GfxConstants.CITY_PRODUCTION_X,GfxConstants.CITY_PRODUCTION_Y);
+    Position positionPressed = (GfxConstants.getPositionFromXY(x,y));
+
+    Rectangle iconInFocus = new Rectangle(e.getPoint(),new Dimension(50,50));
+    if (iconInFocus.contains(turnIcon)){
+      alternatingTool = new EndOfTurnTool(game,tool);
+    }
+    else if (iconInFocus.contains(cityProductionIcon)){
+      alternatingTool = new setFocusTool(game,tool);
+    }
+    else if (game.getUnitAt(positionPressed) != null){
+      if (e.isShiftDown()){
+        alternatingTool = new actionTool(game,tool);
+      } else {
+        alternatingTool = new UnitMoveTool(game,tool);
+      }
+
+    }
+    alternatingTool.mouseDown(e,x,y);
+  }
+
+  @Override
+  public void mouseDrag(MouseEvent e, int x, int y){
+    alternatingTool.mouseDrag(e,x,y);
+  }
+
+  @Override
+  public void mouseUp(MouseEvent e, int x, int y){
+    alternatingTool.mouseUp(e,x,y);
+  }
+
+}

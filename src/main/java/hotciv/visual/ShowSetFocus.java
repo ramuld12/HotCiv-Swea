@@ -39,6 +39,24 @@ public class ShowSetFocus {
     editor.showStatus("Click a tile to see Game's setFocus method being called.");
 
     // TODO: Replace the setting of the tool with your SetFocusTool implementation.
-    editor.setTool( new SelectionTool(editor) );
+    editor.setTool(new setFocusTool(game, new SelectionTool(editor)));
+  }
+}
+
+
+class setFocusTool extends NullTool {
+  private SelectionTool tool;
+  private Game game;
+
+  public setFocusTool(Game game, SelectionTool tool) {
+    this.game = game;
+    this.tool = tool;
+  }
+
+  @Override
+  public void mouseDown(MouseEvent e, int x, int y) {
+    Position positionPressed = (GfxConstants.getPositionFromXY(x,y));
+      game.setTileFocus(positionPressed);
+      tool.mouseDown(e,x,y);
   }
 }
