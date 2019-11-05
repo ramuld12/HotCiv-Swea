@@ -10,6 +10,8 @@ import hotciv.standard.UnitImpl;
 import minidraw.framework.*;
 import minidraw.standard.*;
 
+import javax.xml.soap.Text;
+
 /**
  * CivDrawing is a specialized Drawing (model component) from
  * MiniDraw that dynamically builds the list of Figures for MiniDraw
@@ -170,40 +172,46 @@ public class CivDrawing
   protected ImageFigure cityShieldIcon;
   protected ImageFigure refreshIcon;
   protected TextFigure unitMoveCount;
+  protected ImageFigure cityProductionIcon;
+  protected ImageFigure workForceFocusIcon;
+  protected TextFigure gameAgeText;
 
   protected void defineIcons() {
     // Tænker vi skal starte med at fjerne alle for god ordens skyld
     removeAllUnitFigures();
     // TODO: Further development to include rest of figures needed
-    turnShieldIcon =
-            new ImageFigure(GfxConstants.RED_SHIELD,
-                    new Point(GfxConstants.TURN_SHIELD_X,
-                            GfxConstants.TURN_SHIELD_Y));
+    turnShieldIcon = new ImageFigure(GfxConstants.RED_SHIELD,
+                    new Point(GfxConstants.TURN_SHIELD_X, GfxConstants.TURN_SHIELD_Y));
 
     //UnitShield
-    unitShieldIcon =
-            new ImageFigure(GfxConstants.RED_SHIELD,
-                    new Point(GfxConstants.UNIT_SHIELD_X,
-                            GfxConstants.UNIT_SHIELD_Y));
-
+    unitShieldIcon = new ImageFigure(GfxConstants.RED_SHIELD,
+                    new Point(GfxConstants.UNIT_SHIELD_X, GfxConstants.UNIT_SHIELD_Y));
 
     //CityShield
     cityShieldIcon = new ImageFigure(GfxConstants.RED_SHIELD,
-            new Point(GfxConstants.CITY_SHIELD_X,
-                    GfxConstants.CITY_SHIELD_Y));
-
+            new Point(GfxConstants.CITY_SHIELD_X, GfxConstants.CITY_SHIELD_Y));
 
     //Refresh button
     refreshIcon = new ImageFigure(GfxConstants.REFRESH_BUTTON,
-            new Point(GfxConstants.REFRESH_BUTTON_X,
-                    GfxConstants.REFRESH_BUTTON_Y));
+            new Point(GfxConstants.REFRESH_BUTTON_X, GfxConstants.REFRESH_BUTTON_Y));
 
 
     //Unit Move Counter
-    unitMoveCount =
-            new TextFigure("",
-                    new Point(GfxConstants.UNIT_COUNT_X,
-                            GfxConstants.UNIT_COUNT_Y));
+    unitMoveCount = new TextFigure("",
+                    new Point(GfxConstants.UNIT_COUNT_X, GfxConstants.UNIT_COUNT_Y));
+
+    //Production in the city
+    cityProductionIcon = new ImageFigure("productionUnit",
+          new Point(GfxConstants.CITY_PRODUCTION_X, GfxConstants.CITY_PRODUCTION_Y));
+
+    //Workforce focus in the city
+    workForceFocusIcon = new ImageFigure("workForceFocus",
+            new Point(GfxConstants.WORKFORCEFOCUS_X, GfxConstants.WORKFORCEFOCUS_Y));
+
+    //Game age
+    gameAgeText = new TextFigure("gameAge",
+            new Point (GfxConstants.AGE_TEXT_X, GfxConstants.AGE_TEXT_Y));
+
     // insert in delegate figure list to ensure graphical
     // rendering.
     delegate.add(turnShieldIcon);
@@ -211,6 +219,8 @@ public class CivDrawing
     delegate.add(cityShieldIcon);
     delegate.add(refreshIcon);
     delegate.add(unitMoveCount);
+    delegate.add(cityProductionIcon);
+    delegate.add(workForceFocusIcon);
   }
 
 
