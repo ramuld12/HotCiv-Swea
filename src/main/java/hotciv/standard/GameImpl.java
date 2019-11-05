@@ -338,9 +338,10 @@ public class GameImpl implements Game {
     concreteObserver = observer;
   }
 
+
   @Override
   public void setTileFocus(Position position) {
-
+    concreteObserver.tileFocusChangedAt(position);
   }
 
   public GameObserver getConcreteObserver() {

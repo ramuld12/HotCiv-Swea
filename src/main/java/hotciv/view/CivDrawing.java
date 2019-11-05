@@ -179,55 +179,38 @@ public class CivDrawing
             new ImageFigure(GfxConstants.RED_SHIELD,
                     new Point(GfxConstants.TURN_SHIELD_X,
                             GfxConstants.TURN_SHIELD_Y));
-    // insert in delegate figure list to ensure graphical
-    // rendering.
-    delegate.add(turnShieldIcon);
-
-    turnShieldIcon =
-            new ImageFigure(GfxConstants.BLUE_SHIELD,
-                    new Point(GfxConstants.TURN_SHIELD_X,
-                            GfxConstants.TURN_SHIELD_Y));
-    // insert in delegate figure list to ensure graphical
-    // rendering.
-    delegate.add(turnShieldIcon);
 
     //UnitShield
     unitShieldIcon =
             new ImageFigure(GfxConstants.RED_SHIELD,
                     new Point(GfxConstants.UNIT_SHIELD_X,
                             GfxConstants.UNIT_SHIELD_Y));
-    delegate.add(unitShieldIcon);
 
-    unitShieldIcon =
-            new ImageFigure(GfxConstants.BLUE_SHIELD,
-                    new Point(GfxConstants.UNIT_SHIELD_X,
-                            GfxConstants.UNIT_SHIELD_Y));
-    delegate.add(unitShieldIcon);
 
     //CityShield
     cityShieldIcon = new ImageFigure(GfxConstants.RED_SHIELD,
             new Point(GfxConstants.CITY_SHIELD_X,
                     GfxConstants.CITY_SHIELD_Y));
-    delegate.add(cityShieldIcon);
 
-    cityShieldIcon = new ImageFigure(GfxConstants.BLUE_SHIELD,
-            new Point(GfxConstants.CITY_SHIELD_X,
-                    GfxConstants.CITY_SHIELD_Y));
-    delegate.add(cityShieldIcon);
 
     //Refresh button
     refreshIcon = new ImageFigure(GfxConstants.REFRESH_BUTTON,
             new Point(GfxConstants.REFRESH_BUTTON_X,
                     GfxConstants.REFRESH_BUTTON_Y));
-    delegate.add(refreshIcon);
+
 
     //Unit Move Counter
     unitMoveCount =
             new TextFigure("",
                     new Point(GfxConstants.UNIT_COUNT_X,
                             GfxConstants.UNIT_COUNT_Y));
-
-
+    // insert in delegate figure list to ensure graphical
+    // rendering.
+    delegate.add(turnShieldIcon);
+    delegate.add(unitShieldIcon);
+    delegate.add(cityShieldIcon);
+    delegate.add(refreshIcon);
+    delegate.add(unitMoveCount);
   }
 
 
