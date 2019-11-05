@@ -201,15 +201,15 @@ public class CivDrawing
                     new Point(GfxConstants.UNIT_COUNT_X, GfxConstants.UNIT_COUNT_Y));
 
     //Production in the city
-    cityProductionIcon = new ImageFigure("productionUnit",
+    cityProductionIcon = new ImageFigure(GfxConstants.RED_SHIELD,
           new Point(GfxConstants.CITY_PRODUCTION_X, GfxConstants.CITY_PRODUCTION_Y));
 
     //Workforce focus in the city
-    workForceFocusIcon = new ImageFigure("workForceFocus",
+    workForceFocusIcon = new ImageFigure(GfxConstants.RED_SHIELD,
             new Point(GfxConstants.WORKFORCEFOCUS_X, GfxConstants.WORKFORCEFOCUS_Y));
 
     //Game age
-    gameAgeText = new TextFigure("gameAge",
+    gameAgeText = new TextFigure(("" + game.getAge()),
             new Point (GfxConstants.AGE_TEXT_X, GfxConstants.AGE_TEXT_Y));
 
     // insert in delegate figure list to ensure graphical
@@ -221,6 +221,7 @@ public class CivDrawing
     delegate.add(unitMoveCount);
     delegate.add(cityProductionIcon);
     delegate.add(workForceFocusIcon);
+    delegate.add(gameAgeText);
   }
 
 
@@ -253,7 +254,8 @@ public class CivDrawing
     turnShieldIcon.set(playername + "shield",
             new Point(GfxConstants.TURN_SHIELD_X,
                     GfxConstants.TURN_SHIELD_Y));
-    // TODO: Age output pending
+
+    gameAgeText.setText("" + game.getAge());
   }
 
   public void tileFocusChangedAt(Position position) {
