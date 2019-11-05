@@ -35,6 +35,7 @@ public class ShowAction {
     Game game = new StubGame2();
     game = new GameImpl(new SemiCivFactory());
 
+
     DrawingEditor editor =
             new MiniDrawApplication("Shift-Click unit to invoke its action",
                     new HotCivFactory4(game));

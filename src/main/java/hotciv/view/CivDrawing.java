@@ -247,25 +247,15 @@ public class CivDrawing
   // === Observer Methods ===
 
   public void worldChangedAt(Position pos) {
-    // TODO: Remove system.out debugging output
-    System.out.println("CivDrawing: world changes at " + pos);
-    // this is a really brute-force algorithm: destroy
-    // all known units and build up the entire set again
-
     clearSelection(); // destroys everything in delegate
 
     //rebuilding buttum-up
     defineIcons();
     defineCityMap();
     defineUnitMap();
-
-    // TODO: Cities may change on position as well
   }
 
   public void turnEnds(Player nextPlayer, int age) {
-    // TODO: Remove system.out debugging output
-    System.out.println("CivDrawing: turnEnds for " +
-            nextPlayer + " at " + age);
     String playername = "red";
     if (nextPlayer == Player.BLUE) {
       playername = "blue";
