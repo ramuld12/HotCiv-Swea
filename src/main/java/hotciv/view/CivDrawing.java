@@ -194,6 +194,8 @@ public class CivDrawing
 
   protected void defineIcons() {
 
+    removeAllIcons();
+
     turnShieldIcon = new ImageFigure(GfxConstants.RED_SHIELD,
                     new Point(GfxConstants.TURN_SHIELD_X, GfxConstants.TURN_SHIELD_Y));
 
@@ -240,6 +242,17 @@ public class CivDrawing
     delegate.add(cityProductionIcon);
     delegate.add(workForceFocusIcon);
     delegate.add(gameAgeText);
+  }
+
+  public void removeAllIcons(){
+    delegate.remove(turnShieldIcon);
+    delegate.remove(unitShieldIcon);
+    delegate.remove(cityShieldIcon);
+    delegate.remove(refreshIcon);
+    delegate.remove(unitMoveCountText);
+    delegate.remove(cityProductionIcon);
+    delegate.remove(workForceFocusIcon);
+    delegate.remove(gameAgeText);
   }
 
 

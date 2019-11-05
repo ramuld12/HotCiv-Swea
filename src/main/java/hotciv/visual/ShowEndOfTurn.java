@@ -33,7 +33,7 @@ public class ShowEndOfTurn {
   
   public static void main(String[] args) {
     Game game = new StubGame2();
-    game = new GameImpl(SemiCivFactory);
+    game = new GameImpl(new SemiCivFactory());
 
     DrawingEditor editor = 
       new MiniDrawApplication( "Click top shield to end the turn",  
