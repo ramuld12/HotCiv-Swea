@@ -39,6 +39,27 @@ public class ShowEndOfTurn {
     editor.showStatus("Click to shield to see Game's endOfTurn method being called.");
 
     // TODO: Replace the setting of the tool with your EndOfTurnTool implementation.
-    editor.setTool( new NullTool() );
+    editor.setTool( new EndOfTurnTool(game, new SelectionTool(editor)) );
+  }
+
+  static class EndOfTurnTool extends NullTool {
+    private SelectionTool tool;
+    private Game game;
+
+    public EndOfTurnTool(Game game, SelectionTool tool) {
+      this.game = game;
+      this.tool = tool;
+    }
+
+    public void mouseDown(MouseEvent e, int x, int y) {
+      Position positionPressed = (GfxConstants.getPositionFromXY(x,y));
+      System.out.println(GfxConstants.getPositionFromXY(x,y));
+
+      boolean isEndOfTurnShieldX = positionPressed == new Position(2,18);
+
+      if (x > 540 && x < 570 && y > 50 && y < 80) {
+        game.endOfTurn();
+      }
+    }
   }
 }
