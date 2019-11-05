@@ -28,17 +28,35 @@ import hotciv.stub.*;
    commercial use, see http://www.baerbak.com/
  */
 public class ShowAction {
-  
+
   public static void main(String[] args) {
     Game game = new StubGame2();
 
-    DrawingEditor editor = 
-      new MiniDrawApplication( "Shift-Click unit to invoke its action",  
-                               new HotCivFactory4(game) );
+    DrawingEditor editor =
+            new MiniDrawApplication("Shift-Click unit to invoke its action",
+                    new HotCivFactory4(game));
     editor.open();
     editor.showStatus("Shift-Click on unit to see Game's performAction method being called.");
 
     // TODO: Replace the setting of the tool with your ActionTool implementation.
-    editor.setTool( new NullTool() );
+    editor.setTool(new actionTool(game,new SelectionTool(editor)));
+  }
+
+  static class actionTool extends NullTool {
+    private SelectionTool tool;
+    private Game game;
+
+    public actionTool(Game game, SelectionTool tool) {
+      this.game = game;
+      this.tool = tool;
+    }
+
+    public void mouseDown(MouseEvent e, int x, int y) {
+      Position positionPressed = (GfxConstants.getPositionFromXY(x,y));
+      System.out.println(GfxConstants.getPositionFromXY(x,y));
+      game.performUnitActionAt(positionPressed);
+      tool.mouseDown(e,x,y);
+
+    }
   }
 }
