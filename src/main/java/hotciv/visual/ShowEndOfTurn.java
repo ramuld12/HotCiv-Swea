@@ -1,5 +1,7 @@
 package hotciv.visual;
 
+import hotciv.standard.GameImpl;
+import hotciv.standard.HotCivFactory.SemiCivFactory;
 import minidraw.standard.*;
 import minidraw.framework.*;
 
@@ -37,14 +39,13 @@ public class ShowEndOfTurn {
                                new HotCivFactory4(game) );
     editor.open();
     editor.showStatus("Click to shield to see Game's endOfTurn method being called.");
-
-    // TODO: Replace the setting of the tool with your EndOfTurnTool implementation.
     editor.setTool( new EndOfTurnTool(game, new SelectionTool(editor)) );
   }
 
   static class EndOfTurnTool extends NullTool {
     private SelectionTool tool;
     private Game game;
+    private boolean pressedOnShield = false;
 
     public EndOfTurnTool(Game game, SelectionTool tool) {
       this.game = game;
@@ -53,9 +54,18 @@ public class ShowEndOfTurn {
 
     public void mouseDown(MouseEvent e, int x, int y) {
       if (x > 559 && x < 590 && y > 64 && y < 110) {
-        game.endOfTurn();
+        pressedOnShield = true;
       }
       tool.mouseDown(e,x,y);
+    }
+
+    public void mouseUp(MouseEvent e, int x, int y) {
+      if (x > 559 && x < 590 && y > 64 && y < 110
+        && pressedOnShield) {
+        game.endOfTurn();
+      }
+      pressedOnShield = false;
+      tool.mouseUp(e,x,y);
     }
   }
 }
