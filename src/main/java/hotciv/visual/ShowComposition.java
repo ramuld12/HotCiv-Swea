@@ -42,3 +42,4 @@ public class ShowComposition {
     editor.setTool( new NullTool() );
   }
 }
+

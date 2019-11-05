@@ -55,7 +55,9 @@ public class UnitMoveTool extends NullTool {
 
   @Override
   public void mouseDrag(MouseEvent e, int x, int y) {
-      if (selectedUnit != null) {
+    boolean isXWithinWorldBounds = GfxConstants.getPositionFromXY(x,y).getColumn() <= GameConstants.WORLDSIZE && 0 <= GfxConstants.getPositionFromXY(x,y).getColumn();
+    boolean isYWithinWorldBounds = 0 <= GfxConstants.getPositionFromXY(x,y).getRow() && GfxConstants.getPositionFromXY(x,y).getRow() <= GameConstants.WORLDSIZE;
+      if (selectedUnit != null && isXWithinWorldBounds && isYWithinWorldBounds) {
         tool.mouseDrag(e,x,y);
 
       }

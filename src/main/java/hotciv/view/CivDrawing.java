@@ -194,7 +194,6 @@ public class CivDrawing
 
   protected void defineIcons() {
 
-    // TODO: Further development to include rest of figures needed
     turnShieldIcon = new ImageFigure(GfxConstants.RED_SHIELD,
                     new Point(GfxConstants.TURN_SHIELD_X, GfxConstants.TURN_SHIELD_Y));
 
