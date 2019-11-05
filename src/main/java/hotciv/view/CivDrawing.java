@@ -172,8 +172,8 @@ public class CivDrawing
   protected ImageFigure cityShieldIcon;
   protected ImageFigure refreshIcon;
   protected TextFigure unitMoveCount;
-  protected ImageFigure cityProductionIcon;
-  protected ImageFigure workForceFocusIcon;
+  protected TextFigure cityProductionIcon;
+  protected TextFigure workForceFocusIcon;
   protected TextFigure gameAgeText;
 
   protected void defineIcons() {
@@ -201,11 +201,11 @@ public class CivDrawing
                     new Point(GfxConstants.UNIT_COUNT_X, GfxConstants.UNIT_COUNT_Y));
 
     //Production in the city
-    cityProductionIcon = new ImageFigure("productionUnit",
+    cityProductionIcon = new TextFigure("",
           new Point(GfxConstants.CITY_PRODUCTION_X, GfxConstants.CITY_PRODUCTION_Y));
 
     //Workforce focus in the city
-    workForceFocusIcon = new ImageFigure("workForceFocus",
+    workForceFocusIcon = new TextFigure("",
             new Point(GfxConstants.WORKFORCEFOCUS_X, GfxConstants.WORKFORCEFOCUS_Y));
 
     //Game age
