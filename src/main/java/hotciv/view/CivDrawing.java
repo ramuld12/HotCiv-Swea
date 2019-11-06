@@ -5,23 +5,14 @@ import hotciv.framework.*;
 import java.awt.*;
 import java.util.*;
 import java.util.List;
-
-import hotciv.standard.UnitImpl;
 import minidraw.framework.*;
 import minidraw.standard.*;
-
-import javax.xml.soap.Text;
 
 /**
  * CivDrawing is a specialized Drawing (model component) from
  * MiniDraw that dynamically builds the list of Figures for MiniDraw
  * to render the Unit and other information objects that are visible
  * in the Game instance.
- * <p>
- * TODO: This is a TEMPLATE for the SWEA Exercise! This means
- * that it is INCOMPLETE and that there are several options
- * for CLEANING UP THE CODE when you add features to it!
- * <p>
  * This source code is from the book
  * "Flexible, Reliable Software:
  * Using Patterns and Agile Development"
@@ -48,7 +39,6 @@ import javax.xml.soap.Text;
 
 public class CivDrawing
         implements Drawing, GameObserver {
-
   protected Drawing delegate;
   /**
    * store all moveable figures visible in this drawing = units
