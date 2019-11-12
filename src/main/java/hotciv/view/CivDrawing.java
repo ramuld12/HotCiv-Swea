@@ -202,6 +202,7 @@ public class CivDrawing
     delegate.add(turnShieldIcon);
     delegate.add(refreshIcon);
     delegate.add(gameAgeText);
+    delegate.add(unitMoveCountText);
   }
 
 
@@ -262,12 +263,7 @@ public class CivDrawing
               new Point(GfxConstants.UNIT_SHIELD_X, GfxConstants.UNIT_SHIELD_Y));
       unitMoveCountText.setText("");
     }
-    if(unitMoveCountText.equals("1")) {
-      delegate.remove(unitMoveCountText);
-    } else {
-      delegate.add(unitMoveCountText);
-    }
-    //delegate.add(unitMoveCountText);
+
     delegate.add(cityShieldIcon);
     delegate.add(cityProductionIcon);
     delegate.add(workForceFocusIcon);
@@ -279,9 +275,7 @@ public class CivDrawing
     // A request has been issued to repaint
     // everything. We simply rebuild the
     // entire Drawing.
-    delegate.remove(gameAgeText);
     defineUnitMap();
-    //delegate.remove(unitMoveCountText);
     defineIcons();
     defineCityMap();
   }
