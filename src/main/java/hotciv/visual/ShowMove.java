@@ -65,6 +65,7 @@ class UnitMoveTool extends NullTool {
     boolean isThereAUnit = selectedUnit != null;
     boolean isUnitOwnedByPlayerInTurn = isThereAUnit && selectedUnit.getOwner() == game.getPlayerInTurn();
     if (isThereAUnit && isUnitOwnedByPlayerInTurn) {
+      game.setTileFocus(from);
       tool.mouseDown(e, x, y);
     }
   }
