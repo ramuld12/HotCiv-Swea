@@ -229,10 +229,10 @@ public class GameImpl implements Game {
         String unitType = units.get(from).getTypeString();
         units.remove(from);
         createUnitAtPosition(to, unitType, playerInTurn);
-        concreteObservers.forEach(c -> c.worldChangedAt(from));
-        concreteObservers.forEach(c -> c.worldChangedAt(to));
         units.get(to).decreaseMoveCount();
       }
+      concreteObservers.forEach(c -> c.worldChangedAt(from));
+      concreteObservers.forEach(c -> c.worldChangedAt(to));
     }
   }
 
@@ -247,6 +247,7 @@ public class GameImpl implements Game {
   }
 
   public void endOfTurn() {
+    concreteObservers.forEach(c -> c.turnEnds(playerInTurn,gameAge));
     boolean isPlayerInTurnRed = playerInTurn.equals(Player.RED);
     if (isPlayerInTurnRed) {
       playerInTurn = Player.BLUE;
