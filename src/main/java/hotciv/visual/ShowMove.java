@@ -91,7 +91,7 @@ class UnitMoveTool extends NullTool {
     if (isXWithinWorldBounds && isYWithinWorldBounds) {
       game.moveUnit(from, to);
       game.setTileFocus(to);
-      tool.mouseUp(e, x, y);
     }
+    tool.mouseUp(e, x, y);
   }
 }

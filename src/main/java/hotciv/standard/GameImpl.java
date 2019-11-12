@@ -215,6 +215,7 @@ public class GameImpl implements Game {
 
     if (isThereACityAtPositionTo && isTheCityForeign) {
       cities.get(to).changeOwner(playerInTurn);
+      concreteObservers.forEach(c -> c.worldChangedAt(to));
     }
 
     //Handling of movement for the unit
@@ -231,8 +232,9 @@ public class GameImpl implements Game {
         // create a new unit with moveCounter 0 of the same type there and remove the old
         String unitType = units.get(from).getTypeString();
         units.remove(from);
-        concreteObservers.forEach(c -> c.worldChangedAt(from));
         createUnitAtPosition(to, unitType, playerInTurn);
+        concreteObservers.forEach(c -> c.worldChangedAt(from));
+        concreteObservers.forEach(c -> c.worldChangedAt(to));
         units.get(to).decreaseMoveCount();
       }
     }
