@@ -66,7 +66,7 @@ class CompositionTool extends NullTool {
       if (e.isShiftDown()){
         alternatingTool = new actionTool(game,tool);
       } else {
-        alternatingTool = new UnitMoveTool(game,tool, editor);
+        alternatingTool = new UnitMoveTool(game,tool);
       }
 
     }

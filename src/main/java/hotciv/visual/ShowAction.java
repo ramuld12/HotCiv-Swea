@@ -60,10 +60,10 @@ class actionTool extends NullTool {
 
   public void mouseDown(MouseEvent e, int x, int y) {
     Position positionPressed = (GfxConstants.getPositionFromXY(x,y));
-    System.out.println(GfxConstants.getPositionFromXY(x,y));
-    if (e.isShiftDown()){
+    boolean isPlayerInTurnOwnerOfUnit = game.getPlayerInTurn() == game.getUnitAt(positionPressed).getOwner();
+    if (isPlayerInTurnOwnerOfUnit) {
       game.performUnitActionAt(positionPressed);
-      tool.mouseDown(e,x,y);
+      tool.mouseDown(e, x, y);
     }
   }
 }

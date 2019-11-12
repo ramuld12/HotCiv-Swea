@@ -39,12 +39,11 @@ public class ShowMove {
                     new HotCivFactory4(game));
     editor.open();
     editor.showStatus("Move units to see Game's moveUnit method being called.");
-    editor.setTool(new UnitMoveTool(game, new SelectionTool(editor), editor));
+    editor.setTool(new UnitMoveTool(game, new SelectionTool(editor)));
   }
 }
 
 class UnitMoveTool extends NullTool {
-  private final Drawing currentDrawing;
   private SelectionTool tool;
   private final Game game;
 
@@ -53,10 +52,9 @@ class UnitMoveTool extends NullTool {
   private Position to;
 
 
-  public UnitMoveTool(Game game, SelectionTool tool, DrawingEditor editor) {
+  public UnitMoveTool(Game game, SelectionTool tool) {
     this.game = game;
     this.tool = tool;
-    currentDrawing = editor.drawing();
   }
 
 
@@ -74,8 +72,8 @@ class UnitMoveTool extends NullTool {
   @Override
   public void mouseDrag(MouseEvent e, int x, int y) {
     boolean isThereAUnit = selectedUnit != null;
-    boolean isXWithinWorldBounds = GfxConstants.getPositionFromXY(x, y).getColumn() <= GameConstants.WORLDSIZE && 0 <= GfxConstants.getPositionFromXY(x, y).getColumn();
-    boolean isYWithinWorldBounds = GfxConstants.getPositionFromXY(x, y).getRow() <= GameConstants.WORLDSIZE && 0 <= GfxConstants.getPositionFromXY(x, y).getRow();
+    boolean isXWithinWorldBounds = GfxConstants.getPositionFromXY(x, y).getColumn() < GameConstants.WORLDSIZE && 0 <= GfxConstants.getPositionFromXY(x, y).getColumn();
+    boolean isYWithinWorldBounds = GfxConstants.getPositionFromXY(x, y).getRow() < GameConstants.WORLDSIZE && 0 <= GfxConstants.getPositionFromXY(x, y).getRow();
     if (isThereAUnit &&
             isXWithinWorldBounds &&
             isYWithinWorldBounds) {
@@ -86,12 +84,8 @@ class UnitMoveTool extends NullTool {
   @Override
   public void mouseUp(MouseEvent e, int x, int y) {
     to = GfxConstants.getPositionFromXY(x, y);
-    boolean isXWithinWorldBounds = GfxConstants.getPositionFromXY(x, y).getColumn() < GameConstants.WORLDSIZE && 0 <= GfxConstants.getPositionFromXY(x, y).getColumn();
-    boolean isYWithinWorldBounds = GfxConstants.getPositionFromXY(x, y).getRow() < GameConstants.WORLDSIZE && 0 <= GfxConstants.getPositionFromXY(x, y).getRow();
-    if (isXWithinWorldBounds && isYWithinWorldBounds) {
-      game.moveUnit(from, to);
-      game.setTileFocus(to);
-    }
+    game.moveUnit(from, to);
+    game.setTileFocus(to);
     tool.mouseUp(e, x, y);
   }
 }
