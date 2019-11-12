@@ -174,16 +174,12 @@ public class GameImpl implements Game {
    */
   public void createUnitAtPosition(Position position, String unitType, Player owner) {
     units.put(position, new UnitImpl(unitType, owner));
-    for (GameObserver c : concreteObservers) {
-      c.worldChangedAt(position);
-    }
+    concreteObservers.forEach(c -> c.worldChangedAt(position));
   }
 
-  public void createTileAtPosition(Position position, TileImpl tiletype) {
-    world.put(position, tiletype);
-    for (GameObserver c : concreteObservers) {
-      c.worldChangedAt(position);
-    }
+  public void createTileAtPosition(Position position, TileImpl tileType) {
+    world.put(position, tileType);
+    concreteObservers.forEach(c -> c.worldChangedAt(position));
   }
 
   public boolean moveUnit(Position from, Position to) {
