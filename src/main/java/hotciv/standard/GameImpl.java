@@ -40,7 +40,7 @@ import java.util.*;
  */
 
 public class GameImpl implements Game {
-  private GameObserver concreteObserver;
+  private List<GameObserver> concreteObservers = new ArrayList<>();
   private WinningStrategy winningStrategy;
   private AgingStrategy agingStrategy;
   private UnitActionStrategy unitActionStrategy;
@@ -143,7 +143,9 @@ public class GameImpl implements Game {
   public void setRoundNumber (int newRoundNumber) {roundNumber = newRoundNumber;}
 
   public void changeProductionInCityAt(Position p, String unitType) {
-    concreteObserver.worldChangedAt(p);
+    for (GameObserver c : concreteObservers) {
+      c.worldChangedAt(p);
+    }
     cities.get(p).changeProduction(unitType);
   }
 
@@ -158,7 +160,9 @@ public class GameImpl implements Game {
     boolean isPositionVacantForCity = cities.get(position) == null;
     if (isPositionVacantForCity) {
       cities.put(position, new CityImpl(playerInTurn));
-      concreteObserver.worldChangedAt(position);
+      for (GameObserver c : concreteObservers) {
+        c.worldChangedAt(position);
+      }
     }
   }
 
@@ -170,12 +174,16 @@ public class GameImpl implements Game {
    */
   public void createUnitAtPosition(Position position, String unitType, Player owner) {
     units.put(position, new UnitImpl(unitType, owner));
-    concreteObserver.worldChangedAt(position);
+    for (GameObserver c : concreteObservers) {
+      c.worldChangedAt(position);
+    }
   }
 
   public void createTileAtPosition(Position position, TileImpl tiletype) {
     world.put(position, tiletype);
-    concreteObserver.worldChangedAt(position);
+    for (GameObserver c : concreteObservers) {
+      c.worldChangedAt(position);
+    }
   }
 
   public boolean moveUnit(Position from, Position to) {
@@ -223,7 +231,7 @@ public class GameImpl implements Game {
         // create a new unit with moveCounter 0 of the same type there and remove the old
         String unitType = units.get(from).getTypeString();
         units.remove(from);
-        concreteObserver.worldChangedAt(from);
+        concreteObservers.forEach(c -> c.worldChangedAt(from));
         createUnitAtPosition(to, unitType, playerInTurn);
         units.get(to).decreaseMoveCount();
       }
@@ -255,7 +263,7 @@ public class GameImpl implements Game {
       roundNumber ++;
       winningStrategy.changeStateIfNeeded(this);
     }
-    concreteObserver.turnEnds(playerInTurn, gameAge);
+    concreteObservers.forEach(c -> c.turnEnds(playerInTurn,gameAge));
   }
 
   @Override
@@ -330,22 +338,18 @@ public class GameImpl implements Game {
 
     public void performUnitActionAt (Position p){
       unitActionStrategy.performUnitActionAt(this, p);
-      concreteObserver.worldChangedAt(p);
+      concreteObservers.forEach(c -> c.worldChangedAt(p));
     }
 
   @Override
   public void addObserver(GameObserver observer) {
-    concreteObserver = observer;
+    concreteObservers.add(observer);
   }
 
 
   @Override
   public void setTileFocus(Position position) {
-    concreteObserver.tileFocusChangedAt(position);
-  }
-
-  public GameObserver getConcreteObserver() {
-    return concreteObserver;
+    concreteObservers.forEach(c -> c.tileFocusChangedAt(position));
   }
 
 
@@ -358,7 +362,7 @@ public class GameImpl implements Game {
       boolean isThereAUnitAtPosition = units.get(unitPosition) != null;
       if (isThereAUnitAtPosition) {
         units.remove(unitPosition);
-        concreteObserver.worldChangedAt(unitPosition);
+        concreteObservers.forEach(c -> c.worldChangedAt(unitPosition));
       }
     }
 
@@ -366,13 +370,13 @@ public class GameImpl implements Game {
       boolean isThereACityAtPosition = cities.get(cityPosition) != null;
       if (isThereACityAtPosition){
         cities.remove(cityPosition);
-        concreteObserver.worldChangedAt(cityPosition);
+        concreteObservers.forEach(c -> c.worldChangedAt(cityPosition));
       }
   }
 
   public void removeTileFromWorldMapAtPosition(Position tilePosition) {
     world.remove(tilePosition);
-    concreteObserver.worldChangedAt(tilePosition);
+    concreteObservers.forEach(c -> c.worldChangedAt(tilePosition));
   }
 
     // === Boolean methods ======================================
