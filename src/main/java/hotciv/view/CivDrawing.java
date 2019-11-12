@@ -220,8 +220,9 @@ public class CivDrawing
     }
     turnShieldIcon.set(playername + "shield",
             new Point(GfxConstants.TURN_SHIELD_X, GfxConstants.TURN_SHIELD_Y));
-
     gameAgeText.setText("" + game.getAge());
+    defineCityMap();
+    defineUnitMap();
   }
 
   public void tileFocusChangedAt(Position position) {

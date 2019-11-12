@@ -183,7 +183,7 @@ public class GameImpl implements Game {
     boolean isToInTheWorld = world.containsKey(to);
     boolean isThereAUnitAtFrom = units.get(from) != null;
     boolean isThereAUnitAtTo = units.get(to) != null;
-    boolean isTileTypeAtToValidForMovement = world.get(to).isValidMovementTileType(units.get(from));
+    boolean isTileTypeAtToValidForMovement = isToInTheWorld && world.get(to).isValidMovementTileType(units.get(from));
     boolean isUnitOwnedByPlayerInTurn = isThereAUnitAtFrom && units.get(from).getOwner() == playerInTurn;
     boolean isThereAnEnemyUnitAtTo = isThereAUnitAtFrom && isThereAUnitAtTo && units.get(from).getOwner() != units.get(to).getOwner();
     boolean isThereAFriendlyUnitAtTo = isThereAUnitAtFrom && isThereAUnitAtTo && units.get(from).getOwner() == units.get(to).getOwner();
@@ -202,6 +202,8 @@ public class GameImpl implements Game {
             isUnitMoveable &&
             hasMovesLeft &&
             !didDefenceWin)) {
+      concreteObservers.forEach(c -> c.worldChangedAt(from));
+      concreteObservers.forEach(c -> c.worldChangedAt(to));
       return false;
     }
 
@@ -243,6 +245,7 @@ public class GameImpl implements Game {
   }
 
   public void endOfTurn() {
+    concreteObservers.forEach(c -> c.turnEnds(playerInTurn,gameAge));
     boolean isPlayerInTurnRed = playerInTurn.equals(Player.RED);
     if (isPlayerInTurnRed) {
       playerInTurn = Player.BLUE;

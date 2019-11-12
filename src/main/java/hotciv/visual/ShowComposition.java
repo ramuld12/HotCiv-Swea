@@ -38,7 +38,7 @@ public class ShowComposition {
                                new HotCivFactory4(game) );
     editor.open();
     editor.showStatus("Click and drag any item to see Game's proper response.");
-    editor.setTool( new CompositionTool(game,new SelectionTool(editor), editor) );
+    editor.setTool( new CompositionTool(game,new SelectionTool(editor)) );
   }
 }
 
@@ -46,12 +46,10 @@ class CompositionTool extends NullTool {
   private Tool alternatingTool;
   private SelectionTool tool;
   private Game game;
-  private DrawingEditor editor;
 
-  public CompositionTool(Game game, SelectionTool tool, DrawingEditor editor) {
+  public CompositionTool(Game game, SelectionTool tool) {
     this.game = game;
     this.tool = tool;
-    this.editor = editor;
   }
 
   @Override
@@ -66,7 +64,7 @@ class CompositionTool extends NullTool {
       if (e.isShiftDown()){
         alternatingTool = new actionTool(game,tool);
       } else {
-        alternatingTool = new UnitMoveTool(game,tool, editor);
+        alternatingTool = new UnitMoveTool(game,tool);
       }
 
     }
