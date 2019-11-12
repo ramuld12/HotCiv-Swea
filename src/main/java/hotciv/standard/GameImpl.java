@@ -142,11 +142,9 @@ public class GameImpl implements Game {
 
   public void setRoundNumber (int newRoundNumber) {roundNumber = newRoundNumber;}
 
-  public void changeProductionInCityAt(Position p, String unitType) {
-    for (GameObserver c : concreteObservers) {
-      c.worldChangedAt(p);
-    }
-    cities.get(p).changeProduction(unitType);
+  public void changeProductionInCityAt(Position position, String unitType) {
+    concreteObservers.forEach(c -> c.worldChangedAt(position));
+    cities.get(position).changeProduction(unitType);
   }
 
   /**
@@ -160,9 +158,7 @@ public class GameImpl implements Game {
     boolean isPositionVacantForCity = cities.get(position) == null;
     if (isPositionVacantForCity) {
       cities.put(position, new CityImpl(playerInTurn));
-      for (GameObserver c : concreteObservers) {
-        c.worldChangedAt(position);
-      }
+      concreteObservers.forEach(c -> c.worldChangedAt(position));
     }
   }
 
@@ -229,10 +225,10 @@ public class GameImpl implements Game {
         String unitType = units.get(from).getTypeString();
         units.remove(from);
         createUnitAtPosition(to, unitType, playerInTurn);
-        concreteObservers.forEach(c -> c.worldChangedAt(from));
-        concreteObservers.forEach(c -> c.worldChangedAt(to));
         units.get(to).decreaseMoveCount();
       }
+      concreteObservers.forEach(c -> c.worldChangedAt(from));
+      concreteObservers.forEach(c -> c.worldChangedAt(to));
     }
   }
 
