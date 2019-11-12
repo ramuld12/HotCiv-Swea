@@ -32,7 +32,7 @@ public class ShowMove {
 
   public static void main(String[] args) {
     Game game = new StubGame2();
-    game = new GameImpl(new SemiCivFactory());
+   // game = new GameImpl(new SemiCivFactory());
 
     DrawingEditor editor =
             new MiniDrawApplication("Move any unit using the mouse",
@@ -73,7 +73,6 @@ class UnitMoveTool extends NullTool {
 
   @Override
   public void mouseDrag(MouseEvent e, int x, int y) {
-    Position position = GfxConstants.getPositionFromXY(x, y);
     boolean isThereAUnit = selectedUnit != null;
     boolean isXWithinWorldBounds = GfxConstants.getPositionFromXY(x, y).getColumn() <= GameConstants.WORLDSIZE && 0 <= GfxConstants.getPositionFromXY(x, y).getColumn();
     boolean isYWithinWorldBounds = GfxConstants.getPositionFromXY(x, y).getRow() <= GameConstants.WORLDSIZE && 0 <= GfxConstants.getPositionFromXY(x, y).getRow();
@@ -89,13 +88,10 @@ class UnitMoveTool extends NullTool {
     to = GfxConstants.getPositionFromXY(x, y);
     boolean isXWithinWorldBounds = GfxConstants.getPositionFromXY(x, y).getColumn() < GameConstants.WORLDSIZE && 0 <= GfxConstants.getPositionFromXY(x, y).getColumn();
     boolean isYWithinWorldBounds = GfxConstants.getPositionFromXY(x, y).getRow() < GameConstants.WORLDSIZE && 0 <= GfxConstants.getPositionFromXY(x, y).getRow();
-    //boolean isDistanceDraggedAllowed = game.moveUnit(from, to);
     if (isXWithinWorldBounds && isYWithinWorldBounds) {
       game.moveUnit(from, to);
       game.setTileFocus(to);
+      tool.mouseUp(e, x, y);
     }
-    currentDrawing.requestUpdate();
-    tool.mouseUp(e, x, y);
-
   }
 }

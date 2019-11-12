@@ -344,10 +344,6 @@ public class GameImpl implements Game {
     concreteObserver.tileFocusChangedAt(position);
   }
 
-  public GameObserver getConcreteObserver() {
-    return concreteObserver;
-  }
-
 
   /**
      * Removes a unit at a certain position from the units map
