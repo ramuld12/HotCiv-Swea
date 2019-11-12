@@ -41,8 +41,6 @@ public class ShowAction {
                     new HotCivFactory4(game));
     editor.open();
     editor.showStatus("Shift-Click on unit to see Game's performAction method being called.");
-
-    // TODO: Replace the setting of the tool with your ActionTool implementation.
     editor.setTool(new actionTool(game,new SelectionTool(editor)));
   }
 
