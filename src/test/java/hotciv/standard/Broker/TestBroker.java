@@ -42,7 +42,7 @@ public class TestBroker {
   }
 
 
-  private class NullObserver implements GameObserver {
+  private static class NullObserver implements GameObserver {
     @Override
     public void worldChangedAt(Position pos) {
 

@@ -1,12 +1,12 @@
 package hotciv.standard.Broker;
 
 import frds.broker.Requestor;
+import frds.broker.ClientProxy;
 import hotciv.framework.*;
 
-public class GameProxy implements Game {
+public class GameProxy implements Game, ClientProxy {
 
   private Requestor requestor;
-  private String gameId = "3";
 
   public GameProxy(Requestor requestor) {
     this.requestor = requestor;
@@ -39,7 +39,8 @@ public class GameProxy implements Game {
 
   @Override
   public int getAge() {
-    return requestor.sendRequestAndAwaitReply(gameId,BrokerConstants.getAgeString,Integer.class);
+    return requestor.sendRequestAndAwaitReply(BrokerConstants.gameId,BrokerConstants.getAgeString,Integer.class);
+
   }
 
   @Override
