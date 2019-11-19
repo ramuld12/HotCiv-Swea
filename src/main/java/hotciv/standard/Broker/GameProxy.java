@@ -39,7 +39,7 @@ public class GameProxy implements Game {
 
   @Override
   public int getAge() {
-    return requestor.sendRequestAndAwaitReply(gameId,"getAge()",Integer.class);
+    return requestor.sendRequestAndAwaitReply(gameId,BrokerConstants.getAgeString,Integer.class);
   }
 
   @Override
