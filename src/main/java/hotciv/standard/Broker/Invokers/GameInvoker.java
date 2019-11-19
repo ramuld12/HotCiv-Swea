@@ -11,8 +11,8 @@ public class GameInvoker implements Invoker {
   private Game servant;
 
   public GameInvoker(Game servant) {
-    this.servant = servant;
     this.gson = new Gson();
+    this.servant = servant;
   }
 
   @Override
