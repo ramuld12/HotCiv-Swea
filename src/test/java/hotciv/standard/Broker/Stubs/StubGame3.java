@@ -2,6 +2,7 @@ package hotciv.standard.Broker.Stubs;
 
 import frds.broker.Servant;
 import hotciv.framework.*;
+import hotciv.standard.Broker.Stubs.StubCity;
 
 public class StubGame3 implements Game, Servant {
 
@@ -54,7 +55,7 @@ public class StubGame3 implements Game, Servant {
 
   @Override
   public void changeProductionInCityAt(Position p, String unitType) {
-
+    StubCity city = new StubCity(playerInTurn);
   }
 
   @Override

@@ -4,10 +4,7 @@ import frds.broker.ClientRequestHandler;
 import frds.broker.Invoker;
 import frds.broker.Requestor;
 import frds.broker.marshall.json.StandardJSONRequestor;
-import hotciv.framework.Game;
-import hotciv.framework.GameObserver;
-import hotciv.framework.Player;
-import hotciv.framework.Position;
+import hotciv.framework.*;
 import hotciv.standard.Broker.Invokers.GameInvoker;
 import hotciv.standard.Broker.LocalMethodClientRequestHandler;
 import hotciv.standard.Broker.Proxies.GameProxy;
@@ -70,6 +67,13 @@ public class TestGameBroker {
     assertThat(game.getPlayerInTurn(), is(Player.BLUE));
     game.endOfTurn();
     assertThat(game.getPlayerInTurn(), is(Player.RED));
+  }
+
+  @Test
+  public void shouldChangeProcutionInCityAt1_1ToArcher() {
+    Position cityPos = new Position(1,1);
+    game.changeProductionInCityAt(cityPos, GameConstants.ARCHER);
+    assertThat(SpyRequester.lastArgument[1], is(GameConstants.ARCHER));
   }
 
 
