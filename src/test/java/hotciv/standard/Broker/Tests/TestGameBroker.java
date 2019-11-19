@@ -1,4 +1,4 @@
-package hotciv.standard.Broker;
+package hotciv.standard.Broker.Tests;
 
 import frds.broker.ClientRequestHandler;
 import frds.broker.Invoker;
@@ -8,15 +8,17 @@ import hotciv.framework.Game;
 import hotciv.framework.GameObserver;
 import hotciv.framework.Player;
 import hotciv.framework.Position;
+import hotciv.standard.Broker.Invokers.GameInvoker;
+import hotciv.standard.Broker.LocalMethodClientRequestHandler;
+import hotciv.standard.Broker.Proxies.GameProxy;
 import hotciv.standard.Broker.Stubs.StubGame3;
-import hotciv.stub.StubGame2;
 import org.junit.*;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.CoreMatchers.is;
 
 
-public class TestBroker {
+public class TestGameBroker {
 
   private Game game;
 
@@ -26,7 +28,7 @@ public class TestBroker {
     GameObserver nullObserver = new NullObserver();
     servant.addObserver(nullObserver);
 
-    Invoker invoker = new HotCivGameInvoker(servant);
+    Invoker invoker = new GameInvoker(servant);
 
     ClientRequestHandler crh = new LocalMethodClientRequestHandler(invoker);
 

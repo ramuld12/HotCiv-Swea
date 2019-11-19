@@ -26,12 +26,12 @@ public class LocalMethodClientRequestHandler implements ClientRequestHandler {
 
   @Override
   public void setServer(String hostname, int port) {
-    // not used (yet)
+    // Not implemented yet
   }
 
   @Override
   public void close() {
-    // not used (yet)
+    // Not implemented yet
   }
 
   public ReplyObject getLastReply() {

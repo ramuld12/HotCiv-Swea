@@ -1,8 +1,9 @@
-package hotciv.standard.Broker;
+package hotciv.standard.Broker.Proxies;
 
 import frds.broker.Requestor;
 import frds.broker.ClientProxy;
 import hotciv.framework.*;
+import hotciv.standard.Broker.BrokerConstants;
 
 public class GameProxy implements Game, ClientProxy {
 

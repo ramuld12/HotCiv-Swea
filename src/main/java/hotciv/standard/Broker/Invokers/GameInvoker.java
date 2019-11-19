@@ -1,15 +1,16 @@
-package hotciv.standard.Broker;
+package hotciv.standard.Broker.Invokers;
 
 import com.google.gson.Gson;
 import frds.broker.Invoker;
 import frds.broker.ReplyObject;
 import hotciv.framework.Game;
+import hotciv.standard.Broker.BrokerConstants;
 
-public class HotCivGameInvoker implements Invoker {
+public class GameInvoker implements Invoker {
   private Gson gson;
   private Game servant;
 
-  public HotCivGameInvoker(Game servant) {
+  public GameInvoker(Game servant) {
     this.servant = servant;
     this.gson = new Gson();
   }
