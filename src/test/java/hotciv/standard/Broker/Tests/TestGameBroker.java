@@ -52,7 +52,7 @@ public class TestGameBroker {
   }
 
   @Test
-  public void shouldBeBlueAsPlayerInTurn() {
+  public void shouldBeRedAsPlayerInTurn() {
     assertThat(game.getPlayerInTurn(), is(Player.RED));
   }
 
@@ -71,7 +71,7 @@ public class TestGameBroker {
   }
 
   @Test
-  public void shouldBeAbleToChangeProdutionInCity() {
+  public void shouldRequestProductionInCity() {
     Position cityPos = new Position(1,2);
     game.changeProductionInCityAt(cityPos, GameConstants.ARCHER);
 
@@ -92,7 +92,21 @@ public class TestGameBroker {
   }
 
   @Test
-  public void shouldBeAbleTo
+  public void shouldRequestPerformUnitAction() {
+    game.performUnitActionAt(new Position(1,5));
+
+    //Variables for testing from the spy
+    Position actionPosition = (Position)requestor.getLastArguments()[0];
+    String operationName = requestor.getLastOperationName();
+    String objectId = requestor.getLastObjectId();
+    Type type = requestor.getLastType();
+
+    //Assertions
+    assertThat(actionPosition, is(new Position(1,5)));
+    assertThat(operationName, is(BrokerConstants.unitAction));
+    assertThat(objectId, is(BrokerConstants.gameId));
+    assertThat(type.toString(), is("void"));
+  }
 
 
 

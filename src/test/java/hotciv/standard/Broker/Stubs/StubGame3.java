@@ -5,13 +5,9 @@ import hotciv.framework.*;
 
 public class StubGame3 implements Game, Servant {
 
-  private Player playerInTurn;
-  private String cityProduction;
-
-  public StubGame3() {
-    playerInTurn = Player.RED;
-    cityProduction = GameConstants.LEGION;
-  }
+  private Player playerInTurn = Player.RED;
+  private String cityProduction = GameConstants.LEGION;
+  private Position actionPosition = new Position(1,1);
 
   @Override
   public Tile getTileAt(Position p) {
@@ -65,7 +61,7 @@ public class StubGame3 implements Game, Servant {
 
   @Override
   public void performUnitActionAt(Position p) {
-
+    actionPosition = p;
   }
 
   @Override
@@ -76,9 +72,5 @@ public class StubGame3 implements Game, Servant {
   @Override
   public void setTileFocus(Position position) {
 
-  }
-
-  public String getCityProduction () {
-    return cityProduction;
   }
 }

@@ -48,6 +48,11 @@ public class GameInvoker implements Invoker {
         servant.changeProductionInCityAt(cityPositition, unitType);
         return new ReplyObject(BrokerConstants.ok_status, "");
       }
+      case BrokerConstants.unitAction: {
+        Position actionPosition = gson.fromJson(jsonArray.get(0), Position.class);
+        servant.performUnitActionAt(actionPosition);
+        return new ReplyObject(BrokerConstants.ok_status, "");
+      }
     }
     return null;
   }

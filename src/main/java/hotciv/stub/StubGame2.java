@@ -136,7 +136,6 @@ public class StubGame2 implements Game {
     }
   }
 
-  // TODO: Add more stub behaviour to test MiniDraw updating
   public City getCityAt( Position p ) {
     if (p.equals(pos_red_city)) {
       return red_city;

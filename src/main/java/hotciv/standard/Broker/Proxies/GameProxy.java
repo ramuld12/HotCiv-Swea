@@ -64,7 +64,7 @@ public class GameProxy implements Game, ClientProxy {
 
   @Override//
   public void performUnitActionAt(Position p) {
-
+    requestor.sendRequestAndAwaitReply(BrokerConstants.gameId, BrokerConstants.unitAction, void.class, p);
   }
 
   @Override
