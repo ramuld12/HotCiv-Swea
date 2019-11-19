@@ -4,6 +4,8 @@ import hotciv.framework.City;
 import hotciv.framework.Player;
 
 public class StubCity implements City {
+  private String prod;
+
   @Override
   public Player getOwner() {
     return null;
@@ -21,11 +23,16 @@ public class StubCity implements City {
 
   @Override
   public String getProduction() {
-    return null;
+    return prod;
   }
 
   @Override
   public String getWorkforceFocus() {
     return null;
   }
+
+  public void changeProduction(String unitType){
+    prod = unitType;
+  }
+
 }

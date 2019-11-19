@@ -6,8 +6,8 @@ import hotciv.framework.*;
 import hotciv.standard.Broker.BrokerConstants;
 
 public class GameProxy implements Game, ClientProxy {
-
   private Requestor requestor;
+
   public GameProxy(Requestor requestor) {
     this.requestor = requestor;
   }
@@ -42,12 +42,12 @@ public class GameProxy implements Game, ClientProxy {
     return requestor.sendRequestAndAwaitReply(BrokerConstants.gameId,BrokerConstants.getAgeString,Integer.class);
   }
 
-  @Override //
+  @Override
   public boolean moveUnit(Position from, Position to) {
     return requestor.sendRequestAndAwaitReply(BrokerConstants.gameId, BrokerConstants.moveUnit_action, Boolean.class, from, to);
   }
 
-  @Override //
+  @Override
   public void endOfTurn() {
     requestor.sendRequestAndAwaitReply(BrokerConstants.gameId, BrokerConstants.endTurn_action, void.class);
   }
@@ -57,9 +57,9 @@ public class GameProxy implements Game, ClientProxy {
     //Never used
   }
 
-  @Override //
+  @Override
   public void changeProductionInCityAt(Position p, String unitType) {
-    requestor.sendRequestAndAwaitReply(BrokerConstants.gameId, BrokerConstants.changeCityProduction, Void.class, p, unitType);
+    requestor.sendRequestAndAwaitReply(BrokerConstants.gameId, BrokerConstants.changeCityProduction, void.class, p, unitType);
   }
 
   @Override//

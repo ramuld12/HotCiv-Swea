@@ -5,23 +5,24 @@ import frds.broker.Invoker;
 import frds.broker.Requestor;
 import frds.broker.marshall.json.StandardJSONRequestor;
 import hotciv.framework.*;
+import hotciv.standard.Broker.BrokerConstants;
 import hotciv.standard.Broker.Invokers.GameInvoker;
 import hotciv.standard.Broker.LocalMethodClientRequestHandler;
 import hotciv.standard.Broker.Proxies.GameProxy;
 import hotciv.standard.Broker.SpyRequester;
 import hotciv.standard.Broker.Stubs.StubGame3;
-import org.apache.http.annotation.ThreadSafe;
 import org.junit.*;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertTrue;
+import java.lang.reflect.Type;
+
+import static org.junit.Assert.*;
+import static org.hamcrest.CoreMatchers.*;
 
 
 public class TestGameBroker {
 
   private Game game;
-  private SpyRequester SpyRequester;
+  private SpyRequester requestor;
 
   @Before
   public void setUp() {
@@ -33,11 +34,11 @@ public class TestGameBroker {
 
     ClientRequestHandler crh = new LocalMethodClientRequestHandler(invoker);
 
-    Requestor requestor = new StandardJSONRequestor(crh);
+    SpyRequester requestor = new SpyRequester(crh);
 
     game = new GameProxy(requestor);
     game.addObserver(nullObserver);
-    SpyRequester = new SpyRequester();
+    this.requestor = requestor;
   }
 
   @Test
@@ -70,11 +71,28 @@ public class TestGameBroker {
   }
 
   @Test
-  public void shouldChangeProcutionInCityAt1_1ToArcher() {
-    Position cityPos = new Position(1,1);
+  public void shouldBeAbleToChangeProdutionInCity() {
+    Position cityPos = new Position(1,2);
     game.changeProductionInCityAt(cityPos, GameConstants.ARCHER);
-    assertThat(SpyRequester.lastArgument[1], is(GameConstants.ARCHER));
+
+    //Variables for testing from the spy
+    Position cityPosSpy = (Position)requestor.getLastArguments()[0];
+    String newUnitType = (String)requestor.getLastArguments()[1];
+    String operationName = requestor.getLastOperationName();
+    String objectId = requestor.getLastObjectId();
+    Type type = requestor.getLastType();
+    System.out.println(type);
+
+    //Assertions
+    assertThat(cityPosSpy, is(cityPos));
+    assertThat(newUnitType, is(GameConstants.ARCHER));
+    assertThat(operationName, is(BrokerConstants.changeCityProduction));
+    assertThat(objectId, is(BrokerConstants.gameId));
+    assertThat(type.toString(), is("void"));
   }
+
+  @Test
+  public void shouldBeAbleTo
 
 
 

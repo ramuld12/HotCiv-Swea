@@ -2,11 +2,16 @@ package hotciv.standard.Broker.Stubs;
 
 import frds.broker.Servant;
 import hotciv.framework.*;
-import hotciv.standard.Broker.Stubs.StubCity;
 
 public class StubGame3 implements Game, Servant {
 
-  private Player playerInTurn = Player.RED;
+  private Player playerInTurn;
+  private String cityProduction;
+
+  public StubGame3() {
+    playerInTurn = Player.RED;
+    cityProduction = GameConstants.LEGION;
+  }
 
   @Override
   public Tile getTileAt(Position p) {
@@ -55,7 +60,7 @@ public class StubGame3 implements Game, Servant {
 
   @Override
   public void changeProductionInCityAt(Position p, String unitType) {
-    StubCity city = new StubCity(playerInTurn);
+    cityProduction = unitType;
   }
 
   @Override
@@ -71,5 +76,9 @@ public class StubGame3 implements Game, Servant {
   @Override
   public void setTileFocus(Position position) {
 
+  }
+
+  public String getCityProduction () {
+    return cityProduction;
   }
 }
