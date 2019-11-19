@@ -245,7 +245,6 @@ public class GameImpl implements Game {
   }
 
   public void endOfTurn() {
-    concreteObservers.forEach(c -> c.turnEnds(playerInTurn,gameAge));
     boolean isPlayerInTurnRed = playerInTurn.equals(Player.RED);
     if (isPlayerInTurnRed) {
       playerInTurn = Player.BLUE;
@@ -349,10 +348,9 @@ public class GameImpl implements Game {
     concreteObservers.forEach(c -> c.tileFocusChangedAt(position));
   }
 
-  public GameObserver getFirstConcreteObserver() {
-    return concreteObservers.get(0);
+  public List<GameObserver> getObservers(){
+    return concreteObservers;
   }
-
 
   /**
      * Removes a unit at a certain position from the units map

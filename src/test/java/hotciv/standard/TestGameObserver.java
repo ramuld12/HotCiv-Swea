@@ -30,7 +30,7 @@ public class TestGameObserver {
     util = new TestUtility(game);
     cities = game.getCities();
     game.addObserver(new GameObserverImplTest());
-    observer = (GameObserverImplTest)game.getFirstConcreteObserver();
+    observer = (GameObserverImplTest)game.getObservers().get(game.getObservers().size()-1);
   }
 
   @Test
