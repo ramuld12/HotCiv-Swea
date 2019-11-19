@@ -11,6 +11,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
@@ -29,7 +30,7 @@ public class TestGameObserver {
     util = new TestUtility(game);
     cities = game.getCities();
     game.addObserver(new GameObserverImplTest());
-    observer = (GameObserverImplTest)game.getConcreteObserver();
+    observer = (GameObserverImplTest)game.getFirstConcreteObserver();
   }
 
   @Test
