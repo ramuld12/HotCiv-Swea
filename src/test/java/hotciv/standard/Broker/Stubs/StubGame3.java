@@ -5,6 +5,8 @@ import hotciv.framework.*;
 
 public class StubGame3 implements Game, Servant {
 
+  private Player playerInTurn = Player.RED;
+
   @Override
   public Tile getTileAt(Position p) {
     return null;
@@ -22,12 +24,12 @@ public class StubGame3 implements Game, Servant {
 
   @Override
   public Player getPlayerInTurn() {
-    return null;
+    return playerInTurn;
   }
 
   @Override
   public Player getWinner() {
-    return null;
+    return Player.RED;
   }
 
   @Override
@@ -37,12 +39,12 @@ public class StubGame3 implements Game, Servant {
 
   @Override
   public boolean moveUnit(Position from, Position to) {
-    return false;
+    return true;
   }
 
   @Override
   public void endOfTurn() {
-
+    playerInTurn = (playerInTurn == Player.RED) ? Player.BLUE : Player.RED;
   }
 
   @Override

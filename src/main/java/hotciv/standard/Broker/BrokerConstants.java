@@ -7,8 +7,11 @@ public class BrokerConstants {
   public static final String gameId = "3";
   public static final String notOk_status = "DillerDaller";
 
-  //Methods
+  //Methods for game
   public static final String getAgeString = "getAge()";
-
-
+  public static final String getPlayerInTurnString = "getPlayerInTurn()";
+  public static final String getWinnerString = "getWinner()";
+  public static final String moveUnit_action = "moveUnit()";
+  public static final String changeCityProduction = "changeProductionInCityAt()";
+  public static final String endTurn_action = "endOfTurn()";
 }

@@ -11,16 +11,20 @@ import hotciv.framework.Position;
 import hotciv.standard.Broker.Invokers.GameInvoker;
 import hotciv.standard.Broker.LocalMethodClientRequestHandler;
 import hotciv.standard.Broker.Proxies.GameProxy;
+import hotciv.standard.Broker.SpyRequester;
 import hotciv.standard.Broker.Stubs.StubGame3;
+import org.apache.http.annotation.ThreadSafe;
 import org.junit.*;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertTrue;
 
 
 public class TestGameBroker {
 
   private Game game;
+  private SpyRequester SpyRequester;
 
   @Before
   public void setUp() {
@@ -36,12 +40,39 @@ public class TestGameBroker {
 
     game = new GameProxy(requestor);
     game.addObserver(nullObserver);
+    SpyRequester = new SpyRequester();
   }
 
   @Test
   public void gameAgeShouldBe42(){
     assertThat(game.getAge(), is(42));
   }
+
+  @Test
+  public void shouldBeRedAsWinner() {
+    assertThat(game.getWinner(), is(Player.RED));
+  }
+
+  @Test
+  public void shouldBeBlueAsPlayerInTurn() {
+    assertThat(game.getPlayerInTurn(), is(Player.RED));
+  }
+
+  @Test
+  public void shouldBeAllowedToMoveUnitFrom1_1To1_2() {
+    assertTrue(game.moveUnit(new Position(1,1), new Position(1,2)));
+  }
+
+  @Test
+  public void playerInTurnShouldAlternateWhenEndingTurn() {
+    assertThat(game.getPlayerInTurn(), is(Player.RED));
+    game.endOfTurn();
+    assertThat(game.getPlayerInTurn(), is(Player.BLUE));
+    game.endOfTurn();
+    assertThat(game.getPlayerInTurn(), is(Player.RED));
+  }
+
+
 
 
   private static class NullObserver implements GameObserver {

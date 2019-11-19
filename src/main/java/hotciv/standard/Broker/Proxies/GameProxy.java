@@ -8,7 +8,6 @@ import hotciv.standard.Broker.BrokerConstants;
 public class GameProxy implements Game, ClientProxy {
 
   private Requestor requestor;
-
   public GameProxy(Requestor requestor) {
     this.requestor = requestor;
   }
@@ -30,38 +29,37 @@ public class GameProxy implements Game, ClientProxy {
 
   @Override
   public Player getPlayerInTurn() {
-    return null;
+    return requestor.sendRequestAndAwaitReply(BrokerConstants.gameId,BrokerConstants.getPlayerInTurnString,Player.class);
   }
 
   @Override
   public Player getWinner() {
-    return null;
+    return requestor.sendRequestAndAwaitReply(BrokerConstants.gameId,BrokerConstants.getWinnerString,Player.class);
   }
 
   @Override
   public int getAge() {
     return requestor.sendRequestAndAwaitReply(BrokerConstants.gameId,BrokerConstants.getAgeString,Integer.class);
-
   }
 
-  @Override
+  @Override //
   public boolean moveUnit(Position from, Position to) {
-    return false;
+    return requestor.sendRequestAndAwaitReply(BrokerConstants.gameId, BrokerConstants.moveUnit_action, Boolean.class, from, to);
   }
 
-  @Override
+  @Override //
   public void endOfTurn() {
-
+    requestor.sendRequestAndAwaitReply(BrokerConstants.gameId, BrokerConstants.endTurn_action, void.class);
   }
 
-  @Override
+  @Override //
   public void changeWorkForceFocusInCityAt(Position p, String balance) {
-
+    //Never used
   }
 
-  @Override
+  @Override //
   public void changeProductionInCityAt(Position p, String unitType) {
-
+    requestor.sendRequestAndAwaitReply(BrokerConstants.gameId, BrokerConstants.changeCityProduction, Void.class, p, unitType);
   }
 
   @Override
