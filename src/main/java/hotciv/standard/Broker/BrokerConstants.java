@@ -17,9 +17,6 @@ public class BrokerConstants {
   public static final String changeCityProduction = "changeProductionInCityAt()";
   public static final String endTurn_action = "endOfTurn()";
 
-  //Methods for Game
-  public static final String getAgeString = "getAge()";
-
   // Methods for City
   public static final String getOwnerString = "getOwner()";
   public static final String getSizeString = "getSize()";
