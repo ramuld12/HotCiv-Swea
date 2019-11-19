@@ -34,7 +34,6 @@ public class TestBroker {
 
     game = new GameProxy(requestor);
     game.addObserver(nullObserver);
-
   }
 
   @Test

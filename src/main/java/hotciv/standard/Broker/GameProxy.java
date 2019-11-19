@@ -6,6 +6,7 @@ import hotciv.framework.*;
 public class GameProxy implements Game {
 
   private Requestor requestor;
+  private int gameId = 3;
 
   public GameProxy(Requestor requestor) {
     this.requestor = requestor;
@@ -38,7 +39,7 @@ public class GameProxy implements Game {
 
   @Override
   public int getAge() {
-    return 0;
+    return requestor.sendRequestAndAwaitReply(gameId,);
   }
 
   @Override
