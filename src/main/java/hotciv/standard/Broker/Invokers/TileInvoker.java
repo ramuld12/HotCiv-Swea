@@ -1,4 +1,33 @@
 package hotciv.standard.Broker.Invokers;
 
-public class TileInvoker {
+import com.google.gson.Gson;
+import com.sun.corba.se.pept.broker.Broker;
+import frds.broker.Invoker;
+import frds.broker.ReplyObject;
+import hotciv.framework.GameConstants;
+import hotciv.framework.Tile;
+import hotciv.standard.Broker.BrokerConstants;
+
+public class TileInvoker implements Invoker {
+  private Tile tileStub;
+  private Gson gson;
+
+  public TileInvoker(Tile servant) {
+    this.gson = new Gson();
+    tileStub = servant;
+  }
+
+  @Override
+  public ReplyObject handleRequest(String objectId, String operationName, String payload) {
+    Tile tile = lookUpTile(objectId);
+
+    if (operationName.equals(BrokerConstants.tileString)) {
+      return new ReplyObject(BrokerConstants.ok_status, gson.toJson(tile.getTypeString()));
+    }
+    return null;
+  }
+
+  private Tile lookUpTile(String objectId) {
+    return tileStub;
+  }
 }

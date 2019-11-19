@@ -1,9 +1,9 @@
-package hotciv.standard.Broker.Stubs;
+package hotciv.standard.Broker.BrokerStubs;
 
 import frds.broker.Servant;
 import hotciv.framework.*;
 
-public class StubGame3 implements Game, Servant {
+public class StubGame3Broker implements Game, Servant {
 
   private Player playerInTurn = Player.RED;
   private String cityProduction = GameConstants.LEGION;

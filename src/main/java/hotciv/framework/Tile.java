@@ -41,5 +41,5 @@ public interface Tile {
    */
   public String getTypeString();
 
-  Object isValidMovementTileType(UnitImpl unit);
+
 }

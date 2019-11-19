@@ -1,10 +1,11 @@
-package hotciv.standard.Broker.Stubs;
+package hotciv.standard.Broker.BrokerStubs;
 
+import frds.broker.Servant;
 import hotciv.framework.City;
+import hotciv.framework.GameConstants;
 import hotciv.framework.Player;
 
-public class StubCity implements City {
-  private String prod;
+public class StubCityBroker implements City, Servant {
 
   @Override
   public Player getOwner() {
@@ -23,16 +24,12 @@ public class StubCity implements City {
 
   @Override
   public String getProduction() {
-    return prod;
+    return GameConstants.ARCHER;
   }
 
   @Override
   public String getWorkforceFocus() {
     return null;
-  }
-
-  public void changeProduction(String unitType){
-    prod = unitType;
   }
 
 }

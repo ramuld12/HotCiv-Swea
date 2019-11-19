@@ -32,13 +32,12 @@ import hotciv.standard.UnitImpl;
 
 public class StubTile implements Tile {
   private String type;
+
   public StubTile(String type) {
     this.type = type;
   }
-  public String getTypeString() { return type; }
 
-  @Override
-  public Object isValidMovementTileType(UnitImpl unit) {
-    return null;
+  public String getTypeString() {
+    return type;
   }
 }

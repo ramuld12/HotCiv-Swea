@@ -1,9 +1,10 @@
-package hotciv.standard.Broker.Stubs;
+package hotciv.standard.Broker.BrokerStubs;
 
+import frds.broker.Servant;
 import hotciv.framework.Player;
 import hotciv.framework.Unit;
 
-public class StubUnit implements Unit {
+public class StubUnitBroker implements Unit, Servant {
   @Override
   public String getTypeString() {
     return null;

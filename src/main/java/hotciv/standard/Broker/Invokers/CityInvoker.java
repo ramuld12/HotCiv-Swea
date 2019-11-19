@@ -4,18 +4,14 @@ import com.google.gson.Gson;
 import frds.broker.Invoker;
 import frds.broker.ReplyObject;
 import hotciv.framework.City;
-import hotciv.framework.Game;
-import hotciv.framework.Player;
 import hotciv.standard.Broker.BrokerConstants;
-import hotciv.stub.CityStub;
-
 public class CityInvoker implements Invoker {
   private Gson gson;
   private City cityStub;
 
-  public CityInvoker(){
+  public CityInvoker(City servant){
     gson = new Gson();
-    cityStub = new CityStub(Player.RED);
+    cityStub = servant;
   }
 
   @Override
