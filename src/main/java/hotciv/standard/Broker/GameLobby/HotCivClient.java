@@ -16,6 +16,7 @@ public class HotCivClient {
   private String name;
   private String hostName;
   private String objectId;
+  private Game game;
 
   public static void main(String[] args) throws IOException {
     new HotCivClient(args);
@@ -23,13 +24,12 @@ public class HotCivClient {
 
   public HotCivClient(String[] args) {
     parseCommandlineParameters(args);
+    System.out.println("LobbyClient: Asked to do operation "+operation+" for player "+name);
+    ClientRequestHandler clientRequestHandler
+          = new SocketClientRequestHandler("localhost", BrokerConstants.serverPort);
+    Requestor requestor = new StandardJSONRequestor(clientRequestHandler);
 
-  System.out.println("LobbyClient: Asked to do operation "+operation+" for player "+name);
-  ClientRequestHandler clientRequestHandler
-          = new SocketClientRequestHandler(hostName, BrokerConstants.serverPort);
-  Requestor requestor = new StandardJSONRequestor(clientRequestHandler);
-
-  Game lobby = new GameProxy(requestor);
+  game = new GameProxy(requestor);
   }
 
   private void parseCommandlineParameters(String[] args) {

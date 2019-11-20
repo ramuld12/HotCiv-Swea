@@ -61,7 +61,6 @@ task hotCivStoryTest(type: JavaExec){
 
   classpath sourceSets.test.runtimeClasspath
   main = 'hotciv.standard.Broker.GameLobby.HotCivStoryTest'
-  args host
 }
 
 // === Demonstrate specialized MiniDraw implementations

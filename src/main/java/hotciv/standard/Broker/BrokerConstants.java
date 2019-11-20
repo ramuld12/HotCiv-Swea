@@ -39,5 +39,5 @@ public class BrokerConstants {
   public static final String isUnitMoveable = "isMoveable";
 
   //Server
-  public static final int serverPort = 0;
+  public static final int serverPort = 37123;
 }

@@ -1,15 +1,22 @@
 package hotciv.standard.Broker.GameLobby;
 
+import frds.broker.ClientRequestHandler;
+import frds.broker.Requestor;
+import frds.broker.ipc.socket.SocketClientRequestHandler;
+import frds.broker.marshall.json.StandardJSONRequestor;
 import hotciv.framework.Game;
 import hotciv.framework.Position;
+import hotciv.standard.Broker.BrokerConstants;
+import hotciv.standard.Broker.Proxies.GameProxy;
 
 public class HotCivStoryTest {
 
-  private static HotCivManualClientTest client;
+  public static void main(String[] args){
+    new HotCivStoryTest(args);
+  }
 
-  public static void main(String[] args) {
-    new HotCivServer();
-    client = new HotCivManualClientTest(args[0]);
+  private HotCivStoryTest(String[] args){
+    HotCivManualClientTest client = new HotCivManualClientTest("localhost");
     TestSimpleMethods(client.getGame());
   }
 
