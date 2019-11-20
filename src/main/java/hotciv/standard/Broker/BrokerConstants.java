@@ -37,4 +37,7 @@ public class BrokerConstants {
   public static final String getDefensiveStrengthString = "getDefensiveStrength";
   public static final String getAttackingStrengthString = "getAttackingStrength";
   public static final String isUnitMoveable = "isMoveable";
+
+  //Server
+  public static final int serverPort = 0;
 }
