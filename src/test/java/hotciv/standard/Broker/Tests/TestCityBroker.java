@@ -10,6 +10,8 @@ import hotciv.standard.Broker.LocalMethodClientRequestHandler;
 import hotciv.standard.Broker.Proxies.CityProxy;
 import hotciv.standard.Broker.BrokerStubs.StubCityBroker;
 import org.junit.*;
+import static org.junit.Assert.*;
+import static org.hamcrest.CoreMatchers.*;
 
 public class TestCityBroker {
   private City city;
@@ -25,5 +27,25 @@ public class TestCityBroker {
     Requestor requestor = new StandardJSONRequestor(crh);
 
     city = new CityProxy(requestor);
+  }
+
+  @Test
+  public void shouldReturnPlayerRed(){
+    assertThat(city.getOwner(), is(Player.RED));
+  }
+
+  @Test
+  public void shouldReturn42(){
+    assertThat(city.getSize(), is(42));
+  }
+
+  @Test
+  public void shouldReturn100() {
+    assertThat(city.getTreasury(),is(100));
+  }
+
+  @Test
+  public void shouldReturnArcherString(){
+    assertThat(city.getProduction(), is(GameConstants.ARCHER));
   }
 }
