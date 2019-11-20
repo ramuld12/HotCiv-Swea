@@ -14,7 +14,6 @@ public class UnitInvoker implements Invoker {
     unitStub = servant;
   }
 
-
   @Override
   public ReplyObject handleRequest(String objectId, String operationName, String payload) {
     Unit unit = lookUpUnit(objectId);
