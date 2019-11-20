@@ -3,6 +3,7 @@ package hotciv.standard.Broker.Proxies;
 import frds.broker.Requestor;
 import hotciv.framework.Player;
 import hotciv.framework.Unit;
+import hotciv.standard.Broker.BrokerConstants;
 
 public class UnitProxy implements Unit {
   private Requestor requestor;
@@ -13,27 +14,27 @@ public class UnitProxy implements Unit {
 
   @Override
   public String getTypeString() {
-    return null;
+    return requestor.sendRequestAndAwaitReply(BrokerConstants.unitId,BrokerConstants.getTypeStringString, String.class);
   }
 
   @Override
   public Player getOwner() {
-    return null;
+    return requestor.sendRequestAndAwaitReply(BrokerConstants.unitId,BrokerConstants.getOwnerString, Player.class);
   }
 
   @Override
   public int getMoveCount() {
-    return 0;
+    return requestor.sendRequestAndAwaitReply(BrokerConstants.unitId,BrokerConstants.getMoveCountString, Integer.class);
   }
 
   @Override
   public int getDefensiveStrength() {
-    return 0;
+    return requestor.sendRequestAndAwaitReply(BrokerConstants.unitId,BrokerConstants.getDefensiveStrengthString, Integer.class);
   }
 
   @Override
   public int getAttackingStrength() {
-    return 0;
+    return requestor.sendRequestAndAwaitReply(BrokerConstants.unitId,BrokerConstants.getAttackingStrengthString, Integer.class);
   }
 
   @Override
