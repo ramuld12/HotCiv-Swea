@@ -45,6 +45,16 @@ dependencies {
 // === Execution tasks - for running the various integration tests
 //     for manual test-driving the MiniDraw framework customization.
 
+// === Distributing HotCiv-executing targets
+
+task hotCivServer(type: JavaExec){
+  group 'SWEA Distribution'
+  description 'Run HotCiv server (Socket)'
+
+  classpath sourceSets.test.runtimeClasspath
+  main = 'hotciv.standard.broker.GameLobby.HotCivServer'
+}
+
 // === Demonstrate specialized MiniDraw implementations
 
 task show(type: JavaExec) {

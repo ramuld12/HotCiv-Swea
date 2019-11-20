@@ -23,13 +23,10 @@ public class HotCivClient {
 
   public HotCivClient(String[] args) {
     parseCommandlineParameters(args);
-
-
     System.out.println("LobbyClient: Asked to do operation " + operation + " for player " + name);
     ClientRequestHandler clientRequestHandler
             = new SocketClientRequestHandler(hostName, BrokerConstants.serverPort);
     Requestor requestor = new StandardJSONRequestor(clientRequestHandler);
-
     Game lobby = new GameProxy(requestor);
   }
 
