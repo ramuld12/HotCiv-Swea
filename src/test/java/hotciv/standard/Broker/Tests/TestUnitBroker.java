@@ -10,9 +10,11 @@ import hotciv.standard.Broker.LocalMethodClientRequestHandler;
 import hotciv.standard.Broker.Proxies.UnitProxy;
 import hotciv.standard.Broker.BrokerStubs.StubUnitBroker;
 import org.junit.*;
+import static org.junit.Assert.*;
+import static org.hamcrest.CoreMatchers.*;
 
 public class TestUnitBroker {
-  private Unit Unit;
+  private Unit unit;
 
   @Before
   public void setUp() {
@@ -24,6 +26,36 @@ public class TestUnitBroker {
 
     Requestor requestor = new StandardJSONRequestor(crh);
 
-    Unit = new UnitProxy(requestor);
+    unit = new UnitProxy(requestor);
+  }
+
+  @Test
+  public void shouldReturnArcher(){
+    assertThat(unit.getTypeString(), is(GameConstants.ARCHER));
+  }
+
+  @Test
+  public void shouldReturnRedPlayer(){
+    assertThat(unit.getOwner(), is(Player.RED));
+  }
+
+  @Test
+  public void shouldReturn42(){
+    assertThat(unit.getMoveCount(), is(42));
+  }
+
+  @Test
+  public void shouldReturnDefence10(){
+    assertThat(unit.getDefensiveStrength(), is(10));
+  }
+
+  @Test
+  public void shouldReturnAttack10(){
+    assertThat(unit.getAttackingStrength(), is(10));
+  }
+
+  @Test
+  public void shouldReturn10(){
+    assertFalse(unit.isMoveable());
   }
 }

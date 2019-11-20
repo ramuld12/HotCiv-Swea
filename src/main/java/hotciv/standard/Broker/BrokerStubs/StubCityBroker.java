@@ -9,17 +9,17 @@ public class StubCityBroker implements City, Servant {
 
   @Override
   public Player getOwner() {
-    return null;
+    return Player.RED;
   }
 
   @Override
   public int getSize() {
-    return 0;
+    return 42;
   }
 
   @Override
   public int getTreasury() {
-    return 0;
+    return 100;
   }
 
   @Override
