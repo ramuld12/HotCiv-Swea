@@ -5,12 +5,15 @@ import hotciv.framework.Position;
 
 public class HotCivStoryTest {
 
+  private static HotCivManualClientTest client;
+
   public static void main(String[] args) {
     new HotCivServer();
-    new HotCivClient(args);
+    client = new HotCivManualClientTest(args[0]);
+    TestSimpleMethods(client.getGame());
   }
 
-  private void TestSimpleMethods(Game game) {
+  private static void TestSimpleMethods(Game game) {
     System.out.println("===Test of simple methods===");
     System.out.println("GameAge is: " + game.getAge());
     System.out.println("Game winner is: " + game.getWinner());

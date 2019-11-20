@@ -24,7 +24,6 @@ public class HotCivClient {
   public HotCivClient(String[] args) {
     parseCommandlineParameters(args);
 
-
   System.out.println("LobbyClient: Asked to do operation "+operation+" for player "+name);
   ClientRequestHandler clientRequestHandler
           = new SocketClientRequestHandler(hostName, BrokerConstants.serverPort);

@@ -10,6 +10,9 @@ import hotciv.standard.Broker.Proxies.GameProxy;
 
 public class HotCivManualClientTest{
 
+
+  private Game game;
+
   public static void main(String[] args) throws Exception {
     new HotCivManualClientTest(args[0]);
   }
@@ -22,6 +25,9 @@ public class HotCivManualClientTest{
     clientRequestHandler.setServer(hostName, 0);
     Requestor requestor = new StandardJSONRequestor(clientRequestHandler);
 
-    Game lobby = new GameProxy(requestor);
+    game = new GameProxy(requestor);
+  }
+  public Game getGame() {
+    return game;
   }
 }
