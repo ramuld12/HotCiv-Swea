@@ -36,4 +36,5 @@ public class BrokerConstants {
   public static final String getMoveCountString = "getMoveCount";
   public static final String getDefensiveStrengthString = "getDefensiveStrength";
   public static final String getAttackingStrengthString = "getAttackingStrength";
+  public static final String isUnitMoveable = "isMoveable";
 }

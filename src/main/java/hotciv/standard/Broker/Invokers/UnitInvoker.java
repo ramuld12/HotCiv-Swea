@@ -1,7 +1,6 @@
 package hotciv.standard.Broker.Invokers;
 
 import com.google.gson.Gson;
-import com.sun.corba.se.pept.broker.Broker;
 import frds.broker.Invoker;
 import frds.broker.ReplyObject;
 import hotciv.framework.Unit;
@@ -40,6 +39,9 @@ public class UnitInvoker implements Invoker {
 
       case BrokerConstants.getAttackingStrengthString : {
         return new ReplyObject(BrokerConstants.ok_status,gson.toJson(unit.getAttackingStrength()));
+      }
+      case BrokerConstants.isUnitMoveable: {
+        return new ReplyObject(BrokerConstants.ok_status, gson.toJson(unit.isMoveable()));
       }
     }
     return null;
