@@ -7,6 +7,7 @@ public class BrokerConstants {
   public static final String gameId = "3";
   public static final String cityId = "4";
   public static final String tileId = "57";
+  public static final String unitId = "55";
 
   public static final String notOk_status = "DillerDaller";
 
@@ -30,4 +31,9 @@ public class BrokerConstants {
   //Methods for Tile
   public static final String tileString = "getTileString";
 
+  // Methods for unit
+  public static final String getTypeStringString = "getTypeStringString";
+  public static final String getMoveCountString = "getMoveCount";
+  public static final String getDefensiveStrengthString = "getDefensiveStrength";
+  public static final String getAttackingStrengthString = "getAttackingStrength";
 }
