@@ -52,7 +52,16 @@ task hotCivServer(type: JavaExec){
   description 'Run HotCiv server (Socket)'
 
   classpath sourceSets.test.runtimeClasspath
-  main = 'hotciv.standard.broker.GameLobby.HotCivServer'
+  main = 'hotciv.standard.Broker.GameLobby.HotCivServer'
+}
+
+task hotCivStoryTest(type: JavaExec){
+  group 'SWEA Distribution'
+  description 'Run a hotciv Story as manuel test client (Socket)'
+
+  classpath sourceSets.test.runtimeClasspath
+  main = 'hotciv.standard.Broker.GameLobby.HotCivStoryTest'
+  args = host
 }
 
 // === Demonstrate specialized MiniDraw implementations
