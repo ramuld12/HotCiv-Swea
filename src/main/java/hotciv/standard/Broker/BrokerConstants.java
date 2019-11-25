@@ -40,4 +40,7 @@ public class BrokerConstants {
 
   //Server
   public static final int serverPort = 37123;
+
+  //GameLobby
+  public static final String GAMELOBBY_CREATE_GAME_METHOD = "createGame";
 }
