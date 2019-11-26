@@ -2,6 +2,7 @@ package hotciv.standard.Broker.Invokers;
 
 import frds.broker.Invoker;
 import frds.broker.ReplyObject;
+import hotciv.framework.City;
 import hotciv.framework.Game;
 import hotciv.framework.Unit;
 import hotciv.standard.Broker.BrokerConstants;
@@ -26,10 +27,10 @@ public class RootInvoker implements Invoker {
       String type = operationName.substring(0,3);
 
       switch (type) {
-        case BrokerConstants.GAME_TYPE : new GameInvoker(servant,nameService);
-        case BrokerConstants.CITY_TYPE : new CityInvoker(servant, nameService);
-        case BrokerConstants.UNIT_TYPE : new UnitInvoker(servant, nameService);
-        case BrokerConstants.TILE_TYPE : new TileInvoker(servant, nameService);
+        case BrokerConstants.GAME_TYPE : new GameInvoker(servant,nameService).handleRequest(objectId,operationName,payload);
+        case BrokerConstants.CITY_TYPE : new CityInvoker(nameService).handleRequest(objectId,operationName,payload);
+        case BrokerConstants.UNIT_TYPE : new UnitInvoker(nameService);
+        case BrokerConstants.TILE_TYPE : new TileInvoker(nameService);
     }
     return null;
   }
