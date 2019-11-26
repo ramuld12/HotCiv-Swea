@@ -6,25 +6,33 @@ import hotciv.framework.*;
 import hotciv.standard.Broker.BrokerConstants;
 
 public class GameProxy implements Game, ClientProxy {
+  private final String id;
   private Requestor requestor;
 
-  public GameProxy(Requestor requestor) {
+  public GameProxy(String id, Requestor requestor) {
     this.requestor = requestor;
+    this.id = id;
   }
 
   @Override
   public Tile getTileAt(Position p) {
-    return null;
+    String id = requestor.sendRequestAndAwaitReply(
+            "none", BrokerConstants.GAME_GET_TILE_METHOD, String.class, p);
+    return new TileProxy(id, requestor);
   }
 
   @Override
   public Unit getUnitAt(Position p) {
-    return null;
+    String id = requestor.sendRequestAndAwaitReply(
+            "none", BrokerConstants.GAME_GET_UNIT_METHOD, String.class, p);
+    return new UnitProxy(id, requestor);
   }
 
   @Override
   public City getCityAt(Position p) {
-    return null;
+    String id = requestor.sendRequestAndAwaitReply(
+            "none", BrokerConstants.GAME_GET_CITY_METHOD, String.class, p);
+    return new CityProxy(id, requestor);
   }
 
   @Override

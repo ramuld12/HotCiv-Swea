@@ -7,9 +7,13 @@ import hotciv.standard.Broker.BrokerConstants;
 
 public class CityProxy implements City, ClientProxy {
 
+  private final String id;
   private Requestor requestor;
 
-  public CityProxy(Requestor requestor){ this.requestor = requestor;}
+  public CityProxy(String id, Requestor requestor){
+    this.requestor = requestor;
+    this.id = id;
+  }
 
 
   @Override

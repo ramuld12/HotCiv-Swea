@@ -41,6 +41,9 @@ public class BrokerConstants {
   //Server
   public static final int serverPort = 37123;
 
-  //GameLobby
-  public static final String GAMELOBBY_CREATE_GAME_METHOD = "createGame";
+  //Object references
+  public static final String GAME_GET_CITY_METHOD = "getCityAt";
+  public static final String GAME_GET_UNIT_METHOD = "getUnitAt";
+  public static final String GAME_GET_TILE_METHOD = "getTileAt";
+
 }

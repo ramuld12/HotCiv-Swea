@@ -6,10 +6,12 @@ import hotciv.framework.Unit;
 import hotciv.standard.Broker.BrokerConstants;
 
 public class UnitProxy implements Unit {
+  private final String id;
   private Requestor requestor;
 
-  public UnitProxy(Requestor requestor) {
+  public UnitProxy(String id, Requestor requestor) {
     this.requestor = requestor;
+    this.id = id;
   }
 
   @Override

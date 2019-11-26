@@ -6,10 +6,12 @@ import hotciv.framework.Tile;
 import hotciv.standard.Broker.BrokerConstants;
 
 public class TileProxy implements Tile, ClientProxy {
+  private final String id;
   private Requestor requestor;
 
-  public TileProxy(Requestor requestor) {
+  public TileProxy(String id, Requestor requestor) {
     this.requestor = requestor;
+    this.id = id;
   }
 
   @Override
