@@ -13,12 +13,12 @@ public class NameServiceImpl implements NameService {
 
   @Override
   public void putTile(String objectID, Tile tile) {
-
+    world.put(objectID, tile);
   }
 
   @Override
   public void putUnit(String objectID, Unit unit) {
-
+    units.put(objectID, unit);
   }
 
   @Override

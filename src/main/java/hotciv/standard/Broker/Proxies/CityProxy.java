@@ -5,8 +5,6 @@ import frds.broker.Requestor;
 import hotciv.framework.*;
 import hotciv.standard.Broker.BrokerConstants;
 
-import java.util.UUID;
-
 public class CityProxy implements City, ClientProxy {
 
   private String id;
@@ -19,27 +17,27 @@ public class CityProxy implements City, ClientProxy {
 
   @Override
   public Player getOwner() {
-    return requestor.sendRequestAndAwaitReply(id,BrokerConstants.getOwnerString,Player.class);
+    return requestor.sendRequestAndAwaitReply(id,BrokerConstants.getOwnerCity,Player.class);
   }
 
   @Override
   public int getSize() {
-    return requestor.sendRequestAndAwaitReply(BrokerConstants.cityId,BrokerConstants.getSizeString,Integer.class);
+    return requestor.sendRequestAndAwaitReply(id,BrokerConstants.getSizeString,Integer.class);
   }
 
   @Override
   public int getTreasury() {
-    return requestor.sendRequestAndAwaitReply(BrokerConstants.cityId,BrokerConstants.getTreasuryString,Integer.class);
+    return requestor.sendRequestAndAwaitReply(id,BrokerConstants.getTreasuryString,Integer.class);
   }
 
   @Override
   public String getProduction() {
-    return requestor.sendRequestAndAwaitReply(BrokerConstants.cityId,BrokerConstants.getProductionString,String.class);
+    return requestor.sendRequestAndAwaitReply(id,BrokerConstants.getProductionString,String.class);
   }
 
   @Override
   public String getWorkforceFocus() {
-    return requestor.sendRequestAndAwaitReply(BrokerConstants.cityId,BrokerConstants.getWorkforceFocus,String.class);
+    return requestor.sendRequestAndAwaitReply(id,BrokerConstants.getWorkforceFocus,String.class);
   }
 
   @Override

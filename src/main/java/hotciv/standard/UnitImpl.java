@@ -82,6 +82,11 @@ public class UnitImpl implements Unit {
     return isMovable;
   }
 
+  @Override
+  public String getId() {
+    return null;
+  }
+
   public void decreaseMoveCount() {
     moveCounter--;
   }

@@ -5,7 +5,12 @@ import hotciv.framework.GameConstants;
 import hotciv.framework.Player;
 import hotciv.framework.Unit;
 
+import java.util.UUID;
+
 public class StubUnitBroker implements Unit, Servant {
+  private final String id = UUID.randomUUID().toString();
+
+
   @Override
   public String getTypeString() {
     return GameConstants.ARCHER;
@@ -34,5 +39,10 @@ public class StubUnitBroker implements Unit, Servant {
   @Override
   public boolean isMoveable() {
     return false;
+  }
+
+  @Override
+  public String getId() {
+    return id;
   }
 }

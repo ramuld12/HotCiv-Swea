@@ -33,7 +33,6 @@ public class RootInvoker implements Invoker {
     Invoker subinvoker = invokerMap.get(type);
 
     try{
-      //System.out.println(operationName);
       return subinvoker.handleRequest(objectId,operationName,payload);
     } catch (IllegalArgumentException e){
       return new ReplyObject(HttpServletResponse.SC_NOT_FOUND, e.getMessage());

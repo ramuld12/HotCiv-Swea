@@ -31,7 +31,7 @@ public class BrokerConstants {
   public static final String GAME_GET_TILE_METHOD = GAME_PREFIX + "getTileAt";
 
   // Methods for City
-  public static final String getOwnerString = CITY_PREFIX + "getOwner";
+  public static final String getOwnerCity = CITY_PREFIX + "getOwner";
   public static final String getSizeString = CITY_PREFIX + "getSize";
   public static final String getTreasuryString = CITY_PREFIX + "getTreasury";
   public static final String getProductionString = CITY_PREFIX + "getProduction";
@@ -41,6 +41,7 @@ public class BrokerConstants {
   public static final String tileString = TILE_PREFIX + "getTileString";
 
   // Methods for unit
+  public static final String getOwnerUnit = UNIT_PREFIX + "getOwner";
   public static final String getTypeStringString = UNIT_PREFIX + "getTypeStringString";
   public static final String getMoveCountString = UNIT_PREFIX + "getMoveCount";
   public static final String getDefensiveStrengthString = UNIT_PREFIX + "getDefensiveStrength";

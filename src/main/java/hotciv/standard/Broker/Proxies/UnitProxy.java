@@ -16,31 +16,36 @@ public class UnitProxy implements Unit {
 
   @Override
   public String getTypeString() {
-    return requestor.sendRequestAndAwaitReply(BrokerConstants.unitId,BrokerConstants.getTypeStringString, String.class);
+    return requestor.sendRequestAndAwaitReply(id,BrokerConstants.getTypeStringString, String.class);
   }
 
   @Override
   public Player getOwner() {
-    return requestor.sendRequestAndAwaitReply(BrokerConstants.unitId,BrokerConstants.getOwnerString, Player.class);
+    return requestor.sendRequestAndAwaitReply(id,BrokerConstants.getOwnerUnit, Player.class);
   }
 
   @Override
   public int getMoveCount() {
-    return requestor.sendRequestAndAwaitReply(BrokerConstants.unitId,BrokerConstants.getMoveCountString, Integer.class);
+    return requestor.sendRequestAndAwaitReply(id,BrokerConstants.getMoveCountString, Integer.class);
   }
 
   @Override
   public int getDefensiveStrength() {
-    return requestor.sendRequestAndAwaitReply(BrokerConstants.unitId,BrokerConstants.getDefensiveStrengthString, Integer.class);
+    return requestor.sendRequestAndAwaitReply(id,BrokerConstants.getDefensiveStrengthString, Integer.class);
   }
 
   @Override
   public int getAttackingStrength() {
-    return requestor.sendRequestAndAwaitReply(BrokerConstants.unitId,BrokerConstants.getAttackingStrengthString, Integer.class);
+    return requestor.sendRequestAndAwaitReply(id,BrokerConstants.getAttackingStrengthString, Integer.class);
   }
 
   @Override
   public boolean isMoveable() {
     return false;
+  }
+
+  @Override
+  public String getId() {
+    return id;
   }
 }

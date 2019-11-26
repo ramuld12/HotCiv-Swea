@@ -69,4 +69,6 @@ public interface Unit {
    * @return true if unit is moveable
    */
   public boolean isMoveable();
+
+  String getId();
 }

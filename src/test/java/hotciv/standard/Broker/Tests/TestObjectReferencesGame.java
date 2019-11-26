@@ -57,7 +57,6 @@ public class TestObjectReferencesGame {
     assertThat(game.getUnitAt(unitPos).getOwner(), is(Player.RED));
     assertThat(game.getUnitAt(unitPos).getAttackingStrength(), is(10));
     assertThat(game.getUnitAt(unitPos).getMoveCount(), is(42));
-
   }
 
   @Test

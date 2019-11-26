@@ -10,12 +10,10 @@ import hotciv.standard.Broker.NameService;
 
 public class TileInvoker implements Invoker {
   private final NameService nameService;
-  private Tile tileStub;
   private Gson gson;
 
   public TileInvoker(NameService nameService) {
     this.gson = new Gson();
-    tileStub = new StubTileBroker();
     this.nameService = nameService;
   }
 
@@ -29,7 +27,5 @@ public class TileInvoker implements Invoker {
     return null;
   }
 
-  private Tile lookUpTile(String objectId) {
-    return tileStub;
-  }
+  private Tile lookUpTile(String objectId) {return nameService.getTile(objectId); }
 }

@@ -10,12 +10,10 @@ import hotciv.standard.Broker.NameService;
 
 public class UnitInvoker implements Invoker {
   private final NameService nameService;
-  private Unit unitStub;
   private Gson gson;
 
   public UnitInvoker(NameService nameService) {
     this.gson = new Gson();
-    unitStub = new StubUnitBroker();
     this.nameService = nameService;
   }
 
@@ -29,7 +27,7 @@ public class UnitInvoker implements Invoker {
         return new ReplyObject(BrokerConstants.ok_status, gson.toJson(unit.getTypeString()));
       }
 
-      case BrokerConstants.getOwnerString : {
+      case BrokerConstants.getOwnerUnit : {
         return new ReplyObject(BrokerConstants.ok_status,gson.toJson(unit.getOwner()));
       }
 
@@ -52,6 +50,6 @@ public class UnitInvoker implements Invoker {
   }
 
   private Unit lookUpUnit(String objectId) {
-    return unitStub;
+    return nameService.getUnit(objectId);
   }
 }

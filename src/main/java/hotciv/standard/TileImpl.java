@@ -14,6 +14,11 @@ public class TileImpl implements Tile {
     return gc;
   }
 
+  @Override
+  public String getId() {
+    return null;
+  }
+
   public Boolean isValidMovementTileType (UnitImpl unit) {
     boolean isThereAUnit = unit != null;
     boolean isUnitB52 = isThereAUnit && unit.getTypeString().equals(GameConstants.B52);

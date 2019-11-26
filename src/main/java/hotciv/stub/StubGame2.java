@@ -182,4 +182,9 @@ class StubUnit implements Unit {
   public boolean isMoveable() {
     return false;
   }
+
+  @Override
+  public String getId() {
+    return null;
+  }
 }

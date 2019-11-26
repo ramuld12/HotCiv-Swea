@@ -12,12 +12,10 @@ import hotciv.standard.Broker.NameService;
 public class CityInvoker implements Invoker {
   private final NameService nameService;
   private Gson gson;
-  private City cityStub;
 
   public CityInvoker(NameService nameService){
     gson = new Gson();
     this.nameService = nameService;
-    cityStub = new StubCityBroker();
   }
 
 
@@ -28,7 +26,7 @@ public class CityInvoker implements Invoker {
 
     switch (operationName){
 
-      case BrokerConstants.getOwnerString : {
+      case BrokerConstants.getOwnerCity : {
         return new ReplyObject(BrokerConstants.ok_status,gson.toJson(city.getOwner()));
       }
       case BrokerConstants.getSizeString : {
@@ -48,6 +46,6 @@ public class CityInvoker implements Invoker {
   }
 
   private City lookUpCity(String objectId) {
-    return cityStub;
+    return nameService.getCity(objectId);
   }
 }

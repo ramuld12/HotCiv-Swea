@@ -5,9 +5,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
 import frds.broker.Invoker;
 import frds.broker.ReplyObject;
-import hotciv.framework.City;
-import hotciv.framework.Game;
-import hotciv.framework.Position;
+import hotciv.framework.*;
 import hotciv.standard.Broker.BrokerConstants;
 import hotciv.standard.Broker.NameService;
 import hotciv.standard.Broker.NameServiceImpl;
@@ -61,22 +59,20 @@ public class GameInvoker implements Invoker {
       }
       case BrokerConstants.GAME_GET_CITY_METHOD: {
         Position cityPosition = gson.fromJson(jsonArray.get(0), Position.class);
-        City city = servant.getCityAt(cityPosition);
-        objectId = city.getId();
-        nameService.putCity(objectId, city);
+        nameService.putCity(objectId, servant.getCityAt(cityPosition));
         return new ReplyObject(BrokerConstants.ok_status, gson.toJson(objectId));
       }
 
       case BrokerConstants.GAME_GET_UNIT_METHOD: {
         Position unitPosition = gson.fromJson(jsonArray.get(0), Position.class);
-        servant.getUnitAt(unitPosition);
-        return new ReplyObject(BrokerConstants.ok_status, "");
+        nameService.putUnit(objectId, servant.getUnitAt(unitPosition));
+        return new ReplyObject(BrokerConstants.ok_status, gson.toJson(objectId));
       }
 
       case BrokerConstants.GAME_GET_TILE_METHOD: {
         Position tilePosition = gson.fromJson(jsonArray.get(0), Position.class);
-        servant.getTileAt(tilePosition);
-        return new ReplyObject(BrokerConstants.ok_status, "");
+        nameService.putTile(objectId, servant.getTileAt(tilePosition));
+        return new ReplyObject(BrokerConstants.ok_status, gson.toJson(objectId));
       }
     }
     return null;

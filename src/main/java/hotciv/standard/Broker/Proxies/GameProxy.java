@@ -77,7 +77,6 @@ public class GameProxy implements Game, ClientProxy {
 
   @Override
   public void addObserver(GameObserver observer) {
-
   }
 
   @Override
