@@ -5,14 +5,17 @@ import frds.broker.Invoker;
 import frds.broker.ReplyObject;
 import hotciv.framework.Unit;
 import hotciv.standard.Broker.BrokerConstants;
+import hotciv.standard.Broker.NameService;
 
 public class UnitInvoker implements Invoker {
+  private final NameService nameService;
   private Unit unitStub;
   private Gson gson;
 
-  public UnitInvoker(Unit servant) {
+  public UnitInvoker(Unit servant, NameService nameService) {
     this.gson = new Gson();
     unitStub = servant;
+    this.nameService = nameService;
   }
 
   @Override

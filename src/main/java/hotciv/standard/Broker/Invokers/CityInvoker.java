@@ -9,12 +9,14 @@ import hotciv.standard.Broker.BrokerConstants;
 import hotciv.standard.Broker.NameService;
 
 public class CityInvoker implements Invoker {
+  private final NameService nameService;
   private Gson gson;
   private City cityStub;
 
-  public CityInvoker(City servant){
+  public CityInvoker(City servant, NameService nameService){
     gson = new Gson();
     cityStub = servant;
+    this.nameService = nameService;
   }
 
 
