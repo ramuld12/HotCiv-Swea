@@ -5,6 +5,7 @@ import frds.broker.Invoker;
 import frds.broker.ReplyObject;
 import hotciv.framework.Unit;
 import hotciv.standard.Broker.BrokerConstants;
+import hotciv.standard.Broker.BrokerStubs.StubUnitBroker;
 import hotciv.standard.Broker.NameService;
 
 public class UnitInvoker implements Invoker {
@@ -12,9 +13,9 @@ public class UnitInvoker implements Invoker {
   private Unit unitStub;
   private Gson gson;
 
-  public UnitInvoker(Unit servant, NameService nameService) {
+  public UnitInvoker(NameService nameService) {
     this.gson = new Gson();
-    unitStub = servant;
+    unitStub = new StubUnitBroker();
     this.nameService = nameService;
   }
 

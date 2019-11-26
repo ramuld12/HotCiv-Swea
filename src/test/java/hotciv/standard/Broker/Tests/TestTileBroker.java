@@ -7,6 +7,7 @@ import frds.broker.marshall.json.StandardJSONRequestor;
 import hotciv.framework.*;
 import hotciv.standard.Broker.Invokers.TileInvoker;
 import hotciv.standard.Broker.LocalMethodClientRequestHandler;
+import hotciv.standard.Broker.NameServiceImpl;
 import hotciv.standard.Broker.Proxies.TileProxy;
 import hotciv.standard.Broker.BrokerStubs.StubTileBroker;
 import org.junit.*;
@@ -21,7 +22,7 @@ public class TestTileBroker {
   public void setUp() {
     Tile servant = new StubTileBroker();
 
-    Invoker invoker = new TileInvoker(servant);
+    Invoker invoker = new TileInvoker(new NameServiceImpl());
 
     ClientRequestHandler crh = new LocalMethodClientRequestHandler(invoker);
 

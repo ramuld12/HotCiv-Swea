@@ -7,6 +7,7 @@ import frds.broker.marshall.json.StandardJSONRequestor;
 import hotciv.framework.*;
 import hotciv.standard.Broker.Invokers.CityInvoker;
 import hotciv.standard.Broker.LocalMethodClientRequestHandler;
+import hotciv.standard.Broker.NameServiceImpl;
 import hotciv.standard.Broker.Proxies.CityProxy;
 import hotciv.standard.Broker.BrokerStubs.StubCityBroker;
 import org.junit.*;
@@ -20,7 +21,7 @@ public class TestCityBroker {
   public void setUp() {
     City servant = new StubCityBroker();
 
-    Invoker invoker = new CityInvoker(servant);
+    Invoker invoker = new CityInvoker(new NameServiceImpl());
 
     ClientRequestHandler crh = new LocalMethodClientRequestHandler(invoker);
 

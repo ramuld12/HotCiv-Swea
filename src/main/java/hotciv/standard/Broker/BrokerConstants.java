@@ -2,6 +2,12 @@ package hotciv.standard.Broker;
 
 public class BrokerConstants {
 
+  //Prefix
+  public static final String GAME_PREFIX = "Game";
+  public static final String UNIT_PREFIX = "Unit";
+  public static final String TILE_PREFIX = "Tile";
+  public static final String CITY_PREFIX = "City";
+
   // Values
   public static final int ok_status = 200;
   public static final String gameId = "3";
@@ -22,7 +28,7 @@ public class BrokerConstants {
   public static final String unitAction = "performUnitActionAt";
 
   // Methods for City
-  public static final String getOwnerString = "getOwner";
+  public static final String getOwnerString = CITY_PREFIX + "getOwner";
   public static final String getSizeString = "getSize";
   public static final String getTreasuryString = "getTreasury";
   public static final String getProductionString = "getProduction";
@@ -42,12 +48,7 @@ public class BrokerConstants {
   public static final int serverPort = 37123;
 
   //Object references
-  public static final String GAME_GET_CITY_METHOD = "getCityAt";
-  public static final String GAME_GET_UNIT_METHOD = "getUnitAt";
-  public static final String GAME_GET_TILE_METHOD = "getTileAt";
-
-  public static final String GAME_TYPE = "Game";
-  public static final String CITY_TYPE = "City" ;
-  public static final String UNIT_TYPE = "Unit" ;
-  public static final String TILE_TYPE = "Tile" ;
+  public static final String GAME_GET_CITY_METHOD = GAME_PREFIX + "getCityAt";
+  public static final String GAME_GET_UNIT_METHOD = GAME_PREFIX + "getUnitAt";
+  public static final String GAME_GET_TILE_METHOD = GAME_PREFIX + "getTileAt";
 }

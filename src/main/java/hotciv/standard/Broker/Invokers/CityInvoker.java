@@ -6,6 +6,7 @@ import frds.broker.ReplyObject;
 import hotciv.framework.City;
 import hotciv.framework.Game;
 import hotciv.standard.Broker.BrokerConstants;
+import hotciv.standard.Broker.BrokerStubs.StubCityBroker;
 import hotciv.standard.Broker.NameService;
 
 public class CityInvoker implements Invoker {
@@ -13,16 +14,15 @@ public class CityInvoker implements Invoker {
   private Gson gson;
   private City cityStub;
 
-  public CityInvoker(City servant, NameService nameService){
+  public CityInvoker(NameService nameService){
     gson = new Gson();
-    cityStub = servant;
     this.nameService = nameService;
+    cityStub = new StubCityBroker();
   }
 
 
   @Override
   public ReplyObject handleRequest(String objectId, String operationName, String payload) {
-    System.out.println(operationName);
     City city = lookUpCity(objectId);
 
 
