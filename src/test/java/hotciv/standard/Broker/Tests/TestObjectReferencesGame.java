@@ -45,8 +45,6 @@ public class TestObjectReferencesGame {
     Position cityPos = new Position(2,2);
     City city = game.getCityAt(cityPos);
     assertNotNull(city);
-
-
     assertThat(city.getOwner(), is(Player.RED));
     assertThat(city.getSize(), is(42));
     assertEquals(city.getClass(), CityProxy.class);
@@ -57,6 +55,9 @@ public class TestObjectReferencesGame {
     Position unitPos = new Position(2,2);
     assertNotNull(game.getUnitAt(unitPos));
     assertThat(game.getUnitAt(unitPos).getOwner(), is(Player.RED));
+    assertThat(game.getUnitAt(unitPos).getAttackingStrength(), is(10));
+    assertThat(game.getUnitAt(unitPos).getMoveCount(), is(42));
+
   }
 
   @Test
