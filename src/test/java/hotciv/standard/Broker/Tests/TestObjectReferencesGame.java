@@ -52,20 +52,14 @@ public class TestObjectReferencesGame {
   public void shouldGetUnitObjectAt2_2() {
     Position unitPos = new Position(2,2);
     assertNotNull(game.getUnitAt(unitPos));
-
-
-
-    //assertThat(game.getCityAt(cityPos).getOwner(), is(Player.RED));
+    assertThat(game.getUnitAt(unitPos).getOwner(), is(Player.RED));
   }
 
   @Test
   public void shouldGetTileObjectAt2_2() {
     Position tilePos = new Position(2,2);
     assertNotNull(game.getTileAt(tilePos));
-
-
-
-    //assertThat(game.getCityAt(cityPos).getOwner(), is(Player.RED));
+    assertThat(game.getTileAt(tilePos).getTypeString(), is(GameConstants.PLAINS));
   }
 
 }
