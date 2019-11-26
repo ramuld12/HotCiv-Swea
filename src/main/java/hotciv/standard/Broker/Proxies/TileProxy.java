@@ -16,7 +16,6 @@ public class TileProxy implements Tile, ClientProxy {
 
   @Override
   public String getTypeString() {
-    System.out.println(id);
     return requestor.sendRequestAndAwaitReply(id, BrokerConstants.tileString, String.class );
   }
 

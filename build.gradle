@@ -63,6 +63,14 @@ task hotCivStoryTest(type: JavaExec){
   main = 'hotciv.standard.Broker.GameLobby.HotCivStoryTest'
 }
 
+task semiServer(type: JavaExec) {
+  group 'SWEA Mandatory'
+  description ' Play SemiCiv on the server using the GUI :-)'
+
+  main = 'hotciv.standard.Broker.GameLobby.HotCivManualClientTest'
+  classpath = sourceSets.main.runtimeClasspath
+}
+
 // === Demonstrate specialized MiniDraw implementations
 
 task show(type: JavaExec) {

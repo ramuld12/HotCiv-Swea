@@ -22,6 +22,8 @@ public class TileInvoker implements Invoker {
     Tile tile = lookUpTile(objectId);
 
     if (operationName.equals(BrokerConstants.tileString)) {
+      //System.out.println(operationName);
+      System.out.println(objectId);
       return new ReplyObject(BrokerConstants.ok_status, gson.toJson(tile.getTypeString()));
     }
     return null;
