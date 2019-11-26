@@ -4,8 +4,10 @@ import frds.broker.ClientRequestHandler;
 import frds.broker.Invoker;
 import hotciv.framework.*;
 import hotciv.standard.Broker.*;
+import hotciv.standard.Broker.BrokerStubs.StubCityBroker;
 import hotciv.standard.Broker.Invokers.GameInvoker;
 import hotciv.standard.Broker.Invokers.RootInvoker;
+import hotciv.standard.Broker.Proxies.CityProxy;
 import hotciv.standard.Broker.Proxies.GameProxy;
 import hotciv.standard.Broker.BrokerStubs.StubGame3Broker;
 import org.junit.*;
@@ -46,6 +48,8 @@ public class TestObjectReferencesGame {
 
 
     assertThat(city.getOwner(), is(Player.RED));
+    assertThat(city.getSize(), is(42));
+    assertEquals(city.getClass(), CityProxy.class);
   }
 
   @Test

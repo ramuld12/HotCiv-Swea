@@ -26,6 +26,9 @@ public class BrokerConstants {
   public static final String changeCityProduction = GAME_PREFIX + "changeProductionInCityAt";
   public static final String endTurn_action = GAME_PREFIX + "endOfTurn";
   public static final String unitAction = GAME_PREFIX + "performUnitActionAt";
+  public static final String GAME_GET_CITY_METHOD = GAME_PREFIX + "getCityAt";
+  public static final String GAME_GET_UNIT_METHOD = GAME_PREFIX + "getUnitAt";
+  public static final String GAME_GET_TILE_METHOD = GAME_PREFIX + "getTileAt";
 
   // Methods for City
   public static final String getOwnerString = CITY_PREFIX + "getOwner";
@@ -46,9 +49,4 @@ public class BrokerConstants {
 
   //Server
   public static final int serverPort = 37123;
-
-  //Object references
-  public static final String GAME_GET_CITY_METHOD = GAME_PREFIX + "getCityAt";
-  public static final String GAME_GET_UNIT_METHOD = GAME_PREFIX + "getUnitAt";
-  public static final String GAME_GET_TILE_METHOD = GAME_PREFIX + "getTileAt";
 }
