@@ -23,7 +23,7 @@ public class HotCivManualClientTest{
     clientRequestHandler.setServer(hostName, BrokerConstants.serverPort);
     Requestor requestor = new StandardJSONRequestor(clientRequestHandler);
 
-    game = new GameProxy(requestor);
+    game = new GameProxy("", requestor);
   }
   public Game getGame() {
     return game;

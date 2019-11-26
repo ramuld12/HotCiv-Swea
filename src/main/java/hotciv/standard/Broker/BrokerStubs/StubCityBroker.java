@@ -32,4 +32,9 @@ public class StubCityBroker implements City, Servant {
     return null;
   }
 
+  @Override
+  public String getId() {
+    return null;
+  }
+
 }

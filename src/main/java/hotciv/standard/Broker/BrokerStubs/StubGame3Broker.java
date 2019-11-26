@@ -2,26 +2,33 @@ package hotciv.standard.Broker.BrokerStubs;
 
 import frds.broker.Servant;
 import hotciv.framework.*;
+import hotciv.standard.Broker.Proxies.CityProxy;
+import hotciv.standard.CityImpl;
+import hotciv.standard.TileImpl;
+import hotciv.standard.UnitImpl;
 
 public class StubGame3Broker implements Game, Servant {
 
+  private City city = new CityImpl(Player.RED);
+  private Unit unit = new UnitImpl(GameConstants.ARCHER, Player.BLUE);
+  private Tile tile = new TileImpl(GameConstants.PLAINS);
   private Player playerInTurn = Player.RED;
   private String cityProduction = GameConstants.LEGION;
   private Position actionPosition = new Position(1,1);
 
   @Override
   public Tile getTileAt(Position p) {
-    return null;
+    return tile;
   }
 
   @Override
   public Unit getUnitAt(Position p) {
-    return null;
+    return unit;
   }
 
   @Override
   public City getCityAt(Position p) {
-    return null;
+    return city;
   }
 
   @Override

@@ -62,5 +62,7 @@ public interface City {
    */
   public String getWorkforceFocus();//
 
+  String getId();
+
 
 }

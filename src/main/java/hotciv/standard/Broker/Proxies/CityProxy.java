@@ -5,20 +5,22 @@ import frds.broker.Requestor;
 import hotciv.framework.*;
 import hotciv.standard.Broker.BrokerConstants;
 
+import java.util.UUID;
+
 public class CityProxy implements City, ClientProxy {
 
-  private final String id;
+  private String id;
   private Requestor requestor;
 
   public CityProxy(String id, Requestor requestor){
     this.requestor = requestor;
-    this.id = id;
+    this.id = UUID.randomUUID().toString();
   }
-
 
   @Override
   public Player getOwner() {
-    return requestor.sendRequestAndAwaitReply(BrokerConstants.cityId,BrokerConstants.getOwnerString,Player.class);
+    //System.out.println(id);
+    return requestor.sendRequestAndAwaitReply(id,BrokerConstants.getOwnerString,Player.class);
   }
 
   @Override
@@ -39,5 +41,10 @@ public class CityProxy implements City, ClientProxy {
   @Override
   public String getWorkforceFocus() {
     return requestor.sendRequestAndAwaitReply(BrokerConstants.cityId,BrokerConstants.getWorkforceFocus,String.class);
+  }
+
+  @Override
+  public String getId() {
+    return id;
   }
 }

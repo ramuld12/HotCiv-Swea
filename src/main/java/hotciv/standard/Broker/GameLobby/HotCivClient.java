@@ -29,7 +29,7 @@ public class HotCivClient {
           = new SocketClientRequestHandler("localhost", BrokerConstants.serverPort);
     Requestor requestor = new StandardJSONRequestor(clientRequestHandler);
 
-  game = new GameProxy(requestor);
+  game = new GameProxy("", requestor);
   }
 
   private void parseCommandlineParameters(String[] args) {

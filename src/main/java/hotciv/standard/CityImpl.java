@@ -43,6 +43,11 @@ public class CityImpl implements City {
     return null;
   }//Not done
 
+  @Override
+  public String getId() {
+    return null;
+  }
+
   public void increaseTreas() {
     treas += 6;
   }

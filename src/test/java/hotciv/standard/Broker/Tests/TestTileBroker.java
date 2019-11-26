@@ -27,7 +27,7 @@ public class TestTileBroker {
 
     Requestor requestor = new StandardJSONRequestor(crh);
 
-    tile = new TileProxy(requestor);
+    tile = new TileProxy("", requestor);
   }
 
   @Test

@@ -27,4 +27,9 @@ public class CityStub implements City {
 
   @Override
   public String getWorkforceFocus() { return null;}
+
+  @Override
+  public String getId() {
+    return "5";
+  }
 }

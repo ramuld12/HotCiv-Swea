@@ -26,7 +26,7 @@ public class TestUnitBroker {
 
     Requestor requestor = new StandardJSONRequestor(crh);
 
-    unit = new UnitProxy(requestor);
+    unit = new UnitProxy("", requestor);
   }
 
   @Test

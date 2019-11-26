@@ -6,12 +6,12 @@ import hotciv.framework.*;
 import hotciv.standard.Broker.BrokerConstants;
 
 public class GameProxy implements Game, ClientProxy {
-  private final String id;
+  private final String objectId;
   private Requestor requestor;
 
-  public GameProxy(String id, Requestor requestor) {
+  public GameProxy(String objectId, Requestor requestor) {
     this.requestor = requestor;
-    this.id = id;
+    this.objectId = objectId;
   }
 
   @Override
@@ -31,7 +31,7 @@ public class GameProxy implements Game, ClientProxy {
   @Override
   public City getCityAt(Position p) {
     String id = requestor.sendRequestAndAwaitReply(
-            "none", BrokerConstants.GAME_GET_CITY_METHOD, String.class, p);
+            "", BrokerConstants.GAME_GET_CITY_METHOD, String.class, p);
     return new CityProxy(id, requestor);
   }
 

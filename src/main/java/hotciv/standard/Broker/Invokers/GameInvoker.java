@@ -8,14 +8,18 @@ import frds.broker.ReplyObject;
 import hotciv.framework.Game;
 import hotciv.framework.Position;
 import hotciv.standard.Broker.BrokerConstants;
+import hotciv.standard.Broker.NameService;
+import hotciv.standard.Broker.NameServiceImpl;
 
 public class GameInvoker implements Invoker {
   private Gson gson;
   private Game servant;
+  private NameService nameService;
 
   public GameInvoker(Game servant) {
     this.gson = new Gson();
     this.servant = servant;
+    this.nameService = new NameServiceImpl();
   }
 
   @Override
@@ -41,6 +45,8 @@ public class GameInvoker implements Invoker {
         servant.endOfTurn();
         return new ReplyObject(BrokerConstants.ok_status, "");
       }
+
+      //Object References
       case BrokerConstants.changeCityProduction: {
         Position cityPositition = gson.fromJson(jsonArray.get(0), Position.class);
         String unitType = gson.fromJson(jsonArray.get(1), String.class);
@@ -50,6 +56,25 @@ public class GameInvoker implements Invoker {
       case BrokerConstants.unitAction: {
         Position actionPosition = gson.fromJson(jsonArray.get(0), Position.class);
         servant.performUnitActionAt(actionPosition);
+        return new ReplyObject(BrokerConstants.ok_status, "");
+      }
+      case BrokerConstants.GAME_GET_CITY_METHOD: {
+        Position cityPosition = gson.fromJson(jsonArray.get(0), Position.class);
+        servant.getCityAt(cityPosition);
+        nameService.putCity(objectId, servant);
+        //System.out.println(objectId);
+        return new ReplyObject(BrokerConstants.ok_status, gson.toJson(objectId));
+      }
+
+      case BrokerConstants.GAME_GET_UNIT_METHOD: {
+        Position unitPosition = gson.fromJson(jsonArray.get(0), Position.class);
+        servant.getUnitAt(unitPosition);
+        return new ReplyObject(BrokerConstants.ok_status, "");
+      }
+
+      case BrokerConstants.GAME_GET_TILE_METHOD: {
+        Position tilePosition = gson.fromJson(jsonArray.get(0), Position.class);
+        servant.getTileAt(tilePosition);
         return new ReplyObject(BrokerConstants.ok_status, "");
       }
     }

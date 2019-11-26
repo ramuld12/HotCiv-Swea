@@ -35,7 +35,7 @@ public class TestGameBroker {
 
     SpyRequester requestor = new SpyRequester(crh);
 
-    game = new GameProxy(requestor);
+    game = new GameProxy("", requestor);
     game.addObserver(nullObserver);
     this.requestor = requestor;
   }
@@ -106,4 +106,6 @@ public class TestGameBroker {
     assertThat(objectId, is(BrokerConstants.gameId));
     assertThat(type.toString(), is("void"));
   }
+
+
 }

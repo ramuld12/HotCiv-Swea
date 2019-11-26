@@ -26,7 +26,7 @@ public class TestCityBroker {
 
     Requestor requestor = new StandardJSONRequestor(crh);
 
-    city = new CityProxy(requestor);
+    city = new CityProxy("", requestor);
   }
 
   @Test
