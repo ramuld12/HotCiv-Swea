@@ -19,30 +19,30 @@ public class BrokerConstants {
 
 
   //Methods for Game
-  public static final String getAgeString = "getAge";
-  public static final String getPlayerInTurnString = "getPlayerInTurn";
-  public static final String getWinnerString = "getWinner";
-  public static final String moveUnit_action = "moveUnit";
-  public static final String changeCityProduction = "changeProductionInCityAt";
-  public static final String endTurn_action = "endOfTurn";
-  public static final String unitAction = "performUnitActionAt";
+  public static final String getAgeString = GAME_PREFIX + "getAge";
+  public static final String getPlayerInTurnString = GAME_PREFIX + "getPlayerInTurn";
+  public static final String getWinnerString = GAME_PREFIX + "getWinner";
+  public static final String moveUnit_action = GAME_PREFIX + "moveUnit";
+  public static final String changeCityProduction = GAME_PREFIX + "changeProductionInCityAt";
+  public static final String endTurn_action = GAME_PREFIX + "endOfTurn";
+  public static final String unitAction = GAME_PREFIX + "performUnitActionAt";
 
   // Methods for City
   public static final String getOwnerString = CITY_PREFIX + "getOwner";
-  public static final String getSizeString = "getSize";
-  public static final String getTreasuryString = "getTreasury";
-  public static final String getProductionString = "getProduction";
-  public static final String getWorkforceFocus = "getWorkforceFocus";
+  public static final String getSizeString = CITY_PREFIX + "getSize";
+  public static final String getTreasuryString = CITY_PREFIX + "getTreasury";
+  public static final String getProductionString = CITY_PREFIX + "getProduction";
+  public static final String getWorkforceFocus = CITY_PREFIX + "getWorkforceFocus";
 
   //Methods for Tile
-  public static final String tileString = "getTileString";
+  public static final String tileString = TILE_PREFIX + "getTileString";
 
   // Methods for unit
-  public static final String getTypeStringString = "getTypeStringString";
-  public static final String getMoveCountString = "getMoveCount";
-  public static final String getDefensiveStrengthString = "getDefensiveStrength";
-  public static final String getAttackingStrengthString = "getAttackingStrength";
-  public static final String isUnitMoveable = "isMoveable";
+  public static final String getTypeStringString = UNIT_PREFIX + "getTypeStringString";
+  public static final String getMoveCountString = UNIT_PREFIX + "getMoveCount";
+  public static final String getDefensiveStrengthString = UNIT_PREFIX + "getDefensiveStrength";
+  public static final String getAttackingStrengthString = UNIT_PREFIX + "getAttackingStrength";
+  public static final String isUnitMoveable = UNIT_PREFIX + "isMoveable";
 
   //Server
   public static final int serverPort = 37123;
