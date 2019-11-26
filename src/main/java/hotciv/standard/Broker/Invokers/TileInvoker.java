@@ -5,14 +5,17 @@ import frds.broker.Invoker;
 import frds.broker.ReplyObject;
 import hotciv.framework.Tile;
 import hotciv.standard.Broker.BrokerConstants;
+import hotciv.standard.Broker.NameService;
 
 public class TileInvoker implements Invoker {
+  private final NameService nameService;
   private Tile tileStub;
   private Gson gson;
 
-  public TileInvoker(Tile servant) {
+  public TileInvoker(Tile servant, NameService nameService) {
     this.gson = new Gson();
     tileStub = servant;
+    this.nameService = nameService;
   }
 
   @Override
