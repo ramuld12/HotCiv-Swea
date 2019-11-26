@@ -5,6 +5,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
 import frds.broker.Invoker;
 import frds.broker.ReplyObject;
+import hotciv.framework.City;
 import hotciv.framework.Game;
 import hotciv.framework.Position;
 import hotciv.standard.Broker.BrokerConstants;
@@ -16,10 +17,10 @@ public class GameInvoker implements Invoker {
   private Game servant;
   private NameService nameService;
 
-  public GameInvoker(Game servant) {
+  public GameInvoker(Game servant, NameService nameService) {
     this.gson = new Gson();
     this.servant = servant;
-    this.nameService = new NameServiceImpl();
+    this.nameService = nameService;
   }
 
   @Override
@@ -60,9 +61,9 @@ public class GameInvoker implements Invoker {
       }
       case BrokerConstants.GAME_GET_CITY_METHOD: {
         Position cityPosition = gson.fromJson(jsonArray.get(0), Position.class);
-        servant.getCityAt(cityPosition);
-        nameService.putCity(objectId, servant);
-        //System.out.println(objectId);
+        City city = servant.getCityAt(cityPosition);
+        objectId = city.getId();
+        nameService.putCity(objectId, city);
         return new ReplyObject(BrokerConstants.ok_status, gson.toJson(objectId));
       }
 

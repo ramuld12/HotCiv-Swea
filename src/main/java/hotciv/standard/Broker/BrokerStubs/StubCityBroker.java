@@ -5,7 +5,10 @@ import hotciv.framework.City;
 import hotciv.framework.GameConstants;
 import hotciv.framework.Player;
 
+import java.util.UUID;
+
 public class StubCityBroker implements City, Servant {
+  private final String id = UUID.randomUUID().toString();
 
   @Override
   public Player getOwner() {
@@ -34,7 +37,6 @@ public class StubCityBroker implements City, Servant {
 
   @Override
   public String getId() {
-    return null;
+    return id;
   }
-
 }

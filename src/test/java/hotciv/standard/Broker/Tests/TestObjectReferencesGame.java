@@ -5,6 +5,7 @@ import frds.broker.Invoker;
 import hotciv.framework.*;
 import hotciv.standard.Broker.BrokerConstants;
 import hotciv.standard.Broker.Invokers.GameInvoker;
+import hotciv.standard.Broker.Invokers.RootInvoker;
 import hotciv.standard.Broker.LocalMethodClientRequestHandler;
 import hotciv.standard.Broker.NullObserver;
 import hotciv.standard.Broker.Proxies.GameProxy;
@@ -29,7 +30,7 @@ public class TestObjectReferencesGame {
     GameObserver nullObserver = new NullObserver();
     servant.addObserver(nullObserver);
 
-    Invoker invoker = new GameInvoker(servant);
+    Invoker invoker = new RootInvoker(servant);
 
     ClientRequestHandler crh = new LocalMethodClientRequestHandler(invoker);
 

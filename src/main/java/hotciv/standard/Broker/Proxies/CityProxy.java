@@ -14,12 +14,11 @@ public class CityProxy implements City, ClientProxy {
 
   public CityProxy(String id, Requestor requestor){
     this.requestor = requestor;
-    this.id = UUID.randomUUID().toString();
+    this.id = id;
   }
 
   @Override
   public Player getOwner() {
-    //System.out.println(id);
     return requestor.sendRequestAndAwaitReply(id,BrokerConstants.getOwnerString,Player.class);
   }
 

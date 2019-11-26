@@ -12,19 +12,18 @@ public class NameServiceImpl implements NameService {
 
 
   @Override
-  public void putTile(String objectID, Game game) {
+  public void putTile(String objectID, Tile tile) {
 
   }
 
   @Override
-  public void putUnit(String objectID, Game game) {
+  public void putUnit(String objectID, Unit unit) {
 
   }
 
   @Override
-  public void putCity(String objectID, Game game) {
-    objectID = UUID.randomUUID().toString();
-    cities.put(objectID, new CityStub(Player.RED));
+  public void putCity(String objectID, City city) {
+    cities.put(objectID, city);
   }
 
   @Override

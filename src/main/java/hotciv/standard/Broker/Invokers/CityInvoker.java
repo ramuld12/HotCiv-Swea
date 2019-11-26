@@ -16,8 +16,9 @@ public class CityInvoker implements Invoker {
 
   @Override
   public ReplyObject handleRequest(String objectId, String operationName, String payload) {
-    City city = lookUpCity(objectId);
     System.out.println(operationName);
+    City city = lookUpCity(objectId);
+
 
     switch (operationName){
 

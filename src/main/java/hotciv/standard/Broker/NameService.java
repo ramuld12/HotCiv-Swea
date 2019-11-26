@@ -7,11 +7,11 @@ import hotciv.framework.Unit;
 
 public interface NameService {
 
-  void putTile(String objectID, Game game);
+  void putTile(String objectID, Tile tile);
 
-  void putUnit(String objectID, Game game);
+  void putUnit(String objectID, Unit unit);
 
-  void putCity(String objectID, Game game);
+  void putCity(String objectID, City city);
 
   Tile getTile(String objectID);
 

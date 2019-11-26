@@ -31,7 +31,7 @@ public class GameProxy implements Game, ClientProxy {
   @Override
   public City getCityAt(Position p) {
     String id = requestor.sendRequestAndAwaitReply(
-            "", BrokerConstants.GAME_GET_CITY_METHOD, String.class, p);
+            "none", BrokerConstants.GAME_GET_CITY_METHOD, String.class, p);
     return new CityProxy(id, requestor);
   }
 

@@ -9,9 +9,9 @@ import hotciv.standard.UnitImpl;
 
 public class StubGame3Broker implements Game, Servant {
 
-  private City city = new CityImpl(Player.RED);
-  private Unit unit = new UnitImpl(GameConstants.ARCHER, Player.BLUE);
-  private Tile tile = new TileImpl(GameConstants.PLAINS);
+  private City city = new StubCityBroker();
+  private Unit unit = new StubUnitBroker();
+  private Tile tile = new StubTileBroker();
   private Player playerInTurn = Player.RED;
   private String cityProduction = GameConstants.LEGION;
   private Position actionPosition = new Position(1,1);
