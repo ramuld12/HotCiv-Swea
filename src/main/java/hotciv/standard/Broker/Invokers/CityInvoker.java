@@ -4,7 +4,10 @@ import com.google.gson.Gson;
 import frds.broker.Invoker;
 import frds.broker.ReplyObject;
 import hotciv.framework.City;
+import hotciv.framework.Game;
 import hotciv.standard.Broker.BrokerConstants;
+import hotciv.standard.Broker.NameService;
+
 public class CityInvoker implements Invoker {
   private Gson gson;
   private City cityStub;
@@ -13,6 +16,7 @@ public class CityInvoker implements Invoker {
     gson = new Gson();
     cityStub = servant;
   }
+
 
   @Override
   public ReplyObject handleRequest(String objectId, String operationName, String payload) {

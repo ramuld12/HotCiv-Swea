@@ -46,4 +46,5 @@ public class BrokerConstants {
   public static final String GAME_GET_UNIT_METHOD = "getUnitAt";
   public static final String GAME_GET_TILE_METHOD = "getTileAt";
 
+  public static final String GAME_TYPE = "Game";
 }
