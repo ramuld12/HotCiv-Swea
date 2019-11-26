@@ -3,6 +3,7 @@ package hotciv.standard.Broker.Invokers;
 import frds.broker.Invoker;
 import frds.broker.ReplyObject;
 import hotciv.framework.Game;
+import hotciv.framework.Unit;
 import hotciv.standard.Broker.BrokerConstants;
 import hotciv.standard.Broker.NameService;
 import hotciv.standard.Broker.NameServiceImpl;
@@ -26,9 +27,10 @@ public class RootInvoker implements Invoker {
 
       switch (type) {
         case BrokerConstants.GAME_TYPE : new GameInvoker(servant,nameService);
-        case BrokerConstants.CITY_TYPE : new CityInvoker(servant, nameService)
+        case BrokerConstants.CITY_TYPE : new CityInvoker(servant, nameService);
+        case BrokerConstants.UNIT_TYPE : new UnitInvoker(servant, nameService);
+        case BrokerConstants.TILE_TYPE : new TileInvoker(servant, nameService);
     }
-
-    return invoker.handleRequest(objectId, operationName, payload);
+    return null;
   }
 }
