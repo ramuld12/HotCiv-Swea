@@ -28,11 +28,10 @@ public class HotCivClient {
   }
 
   public HotCivClient(String[] args) {
-    parseCommandlineParameters(args);
+    //parseCommandlineParameters(args);
     System.out.println("LobbyClient: Asked to do operation "+operation+" for player "+name);
     ClientRequestHandler clientRequestHandler
           = new SocketClientRequestHandler("localhost", BrokerConstants.serverPort);
-    clientRequestHandler.setServer(hostName, BrokerConstants.serverPort);
 
     Requestor requestor = new StandardJSONRequestor(clientRequestHandler);
 
@@ -48,7 +47,6 @@ public class HotCivClient {
 
   private void parseCommandlineParameters(String[] args) {
     if (args.length < 4) {
-      System.out.println(args.length);
       explainAndFail();
     }
     operation = args[0];

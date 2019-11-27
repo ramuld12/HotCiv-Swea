@@ -1,9 +1,7 @@
 package hotciv.standard.Broker;
 
 import hotciv.framework.*;
-import hotciv.stub.CityStub;
 import java.util.HashMap;
-import java.util.UUID;
 
 public class NameServiceImpl implements NameService {
   private HashMap<String, Tile> world = new HashMap<>(); //HashMap for representing the different tiletypes

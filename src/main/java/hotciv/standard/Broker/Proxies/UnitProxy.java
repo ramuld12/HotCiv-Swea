@@ -16,7 +16,7 @@ public class UnitProxy implements Unit {
 
   @Override
   public String getTypeString() {
-    return requestor.sendRequestAndAwaitReply(id,BrokerConstants.getTypeStringString, String.class);
+    return requestor.sendRequestAndAwaitReply(id,BrokerConstants.getTypeString, String.class);
   }
 
   @Override

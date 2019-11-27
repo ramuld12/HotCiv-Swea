@@ -23,12 +23,6 @@ public class HotCivServer {
   public HotCivServer() {
     int port = BrokerConstants.serverPort;
     Game game = new GameImpl(new SemiCivFactory());
-    DrawingEditor editor =
-            new MiniDrawApplication( "Gui", new HotCivFactory4(game));
-    editor.open();
-    editor.showStatus("Playable SemiCiv");
-    editor.setTool( new CompositionTool(game,new SelectionTool(editor)) );
-
 
     Invoker invoker = new GameInvoker(game, new NameServiceImpl(), new GameObserverImpl());
 

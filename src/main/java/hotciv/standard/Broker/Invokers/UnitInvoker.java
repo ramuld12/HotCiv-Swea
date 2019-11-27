@@ -23,7 +23,7 @@ public class UnitInvoker implements Invoker {
 
     switch (operationName) {
 
-      case BrokerConstants.getTypeStringString : {
+      case BrokerConstants.getTypeString : {
         return new ReplyObject(BrokerConstants.ok_status, gson.toJson(unit.getTypeString()));
       }
 

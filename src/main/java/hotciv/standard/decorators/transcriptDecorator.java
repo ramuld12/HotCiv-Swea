@@ -54,6 +54,11 @@ public class transcriptDecorator implements Game {
   }
 
   @Override
+  public String getId() {
+    return null;
+  }
+
+  @Override
   public void endOfTurn() {
     System.out.println(game.getPlayerInTurn() + " ends turn");
     game.endOfTurn();

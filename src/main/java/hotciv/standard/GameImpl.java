@@ -348,6 +348,11 @@ public class GameImpl implements Game {
     concreteObservers.forEach(c -> c.tileFocusChangedAt(position));
   }
 
+  @Override
+  public String getId() {
+    return null;
+  }
+
   public List<GameObserver> getObservers(){
     return concreteObservers;
   }
