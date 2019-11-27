@@ -30,7 +30,7 @@ public class TestObjectReferencesGame {
     GameObserver nullObserver = new NullObserver();
     servant.addObserver(nullObserver);
 
-    Invoker invoker = new RootInvoker(servant);
+    Invoker invoker = new RootInvoker(servant, nullObserver);
 
     ClientRequestHandler crh = new LocalMethodClientRequestHandler(invoker);
 

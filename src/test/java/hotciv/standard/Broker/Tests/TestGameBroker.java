@@ -7,6 +7,7 @@ import hotciv.standard.Broker.*;
 import hotciv.standard.Broker.Invokers.GameInvoker;
 import hotciv.standard.Broker.Proxies.GameProxy;
 import hotciv.standard.Broker.BrokerStubs.StubGame3Broker;
+import hotciv.standard.GameObserverImpl;
 import org.junit.*;
 
 import java.lang.reflect.Type;
@@ -26,7 +27,7 @@ public class TestGameBroker {
     GameObserver nullObserver = new NullObserver();
     servant.addObserver(nullObserver);
 
-    Invoker invoker = new GameInvoker(servant, new NameServiceImpl());
+    Invoker invoker = new GameInvoker(servant, new NameServiceImpl(), new GameObserverImpl());
 
     ClientRequestHandler crh = new LocalMethodClientRequestHandler(invoker);
 

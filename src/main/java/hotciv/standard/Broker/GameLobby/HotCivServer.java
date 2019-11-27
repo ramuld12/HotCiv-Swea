@@ -6,6 +6,7 @@ import hotciv.framework.Game;
 import hotciv.standard.Broker.BrokerConstants;
 import hotciv.standard.Broker.Invokers.GameInvoker;
 import hotciv.standard.Broker.NameServiceImpl;
+<<<<<<< HEAD
 import hotciv.standard.GameImpl;
 import hotciv.standard.HotCivFactory.SemiCivFactory;
 import hotciv.visual.CompositionTool;
@@ -13,6 +14,9 @@ import hotciv.visual.HotCivFactory4;
 import minidraw.framework.DrawingEditor;
 import minidraw.standard.MiniDrawApplication;
 import minidraw.standard.SelectionTool;
+=======
+import hotciv.standard.GameObserverImpl;
+>>>>>>> 50c7381a24da1f2fe0ad6a99c8c006dbe91e60cb
 
 public class HotCivServer {
 
@@ -22,7 +26,6 @@ public class HotCivServer {
 
   public HotCivServer() {
     int port = BrokerConstants.serverPort;
-
     Game game = new GameImpl(new SemiCivFactory());
     DrawingEditor editor =
             new MiniDrawApplication( "Gui", new HotCivFactory4(game));
@@ -31,7 +34,7 @@ public class HotCivServer {
     editor.setTool( new CompositionTool(game,new SelectionTool(editor)) );
 
 
-    Invoker invoker = new GameInvoker(game, new NameServiceImpl());
+    Invoker invoker = new GameInvoker(game, new NameServiceImpl(), new GameObserverImpl());
 
     SocketServerRequestHandler ssrh = new SocketServerRequestHandler(port, invoker);
 
