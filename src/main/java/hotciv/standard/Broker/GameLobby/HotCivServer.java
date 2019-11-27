@@ -7,6 +7,7 @@ import hotciv.standard.Broker.BrokerConstants;
 import hotciv.standard.Broker.BrokerStubs.StubGame3Broker;
 import hotciv.standard.Broker.Invokers.GameInvoker;
 import hotciv.standard.Broker.NameServiceImpl;
+import hotciv.standard.GameObserverImpl;
 
 public class HotCivServer {
 
@@ -18,7 +19,7 @@ public class HotCivServer {
     int port = BrokerConstants.serverPort;
 
     Game lobby = new StubGame3Broker();
-    Invoker invoker = new GameInvoker(lobby, new NameServiceImpl());
+    Invoker invoker = new GameInvoker(lobby, new NameServiceImpl(), new GameObserverImpl());
 
     SocketServerRequestHandler ssrh = new SocketServerRequestHandler(port, invoker);
 
