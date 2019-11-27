@@ -4,6 +4,8 @@ import hotciv.framework.GameConstants;
 import hotciv.framework.Player;
 import hotciv.framework.Unit;
 
+import java.util.UUID;
+
 public class UnitImpl implements Unit {
   private int defenseStrength;
   private int attackStrength;
@@ -12,6 +14,7 @@ public class UnitImpl implements Unit {
   private int moveCounter;
   private boolean isMovable;
   private boolean isFortified;
+  private final String id = UUID.randomUUID().toString();
 
   public UnitImpl(String type, Player owner) {
     this.type = type;
@@ -84,7 +87,7 @@ public class UnitImpl implements Unit {
 
   @Override
   public String getId() {
-    return null;
+    return id;
   }
 
   public void decreaseMoveCount() {

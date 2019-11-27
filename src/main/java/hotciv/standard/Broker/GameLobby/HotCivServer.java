@@ -4,7 +4,9 @@ import frds.broker.Invoker;
 import frds.broker.ipc.socket.SocketServerRequestHandler;
 import hotciv.framework.Game;
 import hotciv.standard.Broker.BrokerConstants;
+import hotciv.standard.Broker.BrokerStubs.StubGame3Broker;
 import hotciv.standard.Broker.Invokers.GameInvoker;
+import hotciv.standard.Broker.Invokers.RootInvoker;
 import hotciv.standard.Broker.NameServiceImpl;
 import hotciv.standard.GameImpl;
 import hotciv.standard.HotCivFactory.SemiCivFactory;
@@ -23,8 +25,9 @@ public class HotCivServer {
   public HotCivServer() {
     int port = BrokerConstants.serverPort;
     Game game = new GameImpl(new SemiCivFactory());
+    //Game game = new StubGame3Broker();
 
-    Invoker invoker = new GameInvoker(game, new NameServiceImpl(), new GameObserverImpl());
+    Invoker invoker = new RootInvoker(game, new GameObserverImpl());
 
     SocketServerRequestHandler ssrh = new SocketServerRequestHandler(port, invoker);
 

@@ -28,6 +28,7 @@ public class GameInvoker implements Invoker {
   public ReplyObject handleRequest(String objectId, String operationName, String payload) {
     JsonParser parser = new JsonParser();
     JsonArray jsonArray = parser.parse(payload).getAsJsonArray();
+    System.out.println("--> Do you hit handle request" + objectId);
 
     switch (operationName) {
       //Simple accessors
@@ -67,6 +68,7 @@ public class GameInvoker implements Invoker {
       }
 
       case BrokerConstants.GAME_GET_UNIT_METHOD: {
+
         Position unitPosition = gson.fromJson(jsonArray.get(0), Position.class);
         nameService.putUnit(objectId, servant.getUnitAt(unitPosition));
         return new ReplyObject(BrokerConstants.ok_status, gson.toJson(objectId));
