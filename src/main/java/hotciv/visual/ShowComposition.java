@@ -38,7 +38,7 @@ public class ShowComposition {
                                new HotCivFactory4(game) );
     editor.open();
     editor.showStatus("Click and drag any item to see Game's proper response.");
-    editor.setTool( new CompositionTool(game,new SelectionTool(editor)) );
+    editor.setTool( new CompositionTool(game,new SelectionTool(editor), editor) );
   }
 }
 

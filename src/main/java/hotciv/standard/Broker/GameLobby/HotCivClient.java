@@ -18,17 +18,12 @@ import java.util.*;
 import java.io.IOException;
 
 public class HotCivClient {
-  private String operation;
-  private String name;
-  private String hostName;
-  private String objectId;
 
   public static void main(String[] args) throws IOException {
     new HotCivClient(args);
   }
 
   public HotCivClient(String[] args) {
-    System.out.println("LobbyClient: Asked to do operation "+operation+" for player "+name);
     ClientRequestHandler clientRequestHandler
           = new SocketClientRequestHandler("localhost", BrokerConstants.serverPort);
     Requestor requestor = new StandardJSONRequestor(clientRequestHandler);
@@ -39,6 +34,6 @@ public class HotCivClient {
                     new HotCivFactory4(game) );
     editor.open();
     editor.showStatus("Play SemiCiv");
-    editor.setTool( new CompositionTool(game,new SelectionTool(editor)) );
+    editor.setTool( new CompositionTool(game,new SelectionTool(editor), editor) );
   }
 }
