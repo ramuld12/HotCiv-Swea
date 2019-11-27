@@ -4,6 +4,7 @@ import frds.broker.Invoker;
 import frds.broker.ReplyObject;
 import hotciv.framework.City;
 import hotciv.framework.Game;
+import hotciv.framework.GameObserver;
 import hotciv.standard.Broker.BrokerConstants;
 import hotciv.standard.Broker.NameService;
 import hotciv.standard.Broker.NameServiceImpl;
@@ -16,11 +17,11 @@ public class RootInvoker implements Invoker {
   private final NameService nameService;
   private final HashMap<String, Invoker> invokerMap;
 
-  public RootInvoker(Game servant) {
+  public RootInvoker(Game servant, GameObserver gameObserver) {
     this.nameService = new NameServiceImpl();
     this.invokerMap = new HashMap<>();
 
-    invokerMap.put(BrokerConstants.GAME_PREFIX, new GameInvoker(servant, nameService));
+    invokerMap.put(BrokerConstants.GAME_PREFIX, new GameInvoker(servant, nameService, gameObserver));
     invokerMap.put(BrokerConstants.CITY_PREFIX, new CityInvoker(nameService));
     invokerMap.put(BrokerConstants.UNIT_PREFIX, new UnitInvoker(nameService));
     invokerMap.put(BrokerConstants.TILE_PREFIX, new TileInvoker(nameService));

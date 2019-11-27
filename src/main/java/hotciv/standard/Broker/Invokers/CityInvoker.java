@@ -10,7 +10,7 @@ import hotciv.standard.Broker.BrokerStubs.StubCityBroker;
 import hotciv.standard.Broker.NameService;
 
 public class CityInvoker implements Invoker {
-  private final NameService nameService;
+  private NameService nameService;
   private Gson gson;
 
   public CityInvoker(NameService nameService){

@@ -15,10 +15,13 @@ public class GameInvoker implements Invoker {
   private Game servant;
   private NameService nameService;
 
-  public GameInvoker(Game servant, NameService nameService) {
+  private final GameObserver gameObserver;
+
+  public GameInvoker(Game servant, NameService nameService, GameObserver gameObserver) {
     this.gson = new Gson();
     this.servant = servant;
     this.nameService = nameService;
+    this.gameObserver = gameObserver;
   }
 
   @Override

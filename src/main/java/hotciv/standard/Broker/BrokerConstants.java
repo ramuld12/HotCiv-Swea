@@ -39,6 +39,8 @@ public class BrokerConstants {
 
   //Methods for Tile
   public static final String tileString = TILE_PREFIX + "getTileString";
+  public static final String tileFocusString = TILE_PREFIX + "setTileFocusString";
+
 
   // Methods for unit
   public static final String getOwnerUnit = UNIT_PREFIX + "getOwner";
