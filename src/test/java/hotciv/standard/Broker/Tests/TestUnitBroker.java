@@ -5,6 +5,7 @@ import frds.broker.Invoker;
 import frds.broker.Requestor;
 import frds.broker.marshall.json.StandardJSONRequestor;
 import hotciv.framework.*;
+import hotciv.standard.Broker.BrokerStubs.StubCityBroker;
 import hotciv.standard.Broker.Invokers.UnitInvoker;
 import hotciv.standard.Broker.LocalMethodClientRequestHandler;
 import hotciv.standard.Broker.NameServiceImpl;
@@ -20,13 +21,9 @@ public class TestUnitBroker {
   @Before
   public void setUp() {
     Unit servant = new StubUnitBroker();
-
     Invoker invoker = new UnitInvoker(new NameServiceImpl());
-
     ClientRequestHandler crh = new LocalMethodClientRequestHandler(invoker);
-
     Requestor requestor = new StandardJSONRequestor(crh);
-
     unit = new UnitProxy("", requestor);
   }
 
@@ -37,7 +34,8 @@ public class TestUnitBroker {
 
   @Test
   public void shouldReturnRedPlayer(){
-    assertThat(unit.getOwner(), is(Player.RED));
+    StubCityBroker servant = new StubCityBroker();
+    assertThat(servant.getOwner(), is(Player.RED));
   }
 
   @Test
