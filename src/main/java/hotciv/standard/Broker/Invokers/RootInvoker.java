@@ -2,7 +2,6 @@ package hotciv.standard.Broker.Invokers;
 
 import frds.broker.Invoker;
 import frds.broker.ReplyObject;
-import hotciv.framework.City;
 import hotciv.framework.Game;
 import hotciv.framework.GameObserver;
 import hotciv.standard.Broker.BrokerConstants;
