@@ -5,7 +5,6 @@ import frds.broker.Invoker;
 import frds.broker.ReplyObject;
 import hotciv.framework.Tile;
 import hotciv.standard.Broker.BrokerConstants;
-import hotciv.standard.Broker.BrokerStubs.StubTileBroker;
 import hotciv.standard.Broker.NameService;
 
 public class TileInvoker implements Invoker {
@@ -22,8 +21,6 @@ public class TileInvoker implements Invoker {
     Tile tile = lookUpTile(objectId);
 
     if (operationName.equals(BrokerConstants.tileString)) {
-      //System.out.println(operationName);
-      System.out.println(objectId);
       return new ReplyObject(BrokerConstants.ok_status, gson.toJson(tile.getTypeString()));
     }
     return null;

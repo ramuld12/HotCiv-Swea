@@ -2,6 +2,8 @@ package hotciv.standard.Broker.Tests;
 
 import frds.broker.ClientRequestHandler;
 import frds.broker.Invoker;
+import frds.broker.Requestor;
+import frds.broker.marshall.json.StandardJSONRequestor;
 import hotciv.framework.*;
 import hotciv.standard.Broker.*;
 import hotciv.standard.Broker.BrokerStubs.StubCityBroker;
@@ -21,7 +23,6 @@ import static org.hamcrest.CoreMatchers.*;
 public class TestObjectReferencesGame {
 
   private Game game;
-  private SpyRequester requestor;
 
   @Before
   public void setUp() {
@@ -33,11 +34,10 @@ public class TestObjectReferencesGame {
 
     ClientRequestHandler crh = new LocalMethodClientRequestHandler(invoker);
 
-    SpyRequester requestor = new SpyRequester(crh);
+    Requestor requestor = new StandardJSONRequestor(crh);
 
     game = new GameProxy("3", requestor);
     game.addObserver(nullObserver);
-    this.requestor = requestor;
   }
 
   @Test
