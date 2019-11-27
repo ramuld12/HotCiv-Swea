@@ -54,7 +54,7 @@ public class GameImpl implements Game {
   private HashMap<Position, UnitImpl> units; //HashMap representing the units
   private HashMap<Player, Integer> playerVictories; //HashMap representing playervictories
   private int roundNumber;
-  private final String id = UUID.randomUUID().toString();
+  private final String id;
 
 
   /**
@@ -76,6 +76,7 @@ public class GameImpl implements Game {
     worldLayoutStrategy.createTheWorld(this);
     winningStrategy.initializePlayerVictories(this);
     addObserver(new GameObserverImpl());
+    id = UUID.randomUUID().toString();
   }
 
   // === Accessor methods ======================================

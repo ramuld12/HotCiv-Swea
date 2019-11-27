@@ -28,18 +28,17 @@ public class HotCivClient {
   }
 
   public HotCivClient(String[] args) {
-    //parseCommandlineParameters(args);
     System.out.println("LobbyClient: Asked to do operation "+operation+" for player "+name);
     ClientRequestHandler clientRequestHandler
           = new SocketClientRequestHandler("localhost", BrokerConstants.serverPort);
     Requestor requestor = new StandardJSONRequestor(clientRequestHandler);
-    Game game = new GameProxy("", requestor);
+    Game game = new GameProxy("Game", requestor);
 
     DrawingEditor editor =
-            new MiniDrawApplication( "SemiCiv",
+            new MiniDrawApplication( "Playable SemiCiv",
                     new HotCivFactory4(game) );
     editor.open();
-    editor.showStatus("Playable SemiCiv");
+    editor.showStatus("Play SemiCiv");
     editor.setTool( new CompositionTool(game,new SelectionTool(editor)) );
   }
 }

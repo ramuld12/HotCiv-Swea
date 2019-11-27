@@ -14,11 +14,12 @@ public class CityImpl implements City {
   private int foodAmount = 0;
   private int citySize = 0;
   private  int populationSize = 1;
-  private final String id = UUID.randomUUID().toString();
+  private final String id;
 
   public CityImpl(Player p) {
     this.p = p;
     prod = GameConstants.ARCHER;
+    id = UUID.randomUUID().toString();
   }
 
   @Override

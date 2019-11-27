@@ -14,7 +14,7 @@ public class UnitImpl implements Unit {
   private int moveCounter;
   private boolean isMovable;
   private boolean isFortified;
-  private final String id = UUID.randomUUID().toString();
+  private final String id;
 
   public UnitImpl(String type, Player owner) {
     this.type = type;
@@ -39,6 +39,7 @@ public class UnitImpl implements Unit {
       this.attackStrength = 1;
       this.moveCounter = 2;
     }
+    id = UUID.randomUUID().toString();
   }
 
   @Override

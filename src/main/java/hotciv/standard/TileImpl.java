@@ -7,10 +7,11 @@ import java.util.UUID;
 public class TileImpl implements Tile {
 
   private String gc;
-  private final String id = UUID.randomUUID().toString();
+  private final String id;
 
   public TileImpl(String gc) {
     this.gc = gc;
+    id = UUID.randomUUID().toString();
   }
 
   @Override

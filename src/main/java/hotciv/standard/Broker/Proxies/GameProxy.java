@@ -17,23 +17,25 @@ public class GameProxy implements Game, ClientProxy {
 
   @Override
   public Tile getTileAt(Position p) {
-    String id = requestor.sendRequestAndAwaitReply(
+    String tileId = requestor.sendRequestAndAwaitReply(
             "none", BrokerConstants.GAME_GET_TILE_METHOD, String.class, p);
-    return new TileProxy(id, requestor);
+    return new TileProxy(tileId, requestor);
   }
 
   @Override
   public Unit getUnitAt(Position p) {
     String unitId = requestor.sendRequestAndAwaitReply(
             "none", BrokerConstants.GAME_GET_UNIT_METHOD, String.class, p);
+    if(unitId.equals("")) {return null;}
     return new UnitProxy(unitId, requestor);
   }
 
   @Override
   public City getCityAt(Position p) {
-    String id = requestor.sendRequestAndAwaitReply(
+    String cityId = requestor.sendRequestAndAwaitReply(
             "none", BrokerConstants.GAME_GET_CITY_METHOD, String.class, p);
-    return new CityProxy(id, requestor);
+    if(cityId.equals("")) {return null;}
+    return new CityProxy(cityId, requestor);
   }
 
   @Override
@@ -89,7 +91,6 @@ public class GameProxy implements Game, ClientProxy {
 
   @Override
   public void setTileFocus(Position position) {
-    requestor.sendRequestAndAwaitReply(id,BrokerConstants.tileFocusString,String.class, position);
     gameObserver.worldChangedAt(position);
   }
 

@@ -63,13 +63,20 @@ public class GameInvoker implements Invoker {
       }
       case BrokerConstants.GAME_GET_CITY_METHOD: {
         Position cityPosition = gson.fromJson(jsonArray.get(0), Position.class);
+        City cityRef = servant.getCityAt(cityPosition);
+        if (cityRef == null) {
+          return new ReplyObject(BrokerConstants.ok_status, gson.toJson(""));
+        }
         nameService.putCity(objectId, servant.getCityAt(cityPosition));
         return new ReplyObject(BrokerConstants.ok_status, gson.toJson(objectId));
       }
 
       case BrokerConstants.GAME_GET_UNIT_METHOD: {
-
         Position unitPosition = gson.fromJson(jsonArray.get(0), Position.class);
+        Unit unitRef = servant.getUnitAt(unitPosition);
+        if (unitRef == null) {
+          return new ReplyObject(BrokerConstants.ok_status, gson.toJson(""));
+        }
         nameService.putUnit(objectId, servant.getUnitAt(unitPosition));
         return new ReplyObject(BrokerConstants.ok_status, gson.toJson(objectId));
       }
