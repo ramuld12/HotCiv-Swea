@@ -7,6 +7,8 @@ import hotciv.standard.CityImpl;
 import hotciv.standard.TileImpl;
 import hotciv.standard.UnitImpl;
 
+import java.util.UUID;
+
 public class StubGame3Broker implements Game, Servant {
 
   private City city = new StubCityBroker();
@@ -15,6 +17,7 @@ public class StubGame3Broker implements Game, Servant {
   private Player playerInTurn = Player.RED;
   private String cityProduction = GameConstants.LEGION;
   private Position actionPosition = new Position(1,1);
+  private final String id = UUID.randomUUID().toString();
 
   @Override
   public Tile getTileAt(Position p) {
@@ -79,5 +82,10 @@ public class StubGame3Broker implements Game, Servant {
   @Override
   public void setTileFocus(Position position) {
 
+  }
+
+  @Override
+  public String getId() {
+    return id;
   }
 }

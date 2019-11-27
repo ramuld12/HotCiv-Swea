@@ -5,6 +5,7 @@ import frds.broker.Invoker;
 import hotciv.framework.*;
 import hotciv.standard.Broker.*;
 import hotciv.standard.Broker.Invokers.GameInvoker;
+import hotciv.standard.Broker.Invokers.RootInvoker;
 import hotciv.standard.Broker.Proxies.GameProxy;
 import hotciv.standard.Broker.BrokerStubs.StubGame3Broker;
 import hotciv.standard.GameObserverImpl;
@@ -27,7 +28,7 @@ public class TestGameBroker {
     GameObserver nullObserver = new NullObserver();
     servant.addObserver(nullObserver);
 
-    Invoker invoker = new GameInvoker(servant, new NameServiceImpl(), new GameObserverImpl());
+    Invoker invoker = new RootInvoker(servant, nullObserver);
 
     ClientRequestHandler crh = new LocalMethodClientRequestHandler(invoker);
 
@@ -78,13 +79,12 @@ public class TestGameBroker {
     String operationName = requestor.getLastOperationName();
     String objectId = requestor.getLastObjectId();
     Type type = requestor.getLastType();
-    System.out.println(type);
 
     //Assertions
     assertThat(cityPosSpy, is(cityPos));
     assertThat(newUnitType, is(GameConstants.ARCHER));
     assertThat(operationName, is(BrokerConstants.changeCityProduction));
-    assertThat(objectId, is(BrokerConstants.gameId));
+    assertThat(objectId, is(game.getId()));
     assertThat(type.toString(), is("void"));
   }
 
@@ -101,7 +101,7 @@ public class TestGameBroker {
     //Assertions
     assertThat(actionPosition, is(new Position(1,5)));
     assertThat(operationName, is(BrokerConstants.unitAction));
-    assertThat(objectId, is(BrokerConstants.gameId));
+    assertThat(objectId, is(game.getId()));
     assertThat(type.toString(), is("void"));
   }
 

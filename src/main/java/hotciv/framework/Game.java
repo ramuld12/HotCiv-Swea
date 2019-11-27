@@ -154,6 +154,8 @@ public interface Game {
    */
   public void setTileFocus(Position position);
 
+  String getId();
+
 
   //“This is the hotfix for release 2.1”
 

@@ -44,7 +44,7 @@ public class BrokerConstants {
 
   // Methods for unit
   public static final String getOwnerUnit = UNIT_PREFIX + "getOwner";
-  public static final String getTypeStringString = UNIT_PREFIX + "getTypeStringString";
+  public static final String getTypeString = UNIT_PREFIX + "getTypeString";
   public static final String getMoveCountString = UNIT_PREFIX + "getMoveCount";
   public static final String getDefensiveStrengthString = UNIT_PREFIX + "getDefensiveStrength";
   public static final String getAttackingStrengthString = UNIT_PREFIX + "getAttackingStrength";

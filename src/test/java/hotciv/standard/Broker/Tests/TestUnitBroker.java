@@ -6,25 +6,38 @@ import frds.broker.Requestor;
 import frds.broker.marshall.json.StandardJSONRequestor;
 import hotciv.framework.*;
 import hotciv.standard.Broker.BrokerStubs.StubCityBroker;
+import hotciv.standard.Broker.BrokerStubs.StubGame3Broker;
+import hotciv.standard.Broker.Invokers.RootInvoker;
 import hotciv.standard.Broker.Invokers.UnitInvoker;
 import hotciv.standard.Broker.LocalMethodClientRequestHandler;
 import hotciv.standard.Broker.NameServiceImpl;
+import hotciv.standard.Broker.NullObserver;
+import hotciv.standard.Broker.Proxies.GameProxy;
 import hotciv.standard.Broker.Proxies.UnitProxy;
 import hotciv.standard.Broker.BrokerStubs.StubUnitBroker;
+import hotciv.standard.GameObserverImpl;
 import org.junit.*;
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
 
 public class TestUnitBroker {
+  private Game game;
   private Unit unit;
 
   @Before
   public void setUp() {
-    Unit servant = new StubUnitBroker();
-    Invoker invoker = new UnitInvoker(new NameServiceImpl());
+    Game servant = new StubGame3Broker();
+    GameObserver nullObserver = new NullObserver();
+    servant.addObserver(nullObserver);
+
+    Invoker invoker = new RootInvoker(servant, nullObserver);
+
     ClientRequestHandler crh = new LocalMethodClientRequestHandler(invoker);
     Requestor requestor = new StandardJSONRequestor(crh);
-    unit = new UnitProxy("", requestor);
+
+    game = new GameProxy("", requestor);
+    game.addObserver(nullObserver);
+    this.unit = game.getUnitAt(new Position(1,1));
   }
 
   @Test

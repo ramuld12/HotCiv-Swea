@@ -162,6 +162,11 @@ public class StubGame2 implements Game {
 
   }
 
+  @Override
+  public String getId() {
+    return null;
+  }
+
 }
 
 class StubUnit implements Unit {
