@@ -183,7 +183,11 @@ public class CivDrawing
   protected TextFigure gameAgeText;
 
   protected void defineIcons() {
-    turnShieldIcon = new ImageFigure(GfxConstants.RED_SHIELD,
+    String playername = "red";
+    if (game.getPlayerInTurn() == Player.BLUE) {
+      playername = "blue";
+    }
+    turnShieldIcon = new ImageFigure(playername + "shield",
                     new Point(GfxConstants.TURN_SHIELD_X, GfxConstants.TURN_SHIELD_Y));
 
     //Refresh button
