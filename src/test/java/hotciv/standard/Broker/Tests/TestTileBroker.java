@@ -7,13 +7,9 @@ import frds.broker.marshall.json.StandardJSONRequestor;
 import hotciv.framework.*;
 import hotciv.standard.Broker.BrokerStubs.StubGame3Broker;
 import hotciv.standard.Broker.Invokers.RootInvoker;
-import hotciv.standard.Broker.Invokers.TileInvoker;
 import hotciv.standard.Broker.LocalMethodClientRequestHandler;
-import hotciv.standard.Broker.NameServiceImpl;
 import hotciv.standard.Broker.NullObserver;
 import hotciv.standard.Broker.Proxies.GameProxy;
-import hotciv.standard.Broker.Proxies.TileProxy;
-import hotciv.standard.Broker.BrokerStubs.StubTileBroker;
 import org.junit.*;
 
 import static org.junit.Assert.*;

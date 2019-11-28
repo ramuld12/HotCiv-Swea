@@ -29,7 +29,6 @@ public class GameInvoker implements Invoker {
   public ReplyObject handleRequest(String objectId, String operationName, String payload) {
     JsonParser parser = new JsonParser();
     JsonArray jsonArray = parser.parse(payload).getAsJsonArray();
-    System.out.println("--> Do you hit handle request" + objectId);
 
     switch (operationName) {
       //Simple accessors

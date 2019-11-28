@@ -1,7 +1,6 @@
 package hotciv.standard.Broker;
 
 import hotciv.framework.City;
-import hotciv.framework.Game;
 import hotciv.framework.Tile;
 import hotciv.framework.Unit;
 

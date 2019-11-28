@@ -4,11 +4,9 @@ import frds.broker.ClientRequestHandler;
 import frds.broker.Invoker;
 import hotciv.framework.*;
 import hotciv.standard.Broker.*;
-import hotciv.standard.Broker.Invokers.GameInvoker;
 import hotciv.standard.Broker.Invokers.RootInvoker;
 import hotciv.standard.Broker.Proxies.GameProxy;
 import hotciv.standard.Broker.BrokerStubs.StubGame3Broker;
-import hotciv.standard.GameObserverImpl;
 import org.junit.*;
 
 import java.lang.reflect.Type;
