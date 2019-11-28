@@ -30,7 +30,7 @@ public class RootInvoker implements Invoker {
 
   @Override
   public ReplyObject handleRequest(String objectId, String operationName, String payload) {
-    String type = operationName.substring(0,4);
+    String type = operationName.substring(0, operationName.indexOf("_"));
     Invoker subinvoker = invokerMap.get(type);
     System.out.println("--> In replyobject" + operationName);
 
