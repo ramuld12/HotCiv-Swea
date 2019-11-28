@@ -69,8 +69,9 @@ public class GameInvoker implements Invoker {
         if (cityRef == null) {
           return new ReplyObject(HttpServletResponse.SC_OK, gson.toJson(""));
         }
-        nameService.putCity(objectId, servant.getCityAt(cityPosition));
-        return new ReplyObject(HttpServletResponse.SC_OK, gson.toJson(objectId));
+        String cityId = cityRef.getId();
+        nameService.putCity(cityId, cityRef);
+        return new ReplyObject(HttpServletResponse.SC_OK, gson.toJson(cityId));
       }
 
       case BrokerConstants.GAME_GET_UNIT_METHOD: {
@@ -79,8 +80,9 @@ public class GameInvoker implements Invoker {
         if (unitRef == null) {
           return new ReplyObject(HttpServletResponse.SC_OK, gson.toJson(""));
         }
-        nameService.putUnit(objectId, servant.getUnitAt(unitPosition));
-        return new ReplyObject(HttpServletResponse.SC_OK, gson.toJson(objectId));
+        String unitId = unitRef.getId();
+        nameService.putUnit(unitId, unitRef);
+        return new ReplyObject(HttpServletResponse.SC_OK, gson.toJson(unitId));
       }
 
       case BrokerConstants.GAME_GET_TILE_METHOD: {
