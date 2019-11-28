@@ -8,9 +8,6 @@ public class BrokerConstants {
   public static final String TILE_PREFIX = "Tile";
   public static final String CITY_PREFIX = "City";
 
-  // Values
-  public static final int ok_status = 200;
-
   //Methods for Game
   public static final String getAgeString = GAME_PREFIX + "getAge";
   public static final String getPlayerInTurnString = GAME_PREFIX + "getPlayerInTurn";

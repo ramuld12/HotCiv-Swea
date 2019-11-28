@@ -5,8 +5,9 @@ import frds.broker.Invoker;
 import frds.broker.ReplyObject;
 import hotciv.framework.Unit;
 import hotciv.standard.Broker.BrokerConstants;
-import hotciv.standard.Broker.BrokerStubs.StubUnitBroker;
 import hotciv.standard.Broker.NameService;
+
+import javax.servlet.http.HttpServletResponse;
 
 public class UnitInvoker implements Invoker {
   private final NameService nameService;
@@ -24,26 +25,26 @@ public class UnitInvoker implements Invoker {
     switch (operationName) {
 
       case BrokerConstants.getTypeString : {
-        return new ReplyObject(BrokerConstants.ok_status, gson.toJson(unit.getTypeString()));
+        return new ReplyObject(HttpServletResponse.SC_OK, gson.toJson(unit.getTypeString()));
       }
 
       case BrokerConstants.getOwnerUnit : {
-        return new ReplyObject(BrokerConstants.ok_status,gson.toJson(unit.getOwner()));
+        return new ReplyObject(HttpServletResponse.SC_OK,gson.toJson(unit.getOwner()));
       }
 
       case BrokerConstants.getMoveCountString : {
-        return new ReplyObject(BrokerConstants.ok_status,gson.toJson(unit.getMoveCount()));
+        return new ReplyObject(HttpServletResponse.SC_OK,gson.toJson(unit.getMoveCount()));
       }
 
       case BrokerConstants.getDefensiveStrengthString : {
-        return new ReplyObject(BrokerConstants.ok_status,gson.toJson(unit.getDefensiveStrength()));
+        return new ReplyObject(HttpServletResponse.SC_OK,gson.toJson(unit.getDefensiveStrength()));
       }
 
       case BrokerConstants.getAttackingStrengthString : {
-        return new ReplyObject(BrokerConstants.ok_status,gson.toJson(unit.getAttackingStrength()));
+        return new ReplyObject(HttpServletResponse.SC_OK,gson.toJson(unit.getAttackingStrength()));
       }
       case BrokerConstants.isUnitMoveable: {
-        return new ReplyObject(BrokerConstants.ok_status, gson.toJson(unit.isMoveable()));
+        return new ReplyObject(HttpServletResponse.SC_OK, gson.toJson(unit.isMoveable()));
       }
     }
     return null;
