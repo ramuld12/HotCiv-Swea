@@ -10,13 +10,6 @@ public class BrokerConstants {
 
   // Values
   public static final int ok_status = 200;
-  public static final String gameId = "3";
-  public static final String cityId = "4";
-  public static final String tileId = "57";
-  public static final String unitId = "55";
-
-  public static final String notOk_status = "DillerDaller";
-
 
   //Methods for Game
   public static final String getAgeString = GAME_PREFIX + "getAge";
@@ -39,7 +32,6 @@ public class BrokerConstants {
 
   //Methods for Tile
   public static final String tileString = TILE_PREFIX + "getTileString";
-  public static final String tileFocusString = TILE_PREFIX + "setTileFocusString";
 
   // Methods for unit
   public static final String getOwnerUnit = UNIT_PREFIX + "getOwner";

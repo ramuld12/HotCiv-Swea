@@ -91,7 +91,7 @@ public class GameProxy implements Game, ClientProxy {
 
   @Override
   public void setTileFocus(Position position) {
-    gameObserver.worldChangedAt(position);
+    gameObserver.tileFocusChangedAt(position);
   }
 
   @Override

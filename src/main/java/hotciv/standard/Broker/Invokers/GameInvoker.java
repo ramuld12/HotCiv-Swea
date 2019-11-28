@@ -8,7 +8,6 @@ import frds.broker.ReplyObject;
 import hotciv.framework.*;
 import hotciv.standard.Broker.BrokerConstants;
 import hotciv.standard.Broker.NameService;
-import hotciv.standard.Broker.NameServiceImpl;
 
 public class GameInvoker implements Invoker {
   private Gson gson;
