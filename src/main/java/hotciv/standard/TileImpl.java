@@ -1,12 +1,17 @@
 package hotciv.standard;
 
 import hotciv.framework.*;
+
+import java.util.UUID;
+
 public class TileImpl implements Tile {
 
   private String gc;
+  private final String id;
 
   public TileImpl(String gc) {
     this.gc = gc;
+    id = UUID.randomUUID().toString();
   }
 
   @Override
@@ -16,7 +21,7 @@ public class TileImpl implements Tile {
 
   @Override
   public String getId() {
-    return null;
+    return id;
   }
 
   public Boolean isValidMovementTileType (UnitImpl unit) {

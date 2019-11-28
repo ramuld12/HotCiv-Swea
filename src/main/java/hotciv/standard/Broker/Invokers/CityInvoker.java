@@ -23,7 +23,6 @@ public class CityInvoker implements Invoker {
   public ReplyObject handleRequest(String objectId, String operationName, String payload) {
     City city = lookUpCity(objectId);
 
-
     switch (operationName){
 
       case BrokerConstants.getOwnerCity : {
@@ -42,6 +41,7 @@ public class CityInvoker implements Invoker {
         return new ReplyObject(BrokerConstants.ok_status,gson.toJson(city.getWorkforceFocus()));
       }
     }
+    System.out.println("--> Cityinvoker before null");
     return null;
   }
 

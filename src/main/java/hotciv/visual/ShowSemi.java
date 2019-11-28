@@ -21,6 +21,6 @@ public class ShowSemi {
                     new HotCivFactory4(game) );
     editor.open();
     editor.showStatus("Playable SemiCiv");
-    editor.setTool( new CompositionTool(game,new SelectionTool(editor)) );
+    editor.setTool( new CompositionTool(game,new SelectionTool(editor), editor) );
   }
 }

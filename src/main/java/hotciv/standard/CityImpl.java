@@ -4,6 +4,8 @@ import hotciv.framework.City;
 import hotciv.framework.GameConstants;
 import hotciv.framework.Player;
 
+import java.util.UUID;
+
 public class CityImpl implements City {
 
   private Player p;
@@ -12,10 +14,12 @@ public class CityImpl implements City {
   private int foodAmount = 0;
   private int citySize = 0;
   private  int populationSize = 1;
+  private final String id;
 
   public CityImpl(Player p) {
     this.p = p;
     prod = GameConstants.ARCHER;
+    id = UUID.randomUUID().toString();
   }
 
   @Override
@@ -45,7 +49,7 @@ public class CityImpl implements City {
 
   @Override
   public String getId() {
-    return null;
+    return id;
   }
 
   public void increaseTreas() {

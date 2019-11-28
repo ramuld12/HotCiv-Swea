@@ -19,6 +19,7 @@ public class RootInvoker implements Invoker {
   public RootInvoker(Game servant, GameObserver gameObserver) {
     this.nameService = new NameServiceImpl();
     this.invokerMap = new HashMap<>();
+    System.out.println("--> Before invokerMap");
 
     invokerMap.put(BrokerConstants.GAME_PREFIX, new GameInvoker(servant, nameService, gameObserver));
     invokerMap.put(BrokerConstants.CITY_PREFIX, new CityInvoker(nameService));
@@ -31,6 +32,7 @@ public class RootInvoker implements Invoker {
   public ReplyObject handleRequest(String objectId, String operationName, String payload) {
     String type = operationName.substring(0,4);
     Invoker subinvoker = invokerMap.get(type);
+    System.out.println("--> In replyobject" + operationName);
 
     try{
       return subinvoker.handleRequest(objectId,operationName,payload);

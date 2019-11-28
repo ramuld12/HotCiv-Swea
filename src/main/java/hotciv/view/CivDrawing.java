@@ -183,7 +183,11 @@ public class CivDrawing
   protected TextFigure gameAgeText;
 
   protected void defineIcons() {
-    turnShieldIcon = new ImageFigure(GfxConstants.RED_SHIELD,
+    String playername = "red";
+    if (game.getPlayerInTurn() == Player.BLUE) {
+      playername = "blue";
+    }
+    turnShieldIcon = new ImageFigure(playername + "shield",
                     new Point(GfxConstants.TURN_SHIELD_X, GfxConstants.TURN_SHIELD_Y));
 
     //Refresh button
@@ -191,8 +195,10 @@ public class CivDrawing
             new Point(GfxConstants.REFRESH_BUTTON_X, GfxConstants.REFRESH_BUTTON_Y));
 
     //Game age
-    gameAgeText = new TextFigure(("" + game.getAge()),
-            new Point (GfxConstants.AGE_TEXT_X, GfxConstants.AGE_TEXT_Y));
+    //Remove the current gameage from delegate if it already exists, so it does not stack on itself
+    if (gameAgeText != null) { delegate.remove(gameAgeText); }
+      gameAgeText = new TextFigure(("" + game.getAge()),
+            new Point(GfxConstants.AGE_TEXT_X, GfxConstants.AGE_TEXT_Y));
 
     unitMoveCountText = new TextFigure("",
             new Point(GfxConstants.UNIT_COUNT_X, GfxConstants.UNIT_COUNT_Y));
@@ -277,8 +283,9 @@ public class CivDrawing
     // everything. We simply rebuild the
     // entire Drawing.
     defineUnitMap();
-    defineIcons();
     defineCityMap();
+    defineIcons();
+
   }
 
   @Override

@@ -8,7 +8,6 @@ import frds.broker.ReplyObject;
 import hotciv.framework.*;
 import hotciv.standard.Broker.BrokerConstants;
 import hotciv.standard.Broker.NameService;
-import hotciv.standard.Broker.NameServiceImpl;
 
 public class GameInvoker implements Invoker {
   private Gson gson;
@@ -28,6 +27,7 @@ public class GameInvoker implements Invoker {
   public ReplyObject handleRequest(String objectId, String operationName, String payload) {
     JsonParser parser = new JsonParser();
     JsonArray jsonArray = parser.parse(payload).getAsJsonArray();
+    System.out.println("--> Do you hit handle request" + objectId);
 
     switch (operationName) {
       //Simple accessors
@@ -62,12 +62,20 @@ public class GameInvoker implements Invoker {
       }
       case BrokerConstants.GAME_GET_CITY_METHOD: {
         Position cityPosition = gson.fromJson(jsonArray.get(0), Position.class);
+        City cityRef = servant.getCityAt(cityPosition);
+        if (cityRef == null) {
+          return new ReplyObject(BrokerConstants.ok_status, gson.toJson(""));
+        }
         nameService.putCity(objectId, servant.getCityAt(cityPosition));
         return new ReplyObject(BrokerConstants.ok_status, gson.toJson(objectId));
       }
 
       case BrokerConstants.GAME_GET_UNIT_METHOD: {
         Position unitPosition = gson.fromJson(jsonArray.get(0), Position.class);
+        Unit unitRef = servant.getUnitAt(unitPosition);
+        if (unitRef == null) {
+          return new ReplyObject(BrokerConstants.ok_status, gson.toJson(""));
+        }
         nameService.putUnit(objectId, servant.getUnitAt(unitPosition));
         return new ReplyObject(BrokerConstants.ok_status, gson.toJson(objectId));
       }
