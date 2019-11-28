@@ -8,7 +8,6 @@ public class NameServiceImpl implements NameService {
   private HashMap<String, City> cities = new HashMap<>();; //HashMap representing the cities
   private HashMap<String, Unit> units = new HashMap<>();; //HashMap representing the units
 
-
   @Override
   public void putTile(String objectID, Tile tile) {
     world.put(objectID, tile);

@@ -7,6 +7,8 @@ import hotciv.framework.Tile;
 import hotciv.standard.Broker.BrokerConstants;
 import hotciv.standard.Broker.NameService;
 
+import javax.servlet.http.HttpServletResponse;
+
 public class TileInvoker implements Invoker {
   private final NameService nameService;
   private Gson gson;
@@ -21,7 +23,7 @@ public class TileInvoker implements Invoker {
     Tile tile = lookUpTile(objectId);
 
     if (operationName.equals(BrokerConstants.tileString)) {
-      return new ReplyObject(BrokerConstants.ok_status, gson.toJson(tile.getTypeString()));
+      return new ReplyObject(HttpServletResponse.SC_OK, gson.toJson(tile.getTypeString()));
     }
     return null;
   }

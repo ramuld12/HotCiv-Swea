@@ -9,6 +9,8 @@ import hotciv.standard.Broker.BrokerConstants;
 import hotciv.standard.Broker.BrokerStubs.StubCityBroker;
 import hotciv.standard.Broker.NameService;
 
+import javax.servlet.http.HttpServletResponse;
+
 public class CityInvoker implements Invoker {
   private NameService nameService;
   private Gson gson;
@@ -26,22 +28,21 @@ public class CityInvoker implements Invoker {
     switch (operationName){
 
       case BrokerConstants.getOwnerCity : {
-        return new ReplyObject(BrokerConstants.ok_status,gson.toJson(city.getOwner()));
+        return new ReplyObject(HttpServletResponse.SC_OK,gson.toJson(city.getOwner()));
       }
       case BrokerConstants.getSizeString : {
-        return new ReplyObject(BrokerConstants.ok_status,gson.toJson(city.getSize()));
+        return new ReplyObject(HttpServletResponse.SC_OK,gson.toJson(city.getSize()));
       }
       case BrokerConstants.getTreasuryString : {
-        return new ReplyObject(BrokerConstants.ok_status,gson.toJson(city.getTreasury()));
+        return new ReplyObject(HttpServletResponse.SC_OK,gson.toJson(city.getTreasury()));
       }
       case BrokerConstants.getProductionString : {
-        return new ReplyObject(BrokerConstants.ok_status,gson.toJson(city.getProduction()));
+        return new ReplyObject(HttpServletResponse.SC_OK,gson.toJson(city.getProduction()));
       }
       case BrokerConstants.getWorkforceFocus : {
-        return new ReplyObject(BrokerConstants.ok_status,gson.toJson(city.getWorkforceFocus()));
+        return new ReplyObject(HttpServletResponse.SC_OK,gson.toJson(city.getWorkforceFocus()));
       }
     }
-    System.out.println("--> Cityinvoker before null");
     return null;
   }
 
