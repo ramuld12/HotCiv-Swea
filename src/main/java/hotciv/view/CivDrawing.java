@@ -64,8 +64,8 @@ public class CivDrawing
     game.addObserver(this);
     // ... and build up the set of figures associated with
     // units in the game.
-    defineUnitMap();
     defineCityMap();
+    defineUnitMap();
     // and the set of 'icons' in the status panel
     defineIcons();
   }
@@ -282,10 +282,9 @@ public class CivDrawing
     // A request has been issued to repaint
     // everything. We simply rebuild the
     // entire Drawing.
-    defineUnitMap();
     defineCityMap();
+    defineUnitMap();
     defineIcons();
-
   }
 
   @Override

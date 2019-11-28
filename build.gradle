@@ -63,7 +63,7 @@ task hotCivStoryTest(type: JavaExec){
   main = 'hotciv.standard.Broker.GameLobby.HotCivStoryTest'
 }
 
-task joinSemiServer(type: JavaExec) {
+task hotCivClient(type: JavaExec) {
   group 'SWEA Mandatory'
   description ' Play SemiCiv on the server using the GUI :-)'
 

@@ -13,8 +13,6 @@ import minidraw.framework.DrawingEditor;
 import minidraw.standard.MiniDrawApplication;
 import minidraw.standard.SelectionTool;
 
-import java.util.*;
-
 import java.io.IOException;
 
 public class HotCivClient {
